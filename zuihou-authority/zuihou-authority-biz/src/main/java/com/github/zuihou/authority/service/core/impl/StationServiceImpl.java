@@ -34,16 +34,19 @@ import static com.github.zuihou.common.constant.CacheKey.STATION;
  */
 @Slf4j
 @Service
-public class StationServiceImpl extends SuperCacheServiceImpl<StationMapper, Station> implements StationService {
+public class StationServiceImpl extends SuperCacheServiceImpl<StationMapper, Station> implements StationService
+{
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return STATION;
     }
 
     @Override
     // 启用属性自动注入
     @InjectionResult
-    public IPage<Station> findStationPage(IPage page, StationPageDTO data) {
+    public IPage<Station> findStationPage(IPage page, StationPageDTO data)
+    {
         Station station = BeanUtil.toBean(data, Station.class);
 
         //Wraps.lbQ(station); 这种写法值 不能和  ${ew.customSqlSegment} 一起使用
@@ -51,16 +54,17 @@ public class StationServiceImpl extends SuperCacheServiceImpl<StationMapper, Sta
 
         // ${ew.customSqlSegment} 语法一定要手动eq like 等
         wrapper.like(Station::getName, station.getName())
-                .like(Station::getDescribe, station.getDescribe())
-                .eq(Station::getOrg, station.getOrg())
-                .eq(Station::getStatus, station.getStatus())
-                .geHeader(Station::getCreateTime, data.getStartCreateTime())
-                .leFooter(Station::getCreateTime, data.getEndCreateTime());
+               .like(Station::getDescribe, station.getDescribe())
+               .eq(Station::getOrg, station.getOrg())
+               .eq(Station::getStatus, station.getStatus())
+               .geHeader(Station::getCreateTime, data.getStartCreateTime())
+               .leFooter(Station::getCreateTime, data.getEndCreateTime());
         return baseMapper.findStationPage(page, wrapper, new DataScope());
     }
 
     @Override
-    public Map<Serializable, Object> findStationByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findStationByIds(Set<Serializable> ids)
+    {
         List<Station> list = getStations(ids);
 
         //key 是 组织id， value 是org 对象
@@ -69,29 +73,34 @@ public class StationServiceImpl extends SuperCacheServiceImpl<StationMapper, Sta
     }
 
     @Override
-    public Map<Serializable, Object> findStationNameByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findStationNameByIds(Set<Serializable> ids)
+    {
         List<Station> list = getStations(ids);
         //key 是 组织id， value 是org 对象
         ImmutableMap<Serializable, Object> typeMap = MapHelper.uniqueIndex(list, Station::getId, Station::getName);
         return typeMap;
     }
 
-    private List<Station> getStations(Set<Serializable> ids) {
-        if (ids.isEmpty()) {
+    private List<Station> getStations(Set<Serializable> ids)
+    {
+        if (ids.isEmpty())
+        {
             return Collections.emptyList();
         }
         List<Long> idList = ids.stream().mapToLong(Convert::toLong).boxed().collect(Collectors.toList());
 
         List<Station> list = null;
-        if (idList.size() <= 1000) {
+        if (idList.size() <= 1000)
+        {
             list = idList.stream().map(this::getByIdCache).filter(Objects::nonNull).collect(Collectors.toList());
-        } else {
-            LbqWrapper<Station> query = Wraps.<Station>lbQ()
-                    .in(Station::getId, idList)
-                    .eq(Station::getStatus, true);
+        }
+        else
+        {
+            LbqWrapper<Station> query = Wraps.<Station>lbQ().in(Station::getId, idList).eq(Station::getStatus, true);
             list = super.list(query);
 
-            if (!list.isEmpty()) {
+            if (!list.isEmpty())
+            {
                 list.forEach(item -> {
                     String itemKey = key(item.getId());
                     cacheChannel.set(getRegion(), itemKey, item);

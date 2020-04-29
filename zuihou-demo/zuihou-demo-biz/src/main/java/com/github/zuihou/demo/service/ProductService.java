@@ -12,7 +12,8 @@ import com.github.zuihou.demo.entity.Product;
  * @author zuihou
  * @date 2019-08-13
  */
-public interface ProductService extends IService<Product> {
+public interface ProductService extends IService<Product>
+{
 
     boolean saveEx(Product data);
 }

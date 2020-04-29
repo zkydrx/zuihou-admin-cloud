@@ -20,7 +20,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Data
 @ApiModel(value = "MsgsCenterInfoPageResult", description = "消息分页返回")
 @ToString(callSuper = true)
-public class MsgsCenterInfoPageResultDTO extends MsgsCenterInfo {
+public class MsgsCenterInfoPageResultDTO extends MsgsCenterInfo
+{
     private static final long serialVersionUID = -44224723996050485L;
     @ApiModelProperty(value = "状态")
     @Excel(name = "状态", replace = {"已读_true", "未读_false", "_null"})

@@ -16,12 +16,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020年03月15日11:58:47
  */
 @Component
-public class InitSystemContext {
+public class InitSystemContext
+{
     private final Map<String, InitSystemStrategy> initSystemStrategyMap = new ConcurrentHashMap<>();
     private final DatabaseProperties databaseProperties;
 
     @Autowired
-    public InitSystemContext(Map<String, InitSystemStrategy> strategyMap, DatabaseProperties databaseProperties) {
+    public InitSystemContext(Map<String, InitSystemStrategy> strategyMap, DatabaseProperties databaseProperties)
+    {
         strategyMap.forEach(this.initSystemStrategyMap::put);
         this.databaseProperties = databaseProperties;
     }
@@ -31,7 +33,8 @@ public class InitSystemContext {
      *
      * @param tenant
      */
-    public boolean init(String tenant) {
+    public boolean init(String tenant)
+    {
         InitSystemStrategy initSystemStrategy = initSystemStrategyMap.get(databaseProperties.getMultiTenantType().name());
         BizAssert.notNull(initSystemStrategy, String.format("您配置的租户模式:{}不可用", databaseProperties.getMultiTenantType().name()));
 
@@ -43,7 +46,8 @@ public class InitSystemContext {
      *
      * @param tenant
      */
-    public boolean reset(String tenant) {
+    public boolean reset(String tenant)
+    {
         InitSystemStrategy initSystemStrategy = initSystemStrategyMap.get(databaseProperties.getMultiTenantType().name());
         BizAssert.notNull(initSystemStrategy, String.format("您配置的租户模式:{}不可用", databaseProperties.getMultiTenantType().name()));
         return initSystemStrategy.reset(tenant);
@@ -52,7 +56,8 @@ public class InitSystemContext {
     /**
      * 初始化数据源
      */
-    public void initDataSource() {
+    public void initDataSource()
+    {
         InitSystemStrategy initSystemStrategy = initSystemStrategyMap.get(databaseProperties.getMultiTenantType().name());
 
         initSystemStrategy.initDataSource();
@@ -63,7 +68,8 @@ public class InitSystemContext {
      *
      * @param tenantCodeList
      */
-    public boolean delete(List<String> tenantCodeList) {
+    public boolean delete(List<String> tenantCodeList)
+    {
         InitSystemStrategy initSystemStrategy = initSystemStrategyMap.get(databaseProperties.getMultiTenantType().name());
         BizAssert.notNull(initSystemStrategy, String.format("您配置的租户模式:{}不可用", databaseProperties.getMultiTenantType().name()));
 

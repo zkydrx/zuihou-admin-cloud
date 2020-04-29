@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @date 2019/07/02
  */
 @FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", fallback = LogApiHystrix.class, qualifier = "logApi")
-public interface LogApi {
+public interface LogApi
+{
 
     /**
      * 保存日志

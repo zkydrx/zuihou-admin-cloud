@@ -6,7 +6,8 @@ import java.util.Date;
  * 任务注册
  * Created by xuxueli on 16/9/30.
  */
-public class XxlJobRegistry {
+public class XxlJobRegistry
+{
 
     /**
      * 主键
@@ -33,43 +34,53 @@ public class XxlJobRegistry {
      */
     private Date updateTime;
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public String getRegistryGroup() {
+    public String getRegistryGroup()
+    {
         return registryGroup;
     }
 
-    public void setRegistryGroup(String registryGroup) {
+    public void setRegistryGroup(String registryGroup)
+    {
         this.registryGroup = registryGroup;
     }
 
-    public String getRegistryKey() {
+    public String getRegistryKey()
+    {
         return registryKey;
     }
 
-    public void setRegistryKey(String registryKey) {
+    public void setRegistryKey(String registryKey)
+    {
         this.registryKey = registryKey;
     }
 
-    public String getRegistryValue() {
+    public String getRegistryValue()
+    {
         return registryValue;
     }
 
-    public void setRegistryValue(String registryValue) {
+    public void setRegistryValue(String registryValue)
+    {
         this.registryValue = registryValue;
     }
 
-    public Date getUpdateTime() {
+    public Date getUpdateTime()
+    {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Date updateTime)
+    {
         this.updateTime = updateTime;
     }
 }

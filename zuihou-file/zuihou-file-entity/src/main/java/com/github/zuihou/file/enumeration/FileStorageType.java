@@ -6,7 +6,8 @@ package com.github.zuihou.file.enumeration;
  * @author zuihou
  * @date 2019/05/06
  */
-public enum FileStorageType {
+public enum FileStorageType
+{
     /**
      * 本地
      */
@@ -19,8 +20,10 @@ public enum FileStorageType {
     QINIU,
     ;
 
-    public boolean eq(FileStorageType type) {
-        for (FileStorageType t : FileStorageType.values()) {
+    public boolean eq(FileStorageType type)
+    {
+        for (FileStorageType t : FileStorageType.values())
+        {
             return t.equals(type);
         }
         return false;

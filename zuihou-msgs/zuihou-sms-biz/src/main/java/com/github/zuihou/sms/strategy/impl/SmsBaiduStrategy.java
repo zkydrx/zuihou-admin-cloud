@@ -22,10 +22,13 @@ import java.util.Map;
  */
 @Component("BAIDU")
 @Slf4j
-public class SmsBaiduStrategy extends AbstractSmsStrategy {
+public class SmsBaiduStrategy extends AbstractSmsStrategy
+{
     @Override
-    protected SmsResult send(SmsDO smsDO) {
-        try {
+    protected SmsResult send(SmsDO smsDO)
+    {
+        try
+        {
             // ak、sk等config
             SmsClientConfiguration config = new SmsClientConfiguration();
             config.setCredentials(new DefaultBceCredentials(smsDO.getAppId(), smsDO.getAppSecret()));
@@ -38,18 +41,19 @@ public class SmsBaiduStrategy extends AbstractSmsStrategy {
             //实例化请求对象
             SendMessageV2Request request = new SendMessageV2Request();
             request.withInvokeId(smsDO.getSignName())
-                    .withPhoneNumber(smsDO.getPhone())
-                    .withTemplateCode(smsDO.getTemplateCode())
-                    .withContentVar(JSONObject.parseObject(smsDO.getTemplateParams(), Map.class));
+                   .withPhoneNumber(smsDO.getPhone())
+                   .withTemplateCode(smsDO.getTemplateCode())
+                   .withContentVar(JSONObject.parseObject(smsDO.getTemplateParams(), Map.class));
 
             // 发送请求
             SendMessageV2Response response = smsClient.sendMessage(request);
 
             log.info("百度发送短信返回值={}", JSONObject.toJSONString(response));
 
-            return SmsResult.build(ProviderType.BAIDU, response.getCode(),
-                    response.getRequestId(), "", response.getMessage(), 0);
-        } catch (Exception e) {
+            return SmsResult.build(ProviderType.BAIDU, response.getCode(), response.getRequestId(), "", response.getMessage(), 0);
+        }
+        catch (Exception e)
+        {
             log.error(e.getMessage());
             return SmsResult.fail(e.getMessage());
         }

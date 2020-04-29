@@ -15,7 +15,8 @@ import com.github.zuihou.sms.enumeration.TemplateCodeType;
  * @author zuihou
  * @date 2019-08-01
  */
-public interface SmsTaskService extends SuperService<SmsTask> {
+public interface SmsTaskService extends SuperService<SmsTask>
+{
     /**
      * 保存任务
      *

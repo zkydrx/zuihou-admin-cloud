@@ -28,7 +28,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "ParameterUpdateDTO", description = "参数配置")
-public class ParameterUpdateDTO implements Serializable {
+public class ParameterUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

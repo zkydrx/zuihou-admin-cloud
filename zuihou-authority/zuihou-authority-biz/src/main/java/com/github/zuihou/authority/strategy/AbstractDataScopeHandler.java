@@ -11,7 +11,8 @@ import java.util.List;
  * @date 2019-06-08 15:45
  */
 
-public interface AbstractDataScopeHandler {
+public interface AbstractDataScopeHandler
+{
 
     /**
      * 获取最新的全量的组织id列表

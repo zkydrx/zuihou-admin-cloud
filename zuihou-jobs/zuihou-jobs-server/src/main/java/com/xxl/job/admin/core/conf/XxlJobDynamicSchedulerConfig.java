@@ -13,10 +13,12 @@ import javax.sql.DataSource;
  * @author xuxueli 2018-10-28 00:18:17
  */
 @Configuration
-public class XxlJobDynamicSchedulerConfig {
+public class XxlJobDynamicSchedulerConfig
+{
 
     @Bean
-    public SchedulerFactoryBean getSchedulerFactoryBean(DataSource dataSource) {
+    public SchedulerFactoryBean getSchedulerFactoryBean(DataSource dataSource)
+    {
 
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setDataSource(dataSource);
@@ -39,7 +41,8 @@ public class XxlJobDynamicSchedulerConfig {
      * @return
      */
     @Bean(initMethod = "start", destroyMethod = "destroy")
-    public XxlJobDynamicScheduler getXxlJobDynamicScheduler(SchedulerFactoryBean schedulerFactory) {
+    public XxlJobDynamicScheduler getXxlJobDynamicScheduler(SchedulerFactoryBean schedulerFactory)
+    {
         Scheduler scheduler = schedulerFactory.getScheduler();
 
         XxlJobDynamicScheduler xxlJobDynamicScheduler = new XxlJobDynamicScheduler();

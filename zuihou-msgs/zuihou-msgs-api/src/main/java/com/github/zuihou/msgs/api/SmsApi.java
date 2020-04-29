@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @date 2019/06/21
  */
 @FeignClient(name = "${zuihou.feign.msgs-server:zuihou-msgs-server}", fallback = SmsApiFallback.class)
-public interface SmsApi {
+public interface SmsApi
+{
     /**
      * 短信发送
      *

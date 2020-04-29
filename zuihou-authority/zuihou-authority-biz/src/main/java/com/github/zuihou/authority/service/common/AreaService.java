@@ -14,7 +14,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-07-02
  */
-public interface AreaService extends SuperCacheService<Area> {
+public interface AreaService extends SuperCacheService<Area>
+{
 
     /**
      * 递归删除

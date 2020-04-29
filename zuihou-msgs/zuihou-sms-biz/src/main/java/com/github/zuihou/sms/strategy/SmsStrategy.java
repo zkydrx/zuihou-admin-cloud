@@ -13,7 +13,8 @@ import com.github.zuihou.sms.entity.SmsTemplate;
  * @author zuihou
  * @date 2019-05-15
  */
-public interface SmsStrategy {
+public interface SmsStrategy
+{
     /**
      * 发送短信
      *

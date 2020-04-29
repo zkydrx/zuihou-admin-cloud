@@ -27,7 +27,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "MsgsCenterInfoSaveDTO", description = "消息中心")
-public class MsgsCenterInfoSaveDTO implements Serializable {
+public class MsgsCenterInfoSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "消息内容")
@@ -51,27 +52,23 @@ public class MsgsCenterInfoSaveDTO implements Serializable {
     private Set<String> roleCodeList;
 
 
-    public static MsgsCenterInfoSaveDTO buildPersonal(MsgsCenterInfoDTO msgsCenterInfo, Long userId) {
-        return MsgsCenterInfoSaveDTO.builder()
-                .msgsCenterInfoDTO(msgsCenterInfo)
-                .userIdList(Sets.newHashSet(userId)).build();
+    public static MsgsCenterInfoSaveDTO buildPersonal(MsgsCenterInfoDTO msgsCenterInfo, Long userId)
+    {
+        return MsgsCenterInfoSaveDTO.builder().msgsCenterInfoDTO(msgsCenterInfo).userIdList(Sets.newHashSet(userId)).build();
     }
 
-    public static MsgsCenterInfoSaveDTO buildPersonal(MsgsCenterInfoDTO msgsCenterInfo, Set<Long> userIdList) {
-        return MsgsCenterInfoSaveDTO.builder()
-                .msgsCenterInfoDTO(msgsCenterInfo)
-                .userIdList(userIdList).build();
+    public static MsgsCenterInfoSaveDTO buildPersonal(MsgsCenterInfoDTO msgsCenterInfo, Set<Long> userIdList)
+    {
+        return MsgsCenterInfoSaveDTO.builder().msgsCenterInfoDTO(msgsCenterInfo).userIdList(userIdList).build();
     }
 
-    public static MsgsCenterInfoSaveDTO buildRole(MsgsCenterInfoDTO msgsCenterInfo, String roleCode) {
-        return MsgsCenterInfoSaveDTO.builder()
-                .msgsCenterInfoDTO(msgsCenterInfo)
-                .roleCodeList(Sets.newHashSet(roleCode)).build();
+    public static MsgsCenterInfoSaveDTO buildRole(MsgsCenterInfoDTO msgsCenterInfo, String roleCode)
+    {
+        return MsgsCenterInfoSaveDTO.builder().msgsCenterInfoDTO(msgsCenterInfo).roleCodeList(Sets.newHashSet(roleCode)).build();
     }
 
-    public static MsgsCenterInfoSaveDTO buildRole(MsgsCenterInfoDTO msgsCenterInfo, Set<String> roleCodeList) {
-        return MsgsCenterInfoSaveDTO.builder()
-                .msgsCenterInfoDTO(msgsCenterInfo)
-                .roleCodeList(roleCodeList).build();
+    public static MsgsCenterInfoSaveDTO buildRole(MsgsCenterInfoDTO msgsCenterInfo, Set<String> roleCodeList)
+    {
+        return MsgsCenterInfoSaveDTO.builder().msgsCenterInfoDTO(msgsCenterInfo).roleCodeList(roleCodeList).build();
     }
 }

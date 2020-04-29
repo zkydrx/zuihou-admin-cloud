@@ -18,32 +18,41 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xuxueli 2017-12-29 16:23:43
  */
-public class JobLogFileCleanThread /*extends Thread */ {
+public class JobLogFileCleanThread /*extends Thread */
+{
     private static Logger logger = LoggerFactory.getLogger(JobLogFileCleanThread.class);
 
     private static JobLogFileCleanThread instance = new JobLogFileCleanThread();
     private Thread localThread;
     private volatile boolean toStop = false;
 
-    public static JobLogFileCleanThread getInstance() {
+    public static JobLogFileCleanThread getInstance()
+    {
         return instance;
     }
 
-    public void start(final long logRetentionDays) {
+    public void start(final long logRetentionDays)
+    {
 
         // limit min value
-        if (logRetentionDays < 3) {
+        if (logRetentionDays < 3)
+        {
             return;
         }
 
-        localThread = new Thread(new Runnable() {
+        localThread = new Thread(new Runnable()
+        {
             @Override
-            public void run() {
-                while (!toStop) {
-                    try {
+            public void run()
+            {
+                while (!toStop)
+                {
+                    try
+                    {
                         // clean log dir, over logRetentionDays
                         File[] childDirs = new File(XxlJobFileAppender.getLogPath()).listFiles();
-                        if (childDirs != null && childDirs.length > 0) {
+                        if (childDirs != null && childDirs.length > 0)
+                        {
 
                             // today
                             Calendar todayCal = Calendar.getInstance();
@@ -54,42 +63,55 @@ public class JobLogFileCleanThread /*extends Thread */ {
 
                             Date todayDate = todayCal.getTime();
 
-                            for (File childFile : childDirs) {
+                            for (File childFile : childDirs)
+                            {
 
                                 // valid
-                                if (!childFile.isDirectory()) {
+                                if (!childFile.isDirectory())
+                                {
                                     continue;
                                 }
-                                if (childFile.getName().indexOf("-") == -1) {
+                                if (childFile.getName().indexOf("-") == -1)
+                                {
                                     continue;
                                 }
 
                                 // file create date
                                 Date logFileCreateDate = null;
-                                try {
+                                try
+                                {
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                     logFileCreateDate = simpleDateFormat.parse(childFile.getName());
-                                } catch (ParseException e) {
+                                }
+                                catch (ParseException e)
+                                {
                                     logger.error(e.getMessage(), e);
                                 }
-                                if (logFileCreateDate == null) {
+                                if (logFileCreateDate == null)
+                                {
                                     continue;
                                 }
 
-                                if ((todayDate.getTime() - logFileCreateDate.getTime()) >= logRetentionDays * (24 * 60 * 60 * 1000)) {
+                                if ((todayDate.getTime() - logFileCreateDate.getTime()) >= logRetentionDays * (24 * 60 * 60 * 1000))
+                                {
                                     FileUtil.deleteRecursively(childFile);
                                 }
 
                             }
                         }
 
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         logger.error(e.getMessage(), e);
                     }
 
-                    try {
+                    try
+                    {
                         TimeUnit.DAYS.sleep(1);
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e)
+                    {
                         logger.error(e.getMessage(), e);
                     }
                 }
@@ -101,18 +123,23 @@ public class JobLogFileCleanThread /*extends Thread */ {
         localThread.start();
     }
 
-    public void toStop() {
+    public void toStop()
+    {
         toStop = true;
 
-        if (localThread == null) {
+        if (localThread == null)
+        {
             return;
         }
 
         // interrupt and wait
         localThread.interrupt();
-        try {
+        try
+        {
             localThread.join();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             logger.error(e.getMessage(), e);
         }
     }

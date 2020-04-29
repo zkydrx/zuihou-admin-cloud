@@ -9,7 +9,8 @@ import groovy.lang.GroovyClassLoader;
  *
  * @author xuxueli 2016-1-2 20:02:27
  */
-public class GlueFactory {
+public class GlueFactory
+{
 
 
     private static GlueFactory glueFactory = new GlueFactory();
@@ -18,14 +19,19 @@ public class GlueFactory {
      */
     private GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
 
-    public static GlueFactory getInstance() {
+    public static GlueFactory getInstance()
+    {
         return glueFactory;
     }
 
-    public static void refreshInstance(int type) {
-        if (type == 0) {
+    public static void refreshInstance(int type)
+    {
+        if (type == 0)
+        {
             glueFactory = new GlueFactory();
-        } else if (type == 1) {
+        }
+        else if (type == 1)
+        {
             glueFactory = new SpringGlueFactory();
         }
     }
@@ -37,18 +43,25 @@ public class GlueFactory {
      * @return
      * @throws Exception
      */
-    public IJobHandler loadNewInstance(String codeSource) throws Exception {
-        if (codeSource != null && codeSource.trim().length() > 0) {
+    public IJobHandler loadNewInstance(String codeSource) throws Exception
+    {
+        if (codeSource != null && codeSource.trim().length() > 0)
+        {
             Class<?> clazz = groovyClassLoader.parseClass(codeSource);
-            if (clazz != null) {
+            if (clazz != null)
+            {
                 Object instance = clazz.newInstance();
-                if (instance != null) {
-                    if (instance instanceof IJobHandler) {
+                if (instance != null)
+                {
+                    if (instance instanceof IJobHandler)
+                    {
                         this.injectService(instance);
                         return (IJobHandler) instance;
-                    } else {
-                        throw new IllegalArgumentException(">>>>>>>>>>> xxl-glue, loadNewInstance error, "
-                                + "cannot convert from instance[" + instance.getClass() + "] to IJobHandler");
+                    }
+                    else
+                    {
+                        throw new IllegalArgumentException(">>>>>>>>>>> xxl-glue, loadNewInstance error, " + "cannot convert from instance[" + instance.getClass() + "] to " +
+                                                                   "IJobHandler");
                     }
                 }
             }
@@ -61,7 +74,8 @@ public class GlueFactory {
      *
      * @param instance
      */
-    public void injectService(Object instance) {
+    public void injectService(Object instance)
+    {
         // do something
     }
 

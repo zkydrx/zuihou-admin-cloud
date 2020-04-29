@@ -42,106 +42,61 @@ import java.util.Map;
  * @date 2019/07/05
  */
 @Slf4j
-public class NoBootTest {
+public class NoBootTest
+{
 
 
-    public static void main(String[] args) {
-//        String field = "name";
-//        System.out.println(getField(MenuTreeDTO.class, field));
-//
-//        System.out.println(ReflectUtil.getField(MenuTreeDTO.class, field));
+    public static void main(String[] args)
+    {
+        //        String field = "name";
+        //        System.out.println(getField(MenuTreeDTO.class, field));
+        //
+        //        System.out.println(ReflectUtil.getField(MenuTreeDTO.class, field));
 
 
-        String sql = "       SELECT u.id, account, name, mobile, sex\n" +
-                "FROM c_auth_user\n" +
-                "u\n" +
-                "WHERE 1=1\n" +
-                "and EXISTS (\n" +
-                "select 1 from c_auth_user_role\n" +
-                "ur where  u.id = ur.user_id\n" +
-                "and ur.role_id = 100\n" +
-                ")";
+        String sql = "       SELECT u.id, account, name, mobile, sex\n" + "FROM c_auth_user\n" + "u\n" + "WHERE 1=1\n" + "and EXISTS (\n" + "select 1 from c_auth_user_role\n" +
+                "ur where  u.id = ur.user_id\n" + "and ur.role_id = 100\n" + ")";
 
 
-        sql = "insert into c_auth_resource ( id, create_user, create_time, update_user, update_time, code, name, menu_id, describe_)\n" +
-                "    values (1, 2, SYSDATE(), 2,SYSDATE(), 'code', 'name', 1, ''\t\t)\n" +
-                "    ON DUPLICATE KEY UPDATE " +
-                "      name = 'name2',\n" +
-                "      describe_ = 'ddd',\n" +
-                "      update_user = 3,\n" +
-                "      update_time = SYSDATE()";
-        sql = "CREATE TABLE `aaa_ba`  (\n" +
-                "  `id` bigint(20) NOT NULL COMMENT 'ID',\n" +
-                "  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '资源编码\\n规则：\\n链接：\\n数据列：\\n按钮：',\n" +
-                "  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '名称',\n" +
-                "  `menu_id` bigint(20) NULL DEFAULT NULL COMMENT '菜单ID\\n#c_auth_menu',\n" +
-                "  `describe_` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '描述',\n" +
-                "  `create_user` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',\n" +
-                "  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',\n" +
-                "  `update_user` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',\n" +
-                "  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',\n" +
-                "  PRIMARY KEY (`id`) USING BTREE,\n" +
-                "  UNIQUE INDEX `UN_CODE`(`code`) USING BTREE COMMENT '编码唯一'\n" +
-                ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;";
+        sql = "insert into c_auth_resource ( id, create_user, create_time, update_user, update_time, code, name, menu_id, describe_)\n" + "    values (1, 2, SYSDATE(), 2," +
+                "SYSDATE" + "(), 'code', 'name', 1, ''\t\t)\n" + "    ON DUPLICATE KEY UPDATE " + "      name = 'name2',\n" + "      describe_ = 'ddd',\n" + "      update_user =" +
+                " 3,\n" + "  " + "    update_time = SYSDATE()";
+        sql = "CREATE TABLE `aaa_ba`  (\n" + "  `id` bigint(20) NOT NULL COMMENT 'ID',\n" + "  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT "
+                + "'' COMMENT '资源编码\\n规则：\\n链接：\\n数据列：\\n按钮：',\n" + "  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '名称',\n" + "  `menu_id` bigint(20) NULL DEFAULT NULL COMMENT '菜单ID\\n#c_auth_menu',\n" + "  `describe_` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL " + "DEFAULT '' COMMENT '描述',\n" + "  `create_user` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',\n" + "  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间'," + "\n" + "  `update_user` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',\n" + "  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',\n" + "  PRIMARY KEY " + "(`id`) USING BTREE,\n" + "  UNIQUE INDEX `UN_CODE`(`code`) USING BTREE COMMENT '编码唯一'\n" + ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = " + "utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;";
 
-        sql = "SELECT\n" +
-                "\tcount( 0 ) \n" +
-                "FROM\n" +
-                "\t(\n" +
-                "SELECT\n" +
-                "\tid,\n" +
-                "\tNO,\n" +
-                "\tNAME,\n" +
-                "\taddress,\n" +
-                "\taddressdetail,\n" +
-                "IF\n" +
-                "\t( longitude IS NULL, \"\", longitude ) AS longitude,\n" +
-                "IF\n" +
-                "\t( latitude IS NULL, \"\", latitude ) AS latitude,\n" +
-                "\temail,\n" +
-                "\tcontact,\n" +
-                "\tcooperatestatus_id,\n" +
-                "\tcontractstatus_id,\n" +
-                "\tintro,\n" +
-                "\tlogo,\n" +
-                "\tservicescore,\n" +
-                "\trecommen,\n" +
-                "\ttax,\n" +
-                "\tcreated_by,\n" +
-                "\tupdated_by,\n" +
-                "\tDATE_FORMAT( created_at, '%Y-%m-%d %h:%i:%s' ) AS created_at,\n" +
-                "\tDATE_FORMAT( updated_at, '%Y-%m-%d %h:%i:%s' ) AS updated_at,\n" +
-                "\tdeleted_at \n" +
-                "FROM\n" +
-                "\t`suppliers` \n" +
-                "WHERE\n" +
-                "\t1 = 1 \n" +
-                "\tAND ( `no` LIKE CONCAT( '%',?, '%' ) OR `name` LIKE CONCAT( '%',?, '%' ) OR `intro` LIKE CONCAT( '%',?, '%' ) ) \n" +
-                "\tAND `suppliers`.`deleted_at` IS NULL \n" +
-                "ORDER BY\n" +
-                "\t`id` DESC \n" +
-                "\t) tmp_count";
-//        TableNameParser tableNameParser = new TableNameParser(sql);
-//        tableNameParser.tables().forEach(System.out::println);
+        sql = "SELECT\n" + "\tcount( 0 ) \n" + "FROM\n" + "\t(\n" + "SELECT\n" + "\tid,\n" + "\tNO,\n" + "\tNAME,\n" + "\taddress,\n" + "\taddressdetail,\n" + "IF\n" + "\t( " +
+                "longitude IS NULL, \"\", longitude ) AS longitude,\n" + "IF\n" + "\t( latitude IS NULL, \"\", latitude ) AS latitude,\n" + "\temail,\n" + "\tcontact,\n" +
+                "\tcooperatestatus_id,\n" + "\tcontractstatus_id,\n" + "\tintro,\n" + "\tlogo,\n" + "\tservicescore,\n" + "\trecommen,\n" + "\ttax,\n" + "\tcreated_by,\n" +
+                "\tupdated_by,\n" + "\tDATE_FORMAT( created_at, '%Y-%m-%d %h:%i:%s' ) AS created_at,\n" + "\tDATE_FORMAT( updated_at, '%Y-%m-%d %h:%i:%s' ) AS updated_at,\n" +
+                "\tdeleted_at \n" + "FROM\n" + "\t`suppliers` \n" + "WHERE\n" + "\t1 = 1 \n" + "\tAND ( `no` LIKE CONCAT( '%',?, '%' ) OR `name` LIKE CONCAT( '%',?, '%' ) OR " + "`intro` LIKE CONCAT( '%',?, '%' ) ) \n" + "\tAND `suppliers`.`deleted_at` IS NULL \n" + "ORDER BY\n" + "\t`id` DESC \n" + "\t) tmp_count";
+        //        TableNameParser tableNameParser = new TableNameParser(sql);
+        //        tableNameParser.tables().forEach(System.out::println);
 
         MultiTenantInterceptor i = new MultiTenantInterceptor();
         i.setSchemaName("1234");
         System.out.println(i.processSqlByInterceptor(sql));
     }
 
-    private static Field getField(Class<?> clazz, String fieldName) {
-        if (clazz == null) {
+    private static Field getField(Class<?> clazz, String fieldName)
+    {
+        if (clazz == null)
+        {
             return null;
         }
-        try {
+        try
+        {
             Field declaredField = clazz.getDeclaredField(fieldName);
-            if (declaredField != null) {
+            if (declaredField != null)
+            {
                 return declaredField;
             }
 
-        } catch (NoSuchFieldException e) {
+        }
+        catch (NoSuchFieldException e)
+        {
             Class<?> superclass = clazz.getSuperclass();
-            if (superclass != null) {
+            if (superclass != null)
+            {
                 return getField(superclass, fieldName);
             }
         }
@@ -150,17 +105,18 @@ public class NoBootTest {
     }
 
     @Test
-    public void testRep() {
+    public void testRep()
+    {
         User user = User.builder()
-                .id(123L)
-                .name("asdf%adf")
-                .mobile("阿富汗接_口")
-                .education(new RemoteData<>("fcvgbhn_jkm%l"))
-                .orgId(new RemoteData<>(1123L))
-                .createTime(LocalDateTime.now())
-                .sex(Sex.M)
-                .status(true)
-                .build();
+                        .id(123L)
+                        .name("asdf%adf")
+                        .mobile("阿富汗接_口")
+                        .education(new RemoteData<>("fcvgbhn_jkm%l"))
+                        .orgId(new RemoteData<>(1123L))
+                        .createTime(LocalDateTime.now())
+                        .sex(Sex.M)
+                        .status(true)
+                        .build();
 
         User o = Wraps.replace(user);
 
@@ -169,15 +125,18 @@ public class NoBootTest {
     }
 
     @Test
-    public void test() {
+    public void test()
+    {
         TestModel obj = new TestModel();
         obj.setStation(new RemoteData<>(101L));
         obj.setOrg2(new RemoteData<>(101L));
 
         Field[] fields = ReflectUtil.getFields(obj.getClass());
-        for (Field field : fields) {
+        for (Field field : fields)
+        {
             InjectionField anno = field.getDeclaredAnnotation(InjectionField.class);
-            if (anno == null) {
+            if (anno == null)
+            {
                 continue;
             }
             field.setAccessible(true);
@@ -185,7 +144,8 @@ public class NoBootTest {
             String api = anno.api();
             Class<?> feign = anno.feign();
 
-            if (StrUtil.isEmpty(api) && Object.class.equals(feign)) {
+            if (StrUtil.isEmpty(api) && Object.class.equals(feign))
+            {
                 log.warn("忽略注入字段: {}.{}", field.getType(), field.getName());
                 continue;
             }
@@ -196,18 +156,19 @@ public class NoBootTest {
 
     @Test
 
-    public void testFan() {
+    public void testFan()
+    {
         StationPageDTO data = StationPageDTO.builder()
-//                .orgId(new RemoteData<>(123L, Org.builder().id(123L).build()))
-//                .orgId(123L)
-                .name("123").describe("ad")
-                .build();
+                                            //                .orgId(new RemoteData<>(123L, Org.builder().id(123L).build()))
+                                            //                .orgId(123L)
+                                            .name("123").describe("ad").build();
         Station station = BeanUtil.toBean(data, Station.class);
         System.out.println(station);
     }
 
     @Test
-    public void testBeanUtil() {
+    public void testBeanUtil()
+    {
 
         //10000 - 511
         //50000 - 719
@@ -215,12 +176,9 @@ public class NoBootTest {
         //1000000 - 2303
 
         TimeInterval timer = DateUtil.timer();
-        for (int i = 0; i <= 1000000; i++) {
-            Org org = Org.builder()
-                    .label("string")
-                    .id(123L + i)
-                    .createTime(LocalDateTime.now())
-                    .build();
+        for (int i = 0; i <= 1000000; i++)
+        {
+            Org org = Org.builder().label("string").id(123L + i).createTime(LocalDateTime.now()).build();
             Station station = Station.builder().id(1L + i).name("nihaoa").createTime(LocalDateTime.now()).orgId(new RemoteData(12L, org)).build();
 
             StationPageDTO stationPageDTO = new StationPageDTO();
@@ -234,30 +192,25 @@ public class NoBootTest {
     }
 
     @Test
-    public void testBeanUtilToBean() {
-        Menu menu = Menu.builder()
-                .id(123L)
-                .label("menu")
-                .group("group")
-                .createTime(LocalDateTime.MAX)
-                .icon("aicon")
-                .build();
+    public void testBeanUtilToBean()
+    {
+        Menu menu = Menu.builder().id(123L).label("menu").group("group").createTime(LocalDateTime.MAX).icon("aicon").build();
 
-//        VueRouter vueRouter = BeanUtil.toBean(menu, VueRouter.class);
+        //        VueRouter vueRouter = BeanUtil.toBean(menu, VueRouter.class);
 
         Map<String, String> map = new HashedMap();
         map.put("name", "path");
-//        VueRouter vueRouter = BeanUtil.toBean(VueRouter.class, new ValueProvider<String>(){
-//            @Override
-//            public Object value(String key, Type valueType) {
-//                return "1";
-//            }
-//
-//            @Override
-//            public boolean containsKey(String key) {
-//                return true;
-//            }
-//        }, CopyOptions.create().setFieldMapping(map));
+        //        VueRouter vueRouter = BeanUtil.toBean(VueRouter.class, new ValueProvider<String>(){
+        //            @Override
+        //            public Object value(String key, Type valueType) {
+        //                return "1";
+        //            }
+        //
+        //            @Override
+        //            public boolean containsKey(String key) {
+        //                return true;
+        //            }
+        //        }, CopyOptions.create().setFieldMapping(map));
 
         VueRouter vueRouter = new VueRouter();
         BeanUtil.copyProperties(menu, vueRouter, CopyOptions.create().setFieldMapping(map));
@@ -267,7 +220,8 @@ public class NoBootTest {
     }
 
     @Test
-    public void testFanxin() {
+    public void testFanxin()
+    {
         Org org = Org.builder().label("ahaha").build();
         Station station = Station.builder().id(1L).orgId(new RemoteData(12L, org)).build();
 
@@ -277,7 +231,8 @@ public class NoBootTest {
     }
 
     @Test
-    public void testBuildTree() {
+    public void testBuildTree()
+    {
         List<Area> list = new ArrayList<>();
 
         Area a1 = Area.builder().id(1L).parentId(0L).build();
@@ -303,7 +258,8 @@ public class NoBootTest {
     }
 
     @Test
-    public void test2222() {
+    public void test2222()
+    {
         Map<InjectionFieldPo, String> map = new HashedMap();
 
         InjectionFieldPo a = new InjectionFieldPo();
@@ -322,12 +278,11 @@ public class NoBootTest {
         System.out.println(map);
     }
 
-    public Validator getValidator() {
-        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
-                .configure()
-                //快速失败返回模式
-                .addProperty("hibernate.validator.fail_fast", "false")
-                .buildValidatorFactory();
+    public Validator getValidator()
+    {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure()
+                                                      //快速失败返回模式
+                                                      .addProperty("hibernate.validator.fail_fast", "false").buildValidatorFactory();
         return validatorFactory.getValidator();
     }
 

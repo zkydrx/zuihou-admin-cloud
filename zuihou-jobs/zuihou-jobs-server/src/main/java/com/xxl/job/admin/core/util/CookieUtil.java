@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author xuxueli 2015-12-12 18:01:06
  */
-public class CookieUtil {
+public class CookieUtil
+{
 
     // 默认缓存时间,单位/秒, 2H
     private static final int COOKIE_MAX_AGE = 60 * 60 * 2;
@@ -24,7 +25,8 @@ public class CookieUtil {
      * @param value
      * @param ifRemember
      */
-    public static void set(HttpServletResponse response, String key, String value, boolean ifRemember) {
+    public static void set(HttpServletResponse response, String key, String value, boolean ifRemember)
+    {
         int age = ifRemember ? COOKIE_MAX_AGE : -1;
         set(response, key, value, null, COOKIE_PATH, age, true);
     }
@@ -37,9 +39,11 @@ public class CookieUtil {
      * @param value
      * @param maxAge
      */
-    private static void set(HttpServletResponse response, String key, String value, String domain, String path, int maxAge, boolean isHttpOnly) {
+    private static void set(HttpServletResponse response, String key, String value, String domain, String path, int maxAge, boolean isHttpOnly)
+    {
         Cookie cookie = new Cookie(key, value);
-        if (domain != null) {
+        if (domain != null)
+        {
             cookie.setDomain(domain);
         }
         cookie.setPath(path);
@@ -55,9 +59,11 @@ public class CookieUtil {
      * @param key
      * @return
      */
-    public static String getValue(HttpServletRequest request, String key) {
+    public static String getValue(HttpServletRequest request, String key)
+    {
         Cookie cookie = get(request, key);
-        if (cookie != null) {
+        if (cookie != null)
+        {
             return cookie.getValue();
         }
         return null;
@@ -69,11 +75,15 @@ public class CookieUtil {
      * @param request
      * @param key
      */
-    private static Cookie get(HttpServletRequest request, String key) {
+    private static Cookie get(HttpServletRequest request, String key)
+    {
         Cookie[] arrCookie = request.getCookies();
-        if (arrCookie != null && arrCookie.length > 0) {
-            for (Cookie cookie : arrCookie) {
-                if (cookie.getName().equals(key)) {
+        if (arrCookie != null && arrCookie.length > 0)
+        {
+            for (Cookie cookie : arrCookie)
+            {
+                if (cookie.getName().equals(key))
+                {
                     return cookie;
                 }
             }
@@ -88,9 +98,11 @@ public class CookieUtil {
      * @param response
      * @param key
      */
-    public static void remove(HttpServletRequest request, HttpServletResponse response, String key) {
+    public static void remove(HttpServletRequest request, HttpServletResponse response, String key)
+    {
         Cookie cookie = get(request, key);
-        if (cookie != null) {
+        if (cookie != null)
+        {
             set(response, key, "", null, COOKIE_PATH, 0, true);
         }
     }

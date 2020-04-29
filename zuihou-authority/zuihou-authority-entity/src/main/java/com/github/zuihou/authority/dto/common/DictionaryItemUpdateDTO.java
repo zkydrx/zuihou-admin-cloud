@@ -28,7 +28,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "DictionaryItemUpdateDTO", description = "字典项")
-public class DictionaryItemUpdateDTO implements Serializable {
+public class DictionaryItemUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

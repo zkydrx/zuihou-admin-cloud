@@ -26,7 +26,8 @@ import static com.github.zuihou.exception.code.ExceptionCode.BASE_VALID_PARAM;
  * @date 2019/06/17
  */
 @Slf4j
-public abstract class AbstractFileStrategy implements FileStrategy {
+public abstract class AbstractFileStrategy implements FileStrategy
+{
 
     private static final String FILE_SPLIT = ".";
     @Autowired
@@ -39,24 +40,30 @@ public abstract class AbstractFileStrategy implements FileStrategy {
      * @return
      */
     @Override
-    public File upload(MultipartFile multipartFile) {
-        try {
-            if (!multipartFile.getOriginalFilename().contains(FILE_SPLIT)) {
+    public File upload(MultipartFile multipartFile)
+    {
+        try
+        {
+            if (!multipartFile.getOriginalFilename().contains(FILE_SPLIT))
+            {
                 throw BizException.wrap(BASE_VALID_PARAM.build("缺少后缀名"));
             }
 
             File file = File.builder()
-                    .isDelete(false).submittedFileName(multipartFile.getOriginalFilename())
-                    .contextType(multipartFile.getContentType())
-                    .dataType(FileDataTypeUtil.getDataType(multipartFile.getContentType()))
-                    .size(multipartFile.getSize())
-                    .ext(FilenameUtils.getExtension(multipartFile.getOriginalFilename()))
-                    .build();
+                            .isDelete(false)
+                            .submittedFileName(multipartFile.getOriginalFilename())
+                            .contextType(multipartFile.getContentType())
+                            .dataType(FileDataTypeUtil.getDataType(multipartFile.getContentType()))
+                            .size(multipartFile.getSize())
+                            .ext(FilenameUtils.getExtension(multipartFile.getOriginalFilename()))
+                            .build();
             file.setIcon(IconType.getIcon(file.getExt()).getIcon());
             setDate(file);
             uploadFile(file, multipartFile);
             return file;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             log.error("e={}", e);
             throw BizException.wrap(BASE_VALID_PARAM.build("文件上传失败"));
         }
@@ -71,24 +78,29 @@ public abstract class AbstractFileStrategy implements FileStrategy {
      */
     protected abstract void uploadFile(File file, MultipartFile multipartFile) throws Exception;
 
-    private void setDate(File file) {
+    private void setDate(File file)
+    {
         LocalDateTime now = LocalDateTime.now();
-        file.setCreateMonth(DateUtils.formatAsYearMonthEn(now))
-                .setCreateWeek(DateUtils.formatAsYearWeekEn(now))
-                .setCreateDay(DateUtils.formatAsDateEn(now));
+        file.setCreateMonth(DateUtils.formatAsYearMonthEn(now)).setCreateWeek(DateUtils.formatAsYearWeekEn(now)).setCreateDay(DateUtils.formatAsDateEn(now));
     }
 
     @Override
-    public boolean delete(List<FileDeleteDO> list) {
-        if (list.isEmpty()) {
+    public boolean delete(List<FileDeleteDO> list)
+    {
+        if (list.isEmpty())
+        {
             return true;
         }
         boolean flag = false;
-        for (FileDeleteDO file : list) {
-            try {
+        for (FileDeleteDO file : list)
+        {
+            try
+            {
                 delete(list, file);
                 flag = true;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 log.error("删除文件失败", e);
             }
         }

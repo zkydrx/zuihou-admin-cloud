@@ -27,7 +27,8 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class LoginStatusDTO implements Serializable {
+public class LoginStatusDTO implements Serializable
+{
     private static final long serialVersionUID = -3124612657759050173L;
     /***
      * 用户id
@@ -65,45 +66,40 @@ public class LoginStatusDTO implements Serializable {
 
     private UserToken userToken;
 
-    public static LoginStatusDTO success(Long id, UserToken userToken) {
-        LoginStatusDTO loginStatus = LoginStatusDTO.builder()
-                .id(id).tenant(BaseContextHandler.getTenant())
-                .type(Type.SUCCESS).description("登录成功")
-                .build().setInfo();
+    public static LoginStatusDTO success(Long id, UserToken userToken)
+    {
+        LoginStatusDTO loginStatus = LoginStatusDTO.builder().id(id).tenant(BaseContextHandler.getTenant()).type(Type.SUCCESS).description("登录成功").build().setInfo();
         userToken.setLoginIp(loginStatus.getIp());
         userToken.setLocation(loginStatus.getLocation());
         loginStatus.setUserToken(userToken);
         return loginStatus;
     }
 
-    public static LoginStatusDTO fail(Long id, String description) {
-        return LoginStatusDTO.builder()
-                .id(id).tenant(BaseContextHandler.getTenant())
-                .type(Type.FAIL).description(description)
-                .build().setInfo();
+    public static LoginStatusDTO fail(Long id, String description)
+    {
+        return LoginStatusDTO.builder().id(id).tenant(BaseContextHandler.getTenant()).type(Type.FAIL).description(description).build().setInfo();
     }
 
-    public static LoginStatusDTO fail(String account, String description) {
-        return LoginStatusDTO.builder()
-                .account(account).tenant(BaseContextHandler.getTenant())
-                .type(Type.FAIL).description(description)
-                .build().setInfo();
+    public static LoginStatusDTO fail(String account, String description)
+    {
+        return LoginStatusDTO.builder().account(account).tenant(BaseContextHandler.getTenant()).type(Type.FAIL).description(description).build().setInfo();
     }
 
-    public static LoginStatusDTO pwdError(Long id, String description) {
-        return LoginStatusDTO.builder()
-                .id(id).tenant(BaseContextHandler.getTenant())
-                .type(Type.PWD_ERROR).description(description)
-                .build().setInfo();
+    public static LoginStatusDTO pwdError(Long id, String description)
+    {
+        return LoginStatusDTO.builder().id(id).tenant(BaseContextHandler.getTenant()).type(Type.PWD_ERROR).description(description).build().setInfo();
     }
 
-    private LoginStatusDTO setInfo() {
+    private LoginStatusDTO setInfo()
+    {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) {
+        if (requestAttributes == null)
+        {
             return this;
         }
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        if (request == null) {
+        if (request == null)
+        {
             return this;
         }
         String ua = StrUtil.sub(request.getHeader("user-agent"), 0, 500);
@@ -116,7 +112,8 @@ public class LoginStatusDTO implements Serializable {
     }
 
     @Getter
-    public enum Type {
+    public enum Type
+    {
         SUCCESS,
         PWD_ERROR,
         FAIL;

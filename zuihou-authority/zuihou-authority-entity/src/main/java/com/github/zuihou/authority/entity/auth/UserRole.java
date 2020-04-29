@@ -29,7 +29,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("c_auth_user_role")
 @ApiModel(value = "UserRole", description = "角色分配")
-public class UserRole extends SuperEntity<Long> {
+public class UserRole extends SuperEntity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -53,8 +54,8 @@ public class UserRole extends SuperEntity<Long> {
 
 
     @Builder
-    public UserRole(Long id, Long createUser, LocalDateTime createTime,
-                    Long roleId, Long userId) {
+    public UserRole(Long id, Long createUser, LocalDateTime createTime, Long roleId, Long userId)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

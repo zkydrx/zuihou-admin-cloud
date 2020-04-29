@@ -1,4 +1,3 @@
-
 package com.github.zuihou.gateway.config;
 
 import com.alibaba.fastjson.JSONArray;
@@ -27,7 +26,8 @@ import java.util.List;
 @Component
 @Primary
 @Slf4j
-public class SwaggerResourceConfig implements SwaggerResourcesProvider {
+public class SwaggerResourceConfig implements SwaggerResourcesProvider
+{
 
     @Autowired
     RouteLocator routeLocator;
@@ -41,47 +41,54 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
 
     @LoadBalanced
     @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate()
+    {
         return new RestTemplate();
     }
 
     @Override
-    public List<SwaggerResource> get() {
+    public List<SwaggerResource> get()
+    {
         String url = "/swagger-resources";
         //获取所有router
         List<SwaggerResource> resources = new ArrayList<>();
 
         List<String> routes = new ArrayList<>();
         routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
-        gatewayProperties.getRoutes().stream()
-                .filter(routeDefinition -> routes.contains(routeDefinition.getId()))
-                .forEach(route -> {
-                    route.getPredicates().stream()
-                            .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
-                            .forEach(predicateDefinition -> {
-                                        try {
-                                            JSONArray list = restTemplate.getForObject("http://" + route.getUri().getHost() + url, JSONArray.class);
-                                            if (!list.isEmpty()) {
-                                                for (int i = 0; i < list.size(); i++) {
-                                                    SwaggerResource sr = list.getObject(i, SwaggerResource.class);
-                                                    resources.add(swaggerResource(route.getId() + "-" + sr.getName(), "/" + route.getId() + sr.getUrl()));
-//                                                    resources.add(swaggerResource(route.getId() + "-" + sr.getName(), contextPath + "/" + route.getId() + sr.getUrl()));
-                                                }
-                                            }
-                                        } catch (Exception e) {
-                                            log.warn("加载后端资源时失败{}", route.getUri().getHost());
-                                        }
-                                    }
+        gatewayProperties.getRoutes().stream().filter(routeDefinition -> routes.contains(routeDefinition.getId())).forEach(route -> {
+            route.getPredicates().stream().filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName())).forEach(predicateDefinition -> {
+                                                                                                                                               try
+                                                                                                                                               {
+                                                                                                                                                   JSONArray list =
+                                                                                                                                                           restTemplate.getForObject("http://" + route.getUri().getHost() + url, JSONArray.class);
+                                                                                                                                                   if (!list.isEmpty())
+                                                                                                                                                   {
+                                                                                                                                                       for (int i = 0; i < list.size(); i++)
+                                                                                                                                                       {
+                                                                                                                                                           SwaggerResource sr =
+                                                                                                                                                                   list.getObject(i, SwaggerResource.class);
+                                                                                                                                                           resources.add(swaggerResource(route.getId() + "-" + sr.getName(), "/" + route.getId() + sr.getUrl()));
+                                                                                                                                                           //                                                    resources.add(swaggerResource(route.getId() + "-" + sr.getName(), contextPath + "/" + route.getId() + sr.getUrl()));
+                                                                                                                                                       }
+                                                                                                                                                   }
+                                                                                                                                               }
+                                                                                                                                               catch (Exception e)
+                                                                                                                                               {
+                                                                                                                                                   log.warn("加载后端资源时失败{}",
+                                                                                                                                                            route.getUri().getHost());
+                                                                                                                                               }
+                                                                                                                                           }
 
-                            );
-                });
+            );
+        });
 
         //gateway 网关和bootsway
-//        resources.add(swaggerResource("网关模块", "/v2/api-docs?group=网关模块"));
+        //        resources.add(swaggerResource("网关模块", "/v2/api-docs?group=网关模块"));
         return resources;
     }
 
-    private SwaggerResource swaggerResource(String name, String location) {
+    private SwaggerResource swaggerResource(String name, String location)
+    {
         log.info("name:{},location:{}", name, location);
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);

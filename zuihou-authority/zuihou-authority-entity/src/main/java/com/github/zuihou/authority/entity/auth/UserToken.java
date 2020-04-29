@@ -32,7 +32,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @TableName("c_auth_user_token")
 @ApiModel(value = "UserToken", description = "token")
 @AllArgsConstructor
-public class UserToken extends Entity<Long> {
+public class UserToken extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -100,9 +101,19 @@ public class UserToken extends Entity<Long> {
 
 
     @Builder
-    public UserToken(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                     String loginIp, String location, String clientId, String token, String name,
-                     LocalDateTime expireTime, String account) {
+    public UserToken(Long id,
+                     LocalDateTime createTime,
+                     Long createUser,
+                     LocalDateTime updateTime,
+                     Long updateUser,
+                     String loginIp,
+                     String location,
+                     String clientId,
+                     String token,
+                     String name,
+                     LocalDateTime expireTime,
+                     String account)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

@@ -13,6 +13,7 @@ import com.github.zuihou.msgs.entity.MsgsCenterInfoReceive;
  * @author zuihou
  * @date 2019-08-01
  */
-public interface MsgsCenterInfoReceiveService extends SuperService<MsgsCenterInfoReceive> {
+public interface MsgsCenterInfoReceiveService extends SuperService<MsgsCenterInfoReceive>
+{
 
 }

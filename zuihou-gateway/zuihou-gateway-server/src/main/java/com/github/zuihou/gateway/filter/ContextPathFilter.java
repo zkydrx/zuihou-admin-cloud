@@ -20,16 +20,19 @@ import reactor.core.publisher.Mono;
  * @date 2019/07/31
  */
 @Component
-public class ContextPathFilter implements WebFilter {
+public class ContextPathFilter implements WebFilter
+{
 
     @Autowired
     private ServerProperties serverProperties;
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain)
+    {
         String contextPath = serverProperties.getServlet().getContextPath();
         String requestPath = exchange.getRequest().getPath().pathWithinApplication().value();
-        if (contextPath != null && requestPath.startsWith(contextPath)) {
+        if (contextPath != null && requestPath.startsWith(contextPath))
+        {
             requestPath = requestPath.substring(contextPath.length());
         }
         return chain.filter(exchange.mutate().request(exchange.getRequest().mutate().path(requestPath).build()).build());

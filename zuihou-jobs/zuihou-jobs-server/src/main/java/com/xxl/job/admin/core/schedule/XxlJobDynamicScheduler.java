@@ -38,7 +38,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author xuxueli 2015-12-19 16:13:53
  */
-public final class XxlJobDynamicScheduler {
+public final class XxlJobDynamicScheduler
+{
     private static final Logger logger = LoggerFactory.getLogger(XxlJobDynamicScheduler.class);
 
     // ---------------------- param ----------------------
@@ -53,29 +54,40 @@ public final class XxlJobDynamicScheduler {
      */
     private static ConcurrentHashMap<String, ExecutorBiz> executorBizRepository = new ConcurrentHashMap<String, ExecutorBiz>();
 
-    public static void invokeAdminService(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public static void invokeAdminService(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
         jettyServerHandler.handle(null, new Request(null, null), request, response);
     }
 
 
     // ---------------------- I18n ----------------------
 
-    public static ExecutorBiz getExecutorBiz(String address) throws Exception {
+    public static ExecutorBiz getExecutorBiz(String address) throws Exception
+    {
         // valid
-        if (address == null || address.trim().length() == 0) {
+        if (address == null || address.trim().length() == 0)
+        {
             return null;
         }
 
         // load-cache
         address = address.trim();
         ExecutorBiz executorBiz = executorBizRepository.get(address);
-        if (executorBiz != null) {
+        if (executorBiz != null)
+        {
             return executorBiz;
         }
 
         // set-cache
-        executorBiz = (ExecutorBiz) new XxlRpcReferenceBean(NetEnum.JETTY, Serializer.SerializeEnum.HESSIAN.getSerializer(), CallType.SYNC,
-                ExecutorBiz.class, null, 10000, address, XxlJobAdminConfig.getAdminConfig().getAccessToken(), null).getObject();
+        executorBiz = (ExecutorBiz) new XxlRpcReferenceBean(NetEnum.JETTY,
+                                                            Serializer.SerializeEnum.HESSIAN.getSerializer(),
+                                                            CallType.SYNC,
+                                                            ExecutorBiz.class,
+                                                            null,
+                                                            10000,
+                                                            address,
+                                                            XxlJobAdminConfig.getAdminConfig().getAccessToken(),
+                                                            null).getObject();
 
         executorBizRepository.put(address, executorBiz);
         return executorBiz;
@@ -86,29 +98,35 @@ public final class XxlJobDynamicScheduler {
      *
      * @param jobInfo
      */
-    public static void fillJobInfo(XxlJobInfo jobInfo) {
+    public static void fillJobInfo(XxlJobInfo jobInfo)
+    {
 
         String group = String.valueOf(jobInfo.getJobGroup());
         String name = String.valueOf(jobInfo.getId());
 
         // trigger key
         TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
-        try {
+        try
+        {
 
             // trigger cron
             Trigger trigger = scheduler.getTrigger(triggerKey);
-            if (trigger != null && trigger instanceof CronTriggerImpl) {
+            if (trigger != null && trigger instanceof CronTriggerImpl)
+            {
                 String cronExpression = ((CronTriggerImpl) trigger).getCronExpression();
                 jobInfo.setJobCron(cronExpression);
             }
 
             // trigger state
             TriggerState triggerState = scheduler.getTriggerState(triggerKey);
-            if (triggerState != null) {
+            if (triggerState != null)
+            {
                 jobInfo.setJobStatus(triggerState.name());
             }
 
-        } catch (SchedulerException e) {
+        }
+        catch (SchedulerException e)
+        {
             logger.error(e.getMessage(), e);
         }
     }
@@ -122,13 +140,15 @@ public final class XxlJobDynamicScheduler {
      * @return
      * @throws SchedulerException
      */
-    public static boolean addJob(String jobName, String jobGroup, String cronExpression) throws SchedulerException {
+    public static boolean addJob(String jobName, String jobGroup, String cronExpression) throws SchedulerException
+    {
         // 1、job key
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
         JobKey jobKey = new JobKey(jobName, jobGroup);
 
         // 2、valid
-        if (scheduler.checkExists(triggerKey)) {
+        if (scheduler.checkExists(triggerKey))
+        {
             return true;
         }
 
@@ -155,13 +175,15 @@ public final class XxlJobDynamicScheduler {
         return true;
     }
 
-    public static boolean addJob(String jobName, String jobGroup, Date startExecuteTime, Date endExecuteTime, Integer intervalSeconds, Integer execCount) throws SchedulerException {
+    public static boolean addJob(String jobName, String jobGroup, Date startExecuteTime, Date endExecuteTime, Integer intervalSeconds, Integer execCount) throws SchedulerException
+    {
         // 1、job key
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
         JobKey jobKey = new JobKey(jobName, jobGroup);
 
         // 2、valid
-        if (scheduler.checkExists(triggerKey)) {
+        if (scheduler.checkExists(triggerKey))
+        {
             return true;
         }
 
@@ -228,27 +250,26 @@ public final class XxlJobDynamicScheduler {
 
 
         SimpleScheduleBuilder timingScheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                // 间隔时间 0
-                .withIntervalInSeconds(intervalSeconds)
-                // 重复次数 实际上执行了3次 0
-                .withRepeatCount(execCount);
+                                                                           // 间隔时间 0
+                                                                           .withIntervalInSeconds(intervalSeconds)
+                                                                           // 重复次数 实际上执行了3次 0
+                                                                           .withRepeatCount(execCount);
 
 
         SimpleTrigger singleTrigger = null;
-        if (endExecuteTime != null) {
+        if (endExecuteTime != null)
+        {
             singleTrigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
-                    // 开始执行时间
-                    .startAt(startExecuteTime)
-                    // 结束执行时间
-                    .endAt(endExecuteTime)
-                    .withSchedule(timingScheduleBuilder)
-                    .build();
-        } else {
+                                          // 开始执行时间
+                                          .startAt(startExecuteTime)
+                                          // 结束执行时间
+                                          .endAt(endExecuteTime).withSchedule(timingScheduleBuilder).build();
+        }
+        else
+        {
             singleTrigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
-                    // 开始执行时间
-                    .startAt(startExecuteTime)
-                    .withSchedule(timingScheduleBuilder)
-                    .build();
+                                          // 开始执行时间
+                                          .startAt(startExecuteTime).withSchedule(timingScheduleBuilder).build();
         }
 
         Class<? extends Job> jobclass = RemoteHttpJobBean.class;
@@ -270,11 +291,13 @@ public final class XxlJobDynamicScheduler {
      * @return
      * @throws SchedulerException
      */
-    public static boolean removeJob(String jobName, String jobGroup) throws SchedulerException {
+    public static boolean removeJob(String jobName, String jobGroup) throws SchedulerException
+    {
 
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
 
-        if (scheduler.checkExists(triggerKey)) {
+        if (scheduler.checkExists(triggerKey))
+        {
             scheduler.unscheduleJob(triggerKey);
         }
 
@@ -294,13 +317,15 @@ public final class XxlJobDynamicScheduler {
      * @return
      * @throws SchedulerException
      */
-    public static boolean updateJobCron(String jobGroup, String jobName, String cronExpression) throws SchedulerException {
+    public static boolean updateJobCron(String jobGroup, String jobName, String cronExpression) throws SchedulerException
+    {
 
         // 1、job key
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
 
         // 2、valid
-        if (!scheduler.checkExists(triggerKey)) {
+        if (!scheduler.checkExists(triggerKey))
+        {
             return true;
         }
 
@@ -308,7 +333,8 @@ public final class XxlJobDynamicScheduler {
 
         // 3、avoid repeat cron
         String oldCron = oldTrigger.getCronExpression();
-        if (oldCron.equals(cronExpression)) {
+        if (oldCron.equals(cronExpression))
+        {
             return true;
         }
 
@@ -323,7 +349,8 @@ public final class XxlJobDynamicScheduler {
         return true;
     }
 
-    public void setScheduler(Scheduler scheduler) {
+    public void setScheduler(Scheduler scheduler)
+    {
         XxlJobDynamicScheduler.scheduler = scheduler;
     }
 
@@ -331,7 +358,8 @@ public final class XxlJobDynamicScheduler {
     // ---------------------- schedule util ----------------------
 
     // ---------------------- init + destroy ----------------------
-    public void start() throws Exception {
+    public void start() throws Exception
+    {
         // valid
         Assert.notNull(scheduler, "quartz scheduler is null");
 
@@ -350,7 +378,8 @@ public final class XxlJobDynamicScheduler {
         logger.info(">>>>>>>>> init xxl-job admin success.");
     }
 
-    public void destroy() throws Exception {
+    public void destroy() throws Exception
+    {
         // admin trigger pool stop
         JobTriggerPoolHelper.toStop();
 
@@ -364,13 +393,16 @@ public final class XxlJobDynamicScheduler {
         stopRpcProvider();
     }
 
-    private void initI18n() {
-        for (ExecutorBlockStrategyEnum item : ExecutorBlockStrategyEnum.values()) {
+    private void initI18n()
+    {
+        for (ExecutorBlockStrategyEnum item : ExecutorBlockStrategyEnum.values())
+        {
             item.setTitle(I18nUtil.getString("jobconf_block_".concat(item.name())));
         }
     }
 
-    private void initRpcProvider() {
+    private void initRpcProvider()
+    {
         // init
         XxlRpcProviderFactory xxlRpcProviderFactory = new XxlRpcProviderFactory();
         xxlRpcProviderFactory.initConfig(NetEnum.JETTY, Serializer.SerializeEnum.HESSIAN.getSerializer(), null, 0, XxlJobAdminConfig.getAdminConfig().getAccessToken(), null, null);
@@ -382,7 +414,8 @@ public final class XxlJobDynamicScheduler {
         jettyServerHandler = new JettyServerHandler(xxlRpcProviderFactory);
     }
 
-    private void stopRpcProvider() throws Exception {
+    private void stopRpcProvider() throws Exception
+    {
         new XxlRpcInvokerFactory().stop();
     }
 

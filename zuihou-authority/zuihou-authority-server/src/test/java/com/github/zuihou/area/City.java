@@ -8,32 +8,39 @@ import java.util.List;
  * @author zuihou
  */
 
-class City {
+class City
+{
     private String code;
     private String name;
     private List<Area> areaList;
 
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(String code)
+    {
         this.code = code;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public List<Area> getAreaList() {
+    public List<Area> getAreaList()
+    {
         return areaList;
     }
 
-    public void setAreaList(List<Area> areaList) {
+    public void setAreaList(List<Area> areaList)
+    {
         this.areaList = areaList;
     }
 }

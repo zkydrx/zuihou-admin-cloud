@@ -26,7 +26,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("/station")
 @Api(value = "Station", tags = "岗位")
-public class StationController {
+public class StationController
+{
 
     @Autowired
     private StationService stationService;
@@ -45,7 +46,8 @@ public class StationController {
      * @return
      */
     @GetMapping("/findStationByIds")
-    public Map<Serializable, Object> findStationByIds(@RequestParam("ids") Set<Serializable> ids) {
+    public Map<Serializable, Object> findStationByIds(@RequestParam("ids") Set<Serializable> ids)
+    {
         return stationService.findStationByIds(ids);
     }
 
@@ -63,7 +65,8 @@ public class StationController {
      * @return
      */
     @GetMapping("/findStationNameByIds")
-    public Map<Serializable, Object> findStationNameByIds(@RequestParam("ids") Set<Serializable> ids) {
+    public Map<Serializable, Object> findStationNameByIds(@RequestParam("ids") Set<Serializable> ids)
+    {
         return stationService.findStationNameByIds(ids);
     }
 

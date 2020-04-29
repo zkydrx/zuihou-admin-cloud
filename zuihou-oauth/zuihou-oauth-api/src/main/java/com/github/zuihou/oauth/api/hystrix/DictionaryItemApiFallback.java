@@ -15,10 +15,12 @@ import java.util.Set;
  * @date 2019/07/26
  */
 @Component
-public class DictionaryItemApiFallback implements DictionaryItemApi {
+public class DictionaryItemApiFallback implements DictionaryItemApi
+{
 
     @Override
-    public Map<Serializable, Object> findDictionaryItem(Set<Serializable> codes) {
+    public Map<Serializable, Object> findDictionaryItem(Set<Serializable> codes)
+    {
         return new HashMap<>(1);
     }
 }

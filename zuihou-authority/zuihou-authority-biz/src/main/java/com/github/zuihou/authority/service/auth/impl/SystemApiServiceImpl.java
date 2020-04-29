@@ -29,33 +29,43 @@ import static com.github.zuihou.common.constant.CacheKey.SYSTEM_API;
  */
 @Slf4j
 @Service
-public class SystemApiServiceImpl extends SuperCacheServiceImpl<SystemApiMapper, SystemApi> implements SystemApiService {
+public class SystemApiServiceImpl extends SuperCacheServiceImpl<SystemApiMapper, SystemApi> implements SystemApiService
+{
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return SYSTEM_API;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean batchSave(SystemApiScanSaveDTO data) {
+    public Boolean batchSave(SystemApiScanSaveDTO data)
+    {
         List<SystemApiSaveDTO> list = data.getSystemApiList();
-        if (CollUtil.isEmpty(list)) {
+        if (CollUtil.isEmpty(list))
+        {
             return false;
         }
 
         list.forEach((dto) -> {
-            try {
+            try
+            {
                 SystemApi systemApi = BeanPlusUtil.toBean(dto, SystemApi.class);
                 SystemApi save = this.getApi(dto.getCode());
-                if (save == null) {
+                if (save == null)
+                {
                     systemApi.setIsOpen(false);
                     systemApi.setIsPersist(true);
                     super.save(systemApi);
-                } else {
+                }
+                else
+                {
                     systemApi.setId(save.getId());
                     super.updateById(systemApi);
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 log.warn("api初始化失败", e);
             }
         });
@@ -63,7 +73,8 @@ public class SystemApiServiceImpl extends SuperCacheServiceImpl<SystemApiMapper,
         return true;
     }
 
-    public SystemApi getApi(String code) {
+    public SystemApi getApi(String code)
+    {
         LbqWrapper<SystemApi> wrapper = Wraps.<SystemApi>lbQ().eq(SystemApi::getCode, code);
         return baseMapper.selectOne(wrapper);
     }

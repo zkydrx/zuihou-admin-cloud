@@ -29,7 +29,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "SmsSendStatusUpdateDTO", description = "短信发送状态")
-public class SmsSendStatusUpdateDTO implements Serializable {
+public class SmsSendStatusUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

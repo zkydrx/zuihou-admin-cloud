@@ -35,17 +35,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/smsTemplate")
 @Api(value = "SmsTemplate", tags = "短信模板")
 @PreAuth(replace = "sms:template:")
-public class SmsTemplateController extends SuperController<SmsTemplateService, Long, SmsTemplate, SmsTemplate, SmsTemplateSaveDTO, SmsTemplateUpdateDTO> {
+public class SmsTemplateController extends SuperController<SmsTemplateService, Long, SmsTemplate, SmsTemplate, SmsTemplateSaveDTO, SmsTemplateUpdateDTO>
+{
 
     @Override
-    public R<SmsTemplate> handlerSave(SmsTemplateSaveDTO data) {
+    public R<SmsTemplate> handlerSave(SmsTemplateSaveDTO data)
+    {
         SmsTemplate smsTemplate = BeanPlusUtil.toBean(data, SmsTemplate.class);
         baseService.saveTemplate(smsTemplate);
         return success(smsTemplate);
     }
 
     @Override
-    public R<SmsTemplate> handlerUpdate(SmsTemplateUpdateDTO model) {
+    public R<SmsTemplate> handlerUpdate(SmsTemplateUpdateDTO model)
+    {
         SmsTemplate smsTemplate = BeanPlusUtil.toBean(model, SmsTemplate.class);
         baseService.updateTemplate(smsTemplate);
         return success(smsTemplate);
@@ -55,7 +58,8 @@ public class SmsTemplateController extends SuperController<SmsTemplateService, L
     @GetMapping("/check")
     @SysLog("检测自定义编码是否存在")
     @PreAuth("hasPermit('{}view')")
-    public R<Boolean> check(@RequestParam(value = "customCode") String customCode) {
+    public R<Boolean> check(@RequestParam(value = "customCode") String customCode)
+    {
         int count = baseService.count(Wraps.<SmsTemplate>lbQ().eq(SmsTemplate::getCustomCode, customCode));
         return success(count > 0);
     }

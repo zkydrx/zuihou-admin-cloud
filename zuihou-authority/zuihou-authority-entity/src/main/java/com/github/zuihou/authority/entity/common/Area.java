@@ -35,7 +35,8 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.DICTIONA
 @TableName("c_common_area")
 @ApiModel(value = "Area", description = "地区表")
 @AllArgsConstructor
-public class Area extends TreeEntity<Area, Long> {
+public class Area extends TreeEntity<Area, Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -93,8 +94,21 @@ public class Area extends TreeEntity<Area, Long> {
 
 
     @Builder
-    public Area(Long id, String label, Integer sortValue, Long parentId, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                String code, String fullName, String longitude, String latitude, RemoteData<String, String> level, String source) {
+    public Area(Long id,
+                String label,
+                Integer sortValue,
+                Long parentId,
+                LocalDateTime createTime,
+                Long createUser,
+                LocalDateTime updateTime,
+                Long updateUser,
+                String code,
+                String fullName,
+                String longitude,
+                String latitude,
+                RemoteData<String, String> level,
+                String source)
+    {
         this.id = id;
         this.label = label;
         this.sortValue = sortValue;

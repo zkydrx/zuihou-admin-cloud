@@ -25,13 +25,15 @@ import org.springframework.stereotype.Component;
 @JobHandler(value = "demo2JobHandler")
 @Component
 @Slf4j
-public class Demo2JobHandler extends IJobHandler {
+public class Demo2JobHandler extends IJobHandler
+{
 
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    public ReturnT<String> execute2(String param) throws Exception {
+    public ReturnT<String> execute2(String param) throws Exception
+    {
 
         BaseContextHandler.setTenant("0000");
 

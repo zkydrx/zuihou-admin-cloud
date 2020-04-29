@@ -17,7 +17,8 @@ import java.util.List;
  * @date 2019-07-03
  */
 @Repository
-public interface MenuMapper extends SuperMapper<Menu> {
+public interface MenuMapper extends SuperMapper<Menu>
+{
 
     /**
      * 查询用户可用菜单

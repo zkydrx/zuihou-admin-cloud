@@ -20,7 +20,8 @@ import java.util.Map;
  * @date 2019-10-20
  */
 @Repository
-public interface LoginLogMapper extends SuperMapper<LoginLog> {
+public interface LoginLogMapper extends SuperMapper<LoginLog>
+{
     /**
      * 获取系统总访问次数
      *

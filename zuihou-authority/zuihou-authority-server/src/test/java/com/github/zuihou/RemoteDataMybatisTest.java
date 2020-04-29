@@ -37,7 +37,8 @@ import java.util.Set;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
 @WebAppConfiguration
-public class RemoteDataMybatisTest {
+public class RemoteDataMybatisTest
+{
     @Autowired
     ResourceService resourceService;
     @Autowired
@@ -65,22 +66,21 @@ public class RemoteDataMybatisTest {
     private OrgApi orgApi;
 
     @Before
-    public void setTenant() {
+    public void setTenant()
+    {
         BaseContextHandler.setTenant("0000");
     }
 
     @Test
-    public void testGet() {
+    public void testGet()
+    {
         User user = new User();
-//        user.setSex(Sex.W);
+        //        user.setSex(Sex.W);
         LbqWrapper<User> wrapper = Wraps.lbQ(user);
         wrapper
-//                .geHeader(User::getCreateTime, LocalDateTime.MIN)
-//                .leFooter(User::getCreateTime, LocalDateTime.MAX)
-                .like(User::getAccount, "zuihou")
-                .nested(i -> i.like(User::getName, "")
-                        .or().like(User::getMobile, "")
-                ).orderByDesc(User::getCreateTime);
+                //                .geHeader(User::getCreateTime, LocalDateTime.MIN)
+                //                .leFooter(User::getCreateTime, LocalDateTime.MAX)
+                .like(User::getAccount, "zuihou").nested(i -> i.like(User::getName, "").or().like(User::getMobile, "")).orderByDesc(User::getCreateTime);
 
         List<User> list = userService.list(wrapper);
 
@@ -89,38 +89,38 @@ public class RemoteDataMybatisTest {
     }
 
     @Test
-    public void testFeign() {
+    public void testFeign()
+    {
         Set<Serializable> ids = new HashSet<>();
         Map<Serializable, Object> orgByIds = orgApi.findOrgByIds(ids);
         System.out.println(orgByIds.size());
     }
 
     @Test
-    public void testSave3() {
-        Station station = Station.builder()
-                .name("test4")
-                .orgId(new RemoteData<>(4L))
-                .build();
+    public void testSave3()
+    {
+        Station station = Station.builder().name("test4").orgId(new RemoteData<>(4L)).build();
         stationMapper.insert(station);
     }
 
 
     @Test
-    public void test345() {
+    public void test345()
+    {
         RemoteData<Long, Station> stationData = new RemoteData<>(101L);
 
         Station station = stationMapper.selectById(stationData);
         System.out.println(station);
 
 
-
-//        injectionCore.injection(station2);
-//        System.out.println(station2);
+        //        injectionCore.injection(station2);
+        //        System.out.println(station2);
     }
 
 
     @Test
-    public void test343() {
+    public void test343()
+    {
         TestModel obj = new TestModel();
 
         obj.setEducation(new RemoteData<>("COLLEGE"));

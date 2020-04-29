@@ -31,32 +31,37 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  */
 @Component
 @Slf4j
-public class MultiVersionServerSupportFilter extends BaseFilter {
+public class MultiVersionServerSupportFilter extends BaseFilter
+{
 
     @Autowired
     private DiscoveryClient discoveryClient;
 
     @Override
-    public Object run() {
+    public Object run()
+    {
         Route route = route();
 
         RequestContext ctx = RequestContext.getCurrentContext();
         final String requestURI = URL_PATH_HELPER.getPathWithinApplication(ctx.getRequest());
         String version = ctx.getRequest().getHeader("serviceSuffix");
 
-        if (StrUtil.isEmpty(version)) {
+        if (StrUtil.isEmpty(version))
+        {
             version = ctx.getRequest().getParameter("serviceSuffix");
         }
 
         StringBuilder serviceId = new StringBuilder(route.getLocation());
-        if (StrUtil.isNotEmpty(version)) {
+        if (StrUtil.isNotEmpty(version))
+        {
             serviceId.append("-");
             serviceId.append(version);
         }
         String serviceIdStr = serviceId.toString();
         List<ServiceInstance> instances = discoveryClient.getInstances(serviceIdStr);
         log.debug("serviceIdStr={}, size={}", serviceIdStr, instances.size());
-        if (!instances.isEmpty()) {
+        if (!instances.isEmpty())
+        {
             ctx.put(REQUEST_URI_KEY, requestURI.substring(requestURI.indexOf('/', 1)));
             ctx.set(SERVICE_ID_KEY, serviceIdStr);
             ctx.setRouteHost(null);
@@ -68,17 +73,20 @@ public class MultiVersionServerSupportFilter extends BaseFilter {
 
 
     @Override
-    public boolean shouldFilter() {
+    public boolean shouldFilter()
+    {
         return !StrPool.PROD.equalsIgnoreCase(profiles);
     }
 
     @Override
-    public String filterType() {
+    public String filterType()
+    {
         return PRE_TYPE;
     }
 
     @Override
-    public int filterOrder() {
+    public int filterOrder()
+    {
         return PRE_DECORATION_FILTER_ORDER + 2;
     }
 

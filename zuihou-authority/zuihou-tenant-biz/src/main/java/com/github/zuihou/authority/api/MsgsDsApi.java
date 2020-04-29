@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2020年04月05日18:18:26
  */
 @FeignClient(name = "${zuihou.feign.msgs-server:zuihou-msgs-server}", path = "/ds", fallback = MsgsDsApiFallback.class)
-public interface MsgsDsApi {
+public interface MsgsDsApi
+{
     /**
      * 初始化数据源
      *

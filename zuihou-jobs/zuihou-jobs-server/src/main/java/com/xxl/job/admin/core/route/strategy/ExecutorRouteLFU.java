@@ -15,36 +15,44 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * Created by xuxueli on 17/3/10.
  */
-public class ExecutorRouteLFU extends ExecutorRouter {
+public class ExecutorRouteLFU extends ExecutorRouter
+{
 
     private static ConcurrentHashMap<Integer, HashMap<String, Integer>> jobLfuMap = new ConcurrentHashMap<Integer, HashMap<String, Integer>>();
     private static long CACHE_VALID_TIME = 0;
 
-    public String route(int jobId, List<String> addressList) {
+    public String route(int jobId, List<String> addressList)
+    {
 
         // cache clear
-        if (System.currentTimeMillis() > CACHE_VALID_TIME) {
+        if (System.currentTimeMillis() > CACHE_VALID_TIME)
+        {
             jobLfuMap.clear();
             CACHE_VALID_TIME = System.currentTimeMillis() + 1000 * 60 * 60 * 24;
         }
 
         // lfu item init
         HashMap<String, Integer> lfuItemMap = jobLfuMap.get(jobId);     // Key排序可以用TreeMap+构造入参Compare；Value排序暂时只能通过ArrayList；
-        if (lfuItemMap == null) {
+        if (lfuItemMap == null)
+        {
             lfuItemMap = new HashMap<String, Integer>();
             jobLfuMap.putIfAbsent(jobId, lfuItemMap);   // 避免重复覆盖
         }
-        for (String address : addressList) {
-            if (!lfuItemMap.containsKey(address) || lfuItemMap.get(address) > 1000000) {
+        for (String address : addressList)
+        {
+            if (!lfuItemMap.containsKey(address) || lfuItemMap.get(address) > 1000000)
+            {
                 lfuItemMap.put(address, new Random().nextInt(addressList.size()));  // 初始化时主动Random一次，缓解首次压力
             }
         }
 
         // load least userd count address
         List<Map.Entry<String, Integer>> lfuItemList = new ArrayList<Map.Entry<String, Integer>>(lfuItemMap.entrySet());
-        Collections.sort(lfuItemList, new Comparator<Map.Entry<String, Integer>>() {
+        Collections.sort(lfuItemList, new Comparator<Map.Entry<String, Integer>>()
+        {
             @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2)
+            {
                 return o1.getValue().compareTo(o2.getValue());
             }
         });
@@ -57,7 +65,8 @@ public class ExecutorRouteLFU extends ExecutorRouter {
     }
 
     @Override
-    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
+    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList)
+    {
         String address = route(triggerParam.getJobId(), addressList);
         return new ReturnT<String>(address);
     }

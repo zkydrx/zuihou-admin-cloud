@@ -21,16 +21,20 @@ import java.util.Properties;
  *
  * @author xuxueli 2018-01-17 20:39:06
  */
-public class I18nUtil {
+public class I18nUtil
+{
     private static Logger logger = LoggerFactory.getLogger(I18nUtil.class);
 
     private static Properties prop = null;
 
-    public static Properties loadI18nProp() {
-        if (prop != null) {
+    public static Properties loadI18nProp()
+    {
+        if (prop != null)
+        {
             return prop;
         }
-        try {
+        try
+        {
             // build i18n prop
             String i18n = XxlJobAdminConfig.getAdminConfig().getI18n();
             i18n = StringUtils.isNotBlank(i18n) ? ("_" + i18n) : i18n;
@@ -40,7 +44,9 @@ public class I18nUtil {
             Resource resource = new ClassPathResource(i18nFile);
             EncodedResource encodedResource = new EncodedResource(resource, "UTF-8");
             prop = PropertiesLoaderUtils.loadProperties(encodedResource);
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             logger.error(e.getMessage(), e);
         }
         return prop;
@@ -52,7 +58,8 @@ public class I18nUtil {
      * @param key
      * @return
      */
-    public static String getString(String key) {
+    public static String getString(String key)
+    {
         return loadI18nProp().getProperty(key);
     }
 
@@ -62,16 +69,22 @@ public class I18nUtil {
      * @param keys
      * @return
      */
-    public static String getMultString(String... keys) {
+    public static String getMultString(String... keys)
+    {
         Map<String, String> map = new HashMap<String, String>();
 
         Properties prop = loadI18nProp();
-        if (keys != null && keys.length > 0) {
-            for (String key : keys) {
+        if (keys != null && keys.length > 0)
+        {
+            for (String key : keys)
+            {
                 map.put(key, prop.getProperty(key));
             }
-        } else {
-            for (String key : prop.stringPropertyNames()) {
+        }
+        else
+        {
+            for (String key : prop.stringPropertyNames())
+            {
                 map.put(key, prop.getProperty(key));
             }
         }

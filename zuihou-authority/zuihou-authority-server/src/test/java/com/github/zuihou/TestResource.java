@@ -61,7 +61,8 @@ import java.util.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class TestResource {
+public class TestResource
+{
     @Autowired
     LoginLogService loginLogService;
 
@@ -93,7 +94,8 @@ public class TestResource {
     private ObjectMapper objectMapper;
 
     @Before
-    public void setTenant() {
+    public void setTenant()
+    {
         BaseContextHandler.setUserId(3L);
         BaseContextHandler.setTenant("0000");
     }
@@ -104,7 +106,8 @@ public class TestResource {
     private DictionaryItemService dictionaryItemService;
 
     @Test
-    public void testDict() {
+    public void testDict()
+    {
 
         Collection<com.github.zuihou.authority.entity.common.Dictionary> dictionaryList = new ArrayList<>();
         dictionaryList.add(com.github.zuihou.authority.entity.common.Dictionary.builder().type("AAA").name("BBBB").build());
@@ -113,23 +116,18 @@ public class TestResource {
 
         Collection<DictionaryItem> dictionaryItemList = new ArrayList<>();
         dictionaryList.forEach((item -> {
-            dictionaryItemList.add(DictionaryItem.builder()
-                    .dictionaryId(item.getId()).dictionaryType(item.getType())
-                    .code("cc").name("ddd").sortValue(0)
-                    .build());
-            dictionaryItemList.add(DictionaryItem.builder()
-                    .dictionaryId(item.getId()).dictionaryType(item.getType())
-                    .code("ee").name("fff").sortValue(1)
-                    .build());
+            dictionaryItemList.add(DictionaryItem.builder().dictionaryId(item.getId()).dictionaryType(item.getType()).code("cc").name("ddd").sortValue(0).build());
+            dictionaryItemList.add(DictionaryItem.builder().dictionaryId(item.getId()).dictionaryType(item.getType()).code("ee").name("fff").sortValue(1).build());
         }));
         dictionaryItemService.saveBatch(dictionaryItemList);
         System.out.println(dictionaryItemList);
     }
 
     @Test
-    public void testParam() {
-//        Parameter parameter = parameterMapper.selectById(1225343234796945408L);
-//        System.out.println(parameter);
+    public void testParam()
+    {
+        //        Parameter parameter = parameterMapper.selectById(1225343234796945408L);
+        //        System.out.println(parameter);
 
 
         Collection<Org> list = new ArrayList<>();
@@ -140,26 +138,23 @@ public class TestResource {
     }
 
     @Test
-    public void testLoginLog() {
+    public void testLoginLog()
+    {
         IPage<LoginLog> page = new Page<>(1, 20);
-        LoginLog model = LoginLog.builder()
-                .account("zuihou")
-                .requestIp("127.0.0")
-                .userName("127.0.0")
-                .userId(2L)
-                .build();
+        LoginLog model = LoginLog.builder().account("zuihou").requestIp("127.0.0").userName("127.0.0").userId(2L).build();
         QueryWrap<LoginLog> wrapper = Wraps.<LoginLog>q(model);
         wrapper.lambda()
-                .ignore(LoginLog::setAccount)
-                .ignore(LoginLog::setRequestIp)
-                .likeRight(LoginLog::getAccount, model.getAccount())
-                .likeRight(LoginLog::getRequestIp, model.getRequestIp());
+               .ignore(LoginLog::setAccount)
+               .ignore(LoginLog::setRequestIp)
+               .likeRight(LoginLog::getAccount, model.getAccount())
+               .likeRight(LoginLog::getRequestIp, model.getRequestIp());
         loginLogService.page(page, wrapper);
         System.out.println(page);
     }
 
     @Test
-    public void testJson() throws Exception {
+    public void testJson() throws Exception
+    {
         User u = new User().setSex(Sex.M).setName("123");
         User user = BeanUtil.toBean(u, User.class);
 
@@ -170,7 +165,8 @@ public class TestResource {
     }
 
     @Test
-    public void testDozer() {
+    public void testDozer()
+    {
         Station station = Station.builder().id(1L).orgId(new RemoteData(12L)).build();
 
         StationPageDTO stationPageDTO = dozer.map(station, StationPageDTO.class);
@@ -180,21 +176,20 @@ public class TestResource {
 
 
     @Test
-    public void testDozer3333() {
-        Org org = Org.builder()
-                .label("string")
-                .id(123L)
-                .build();
+    public void testDozer3333()
+    {
+        Org org = Org.builder().label("string").id(123L).build();
         Station station = Station.builder().id(1L).orgId(new RemoteData(12L, org)).build();
 
-//        StationPageDTO stationPageDTO = dozer.map(station, StationPageDTO.class);
+        //        StationPageDTO stationPageDTO = dozer.map(station, StationPageDTO.class);
         StationPageDTO stationPageDTO = new StationPageDTO();
         BeanUtil.copyProperties(station, stationPageDTO);
         System.out.println(stationPageDTO.getOrgId());
     }
 
     @Test
-    public void testDozerAndBean() {
+    public void testDozerAndBean()
+    {
 
         //10000 - 688
         //50000 - 2130
@@ -204,12 +199,9 @@ public class TestResource {
         // 放弃理由
 
         TimeInterval timer = DateUtil.timer();
-        for (int i = 0; i <= 1000000; i++) {
-            Org org = Org.builder()
-                    .label("string")
-                    .id(123L + i)
-                    .createTime(LocalDateTime.now())
-                    .build();
+        for (int i = 0; i <= 1000000; i++)
+        {
+            Org org = Org.builder().label("string").id(123L + i).createTime(LocalDateTime.now()).build();
             Station station = Station.builder().id(1L + i).name("nihaoa").createTime(LocalDateTime.now()).orgId(new RemoteData(12L, org)).build();
 
             StationPageDTO stationPageDTO = dozer.map(station, StationPageDTO.class);
@@ -222,47 +214,55 @@ public class TestResource {
 
 
     @Test
-    public void testDozer2() {
-//        StationPageDTO page = StationPageDTO.builder().orgId(3333L).build();
-//        Station station = dozer.map(page, Station.class);
-//        System.out.println(station.getOrgId());
+    public void testDozer2()
+    {
+        //        StationPageDTO page = StationPageDTO.builder().orgId(3333L).build();
+        //        Station station = dozer.map(page, Station.class);
+        //        System.out.println(station.getOrgId());
     }
 
     @Test
-    public void testSaveUser() {
+    public void testSaveUser()
+    {
         List<Long> menuIdByResourceId = resourceService.findMenuIdByResourceId(Arrays.asList(643444897201784193L, 643445674330819745L, 643445641149680705L));
         System.out.println(menuIdByResourceId.size());
     }
 
 
     @Test
-    public void test() {
+    public void test()
+    {
         List<Long> userIdByCode = roleMapper.findUserIdByCode(new String[]{"SUPER_ADMIN"});
         System.out.println(userIdByCode.size());
     }
 
     @Test
-    public void testFindUserByRoleId() {
+    public void testFindUserByRoleId()
+    {
         List<User> list = userMapper.findUserByRoleId(100L, "ad%min");
         log.info("list.size= " + list.size());
     }
 
     @Test
-    public void testWrapper() {
+    public void testWrapper()
+    {
         Resource build = Resource.builder().code("123%456").name("nide %z").build();
         LbqWrapper<Resource> ignore = Wraps.lbQ(build).ignore(Resource::setCode).eq(Resource::getCode, build.getCode());
         resourceService.list(ignore);
     }
 
     @Test
-    public void testfindChildren() {
+    public void testfindChildren()
+    {
         List<Org> children = orgService.findChildren(Arrays.asList(101L));
         log.info("size={}", children.size());
     }
 
     @Test
-    public void testObjlist() {
-        for (int i = 0; i < 20; i++) {
+    public void testObjlist()
+    {
+        for (int i = 0; i < 20; i++)
+        {
             List<Long> list = orgService.listObjs(Convert::toLong);
             log.info("listsize={}", list.size());
         }
@@ -270,17 +270,19 @@ public class TestResource {
     }
 
     @Test
-    public void testDelete() {
-//        boolean flag = userService.removeById(2221L);
-//        log.info(flag);
-//        boolean flag2 = resourceService.removeById(32L);
-//        log.info(flag2);
+    public void testDelete()
+    {
+        //        boolean flag = userService.removeById(2221L);
+        //        log.info(flag);
+        //        boolean flag2 = resourceService.removeById(32L);
+        //        log.info(flag2);
         resourceService.update(Wraps.<Resource>lbU().set(Resource::getMenuId, null).eq(Resource::getId, 1L));
-//        resourceService.updateById(Resource.builder().menuId(null).describe("1").id(1L).build());
+        //        resourceService.updateById(Resource.builder().menuId(null).describe("1").id(1L).build());
     }
 
     @Test
-    public void dozerTest() {
+    public void dozerTest()
+    {
         OptLogDTO dot = new OptLogDTO();
         dot.setHttpMethod("POST");
         dot.setType("EX");
@@ -292,7 +294,8 @@ public class TestResource {
     }
 
     @Test
-    public void dozer2Test() {
+    public void dozer2Test()
+    {
         TestModel d = new TestModel();
         d.setD2(new Date());
         d.setDate(LocalDateTime.now());
@@ -303,7 +306,8 @@ public class TestResource {
 
 
     @Test
-    public void test3() {
+    public void test3()
+    {
 
         LbqWrapper<Resource> query2 = Wraps.<Resource>lbQ().eq(Resource::getName, "xiz");
         List<Resource> resources2 = resourceMapper.selectList(query2);
@@ -319,34 +323,33 @@ public class TestResource {
 
 
     @Test
-    public void test2() {
-        List<Resource> list = resourceService.list(
-                Wrappers.lambdaQuery(Resource.builder()
-                        .code("aaa")
-                        .name("vvv")
-                        .build()));
-//        List<Resource> list = resourceService.list(
-//                Wraps.lbQ(Resource.builder()
-//                        .code("aaa")
-//                        .name("vvv")
-//                        .build()));
+    public void test2()
+    {
+        List<Resource> list = resourceService.list(Wrappers.lambdaQuery(Resource.builder().code("aaa").name("vvv").build()));
+        //        List<Resource> list = resourceService.list(
+        //                Wraps.lbQ(Resource.builder()
+        //                        .code("aaa")
+        //                        .name("vvv")
+        //                        .build()));
 
         log.info("{}", list.size());
     }
 
     @Test
-    public void testUpdateAllById() {
+    public void testUpdateAllById()
+    {
         User user = new User();
         user.setId(1229973087429066752L);
         user.setName("nihao");
         user.setPassword("123");
         user.setAccount("ahaha");
 
-//        userMapper.updateAllById(user);
+        //        userMapper.updateAllById(user);
     }
 
     @Test
-    public void testAlwaysUpdateSomeColumnById() {
+    public void testAlwaysUpdateSomeColumnById()
+    {
         User user = new User();
         user.setId(1229973087429066752L);
         user.setName("nihao");
@@ -354,11 +357,12 @@ public class TestResource {
         user.setAccount("ahaha");
         user.setOrg(new RemoteData(100L));
 
-//        userMapper.updateAllById(user);
+        //        userMapper.updateAllById(user);
     }
 
     @Test
-    public void testUpdate() {
+    public void testUpdate()
+    {
         User user = new User();
         user.setId(1229973087429066752L);
         user.setName("nihao");
@@ -371,7 +375,8 @@ public class TestResource {
     }
 
     @Test
-    public void testGet() {
+    public void testGet()
+    {
         User user = new User();
         user.setEmail("nihao");
         user.setMobile("nihao");
@@ -379,15 +384,16 @@ public class TestResource {
         user.setEducation(new RemoteData<>(null));
         user.setPositionStatus(new RemoteData<>("12%3"));
 
-        List<User> users = userMapper.selectList(Wraps.<User>lbQ()
-                .eq(User::getOrg, user.getOrg()).eq(User::getStation, user.getStation())
-                .like(User::getEducation, user.getEducation()).like(User::getPositionStatus, user.getPositionStatus())
-        );
+        List<User> users = userMapper.selectList(Wraps.<User>lbQ().eq(User::getOrg, user.getOrg())
+                                                                  .eq(User::getStation, user.getStation())
+                                                                  .like(User::getEducation, user.getEducation())
+                                                                  .like(User::getPositionStatus, user.getPositionStatus()));
         System.out.println(users.size());
     }
 
     @Test
-    public void testInserBacth() {
+    public void testInserBacth()
+    {
         List<User> list = new ArrayList<>();
         User user = new User();
         user.setName("nihao");
@@ -400,8 +406,8 @@ public class TestResource {
         user.setAccount("222");
         user.setPassword("123");
         list.add(user);
-//        userMapper.insertBatch(list);
-//        userMapper.insertBatchSomeColumn(list);
+        //        userMapper.insertBatch(list);
+        //        userMapper.insertBatchSomeColumn(list);
 
         list.forEach(ur -> System.out.println(ur.getId()));
     }

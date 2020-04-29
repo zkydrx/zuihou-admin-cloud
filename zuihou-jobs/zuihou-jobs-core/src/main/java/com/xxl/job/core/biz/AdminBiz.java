@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * @author xuxueli 2017-07-27 21:52:49
  */
-public interface AdminBiz {
+public interface AdminBiz
+{
 
     public static final String MAPPING = "/api";
 

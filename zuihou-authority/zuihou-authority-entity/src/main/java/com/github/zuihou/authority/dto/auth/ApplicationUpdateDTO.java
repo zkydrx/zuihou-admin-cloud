@@ -29,7 +29,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "ApplicationUpdateDTO", description = "应用")
-public class ApplicationUpdateDTO implements Serializable {
+public class ApplicationUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -59,7 +60,6 @@ public class ApplicationUpdateDTO implements Serializable {
     /**
      * 类型
      * #{SERVER:服务应用;APP:手机应用;PC:PC网页应用;WAP:手机网页应用}
-     *
      */
     @ApiModelProperty(value = "类型")
     private ApplicationAppTypeEnum appType;

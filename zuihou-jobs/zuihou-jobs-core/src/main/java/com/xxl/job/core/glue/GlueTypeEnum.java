@@ -3,7 +3,8 @@ package com.xxl.job.core.glue;
 /**
  * Created by xuxueli on 17/4/26.
  */
-public enum GlueTypeEnum {
+public enum GlueTypeEnum
+{
 
     BEAN("BEAN", false, null, null),
     GLUE_GROOVY("GLUE(Java)", false, null, null),
@@ -18,35 +19,43 @@ public enum GlueTypeEnum {
     private String cmd;
     private String suffix;
 
-    private GlueTypeEnum(String desc, boolean isScript, String cmd, String suffix) {
+    private GlueTypeEnum(String desc, boolean isScript, String cmd, String suffix)
+    {
         this.desc = desc;
         this.isScript = isScript;
         this.cmd = cmd;
         this.suffix = suffix;
     }
 
-    public static GlueTypeEnum match(String name) {
-        for (GlueTypeEnum item : GlueTypeEnum.values()) {
-            if (item.name().equals(name)) {
+    public static GlueTypeEnum match(String name)
+    {
+        for (GlueTypeEnum item : GlueTypeEnum.values())
+        {
+            if (item.name().equals(name))
+            {
                 return item;
             }
         }
         return null;
     }
 
-    public String getDesc() {
+    public String getDesc()
+    {
         return desc;
     }
 
-    public boolean isScript() {
+    public boolean isScript()
+    {
         return isScript;
     }
 
-    public String getCmd() {
+    public String getCmd()
+    {
         return cmd;
     }
 
-    public String getSuffix() {
+    public String getSuffix()
+    {
         return suffix;
     }
 

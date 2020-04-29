@@ -13,19 +13,25 @@ import java.util.List;
  * 忙碌转移
  * Created by xuxueli on 17/3/10.
  */
-public class ExecutorRouteBusyover extends ExecutorRouter {
+public class ExecutorRouteBusyover extends ExecutorRouter
+{
 
     @Override
-    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
+    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList)
+    {
         StringBuffer idleBeatResultSB = new StringBuffer();
-        for (String address : addressList) {
+        for (String address : addressList)
+        {
             // beat
             ReturnT<String> idleBeatResult = null;
-            try {
+            try
+            {
                 //
                 ExecutorBiz executorBiz = XxlJobDynamicScheduler.getExecutorBiz(address);
                 idleBeatResult = executorBiz.idleBeat(triggerParam.getJobId());
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 logger.error(e.getMessage(), e);
                 idleBeatResult = new ReturnT<String>(ReturnT.FAIL_CODE, "" + e);
             }
@@ -34,13 +40,17 @@ public class ExecutorRouteBusyover extends ExecutorRouter {
             //code:
             //msg:
             idleBeatResultSB.append((idleBeatResultSB.length() > 0) ? "<br><br>" : "")
-                    .append(I18nUtil.getString("jobconf_idleBeat") + "：")
-                    .append("<br>address：").append(address)
-                    .append("<br>code：").append(idleBeatResult.getCode())
-                    .append("<br>msg：").append(idleBeatResult.getMsg());
+                            .append(I18nUtil.getString("jobconf_idleBeat") + "：")
+                            .append("<br>address：")
+                            .append(address)
+                            .append("<br>code：")
+                            .append(idleBeatResult.getCode())
+                            .append("<br>msg：")
+                            .append(idleBeatResult.getMsg());
 
             // beat success
-            if (idleBeatResult.getCode() == ReturnT.SUCCESS_CODE) {
+            if (idleBeatResult.getCode() == ReturnT.SUCCESS_CODE)
+            {
                 idleBeatResult.setMsg(idleBeatResultSB.toString());
                 idleBeatResult.setContent(address);
                 return idleBeatResult;

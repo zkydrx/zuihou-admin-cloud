@@ -8,32 +8,39 @@ import java.util.List;
  * @author zuihou
  */
 
-public class Province {
+public class Province
+{
     private String code;
     private String name;
     private List<City> cityList;
 
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(String code)
+    {
         this.code = code;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public List<City> getCityList() {
+    public List<City> getCityList()
+    {
         return cityList;
     }
 
-    public void setCityList(List<City> cityList) {
+    public void setCityList(List<City> cityList)
+    {
         this.cityList = cityList;
     }
 }

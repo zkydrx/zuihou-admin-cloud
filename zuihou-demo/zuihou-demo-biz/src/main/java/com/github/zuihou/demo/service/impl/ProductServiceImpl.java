@@ -19,17 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
-public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService {
+public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService
+{
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(Product entity) {
+    public boolean save(Product entity)
+    {
         return super.save(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean saveEx(Product data) {
+    public boolean saveEx(Product data)
+    {
         boolean bool = super.save(data);
         int a = 1 / 0;
         return bool;

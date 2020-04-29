@@ -15,14 +15,17 @@ import java.util.Set;
  * @date 2020年02月09日11:24:23
  */
 @Component
-public class StationApiFallback implements StationApi {
+public class StationApiFallback implements StationApi
+{
     @Override
-    public Map<Serializable, Object> findStationByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findStationByIds(Set<Serializable> ids)
+    {
         return Collections.emptyMap();
     }
 
     @Override
-    public Map<Serializable, Object> findStationNameByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findStationNameByIds(Set<Serializable> ids)
+    {
         return Collections.emptyMap();
     }
 }

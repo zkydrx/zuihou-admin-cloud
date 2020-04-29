@@ -33,7 +33,8 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.*;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserPageDTO", description = "用户")
-public class UserPageDTO implements Serializable {
+public class UserPageDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -162,10 +163,10 @@ public class UserPageDTO implements Serializable {
     @ApiModelProperty(value = "最后登录时间")
     private LocalDateTime lastLoginTime;
 
-//    @ApiModelProperty(value = "开始时间")
-//    private LocalDateTime startCreateTime;
-//
-//    @ApiModelProperty(value = "截止时间")
-//    private LocalDateTime endCreateTime;
+    //    @ApiModelProperty(value = "开始时间")
+    //    private LocalDateTime startCreateTime;
+    //
+    //    @ApiModelProperty(value = "截止时间")
+    //    private LocalDateTime endCreateTime;
 
 }

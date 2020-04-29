@@ -15,7 +15,8 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "FileUpdate", description = "文件修改")
-public class FileUpdateDTO implements Serializable {
+public class FileUpdateDTO implements Serializable
+{
     @ApiModelProperty(value = "id", required = true)
     @NotNull(message = "文件id不能为空")
     private Long id;

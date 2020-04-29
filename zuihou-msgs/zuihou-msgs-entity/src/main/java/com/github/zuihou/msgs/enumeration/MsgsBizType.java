@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "MsgsBizType", description = "业务类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum MsgsBizType implements BaseEnum {
+public enum MsgsBizType implements BaseEnum
+{
 
     /**
      * USER_LOCK:账号锁定;USER_REG:账号申请;WORK_APPROVAL:考勤审批;
@@ -36,25 +37,32 @@ public enum MsgsBizType implements BaseEnum {
     private String desc;
 
 
-    public static MsgsBizType match(String val, MsgsBizType def) {
-        for (MsgsBizType enm : MsgsBizType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static MsgsBizType match(String val, MsgsBizType def)
+    {
+        for (MsgsBizType enm : MsgsBizType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static MsgsBizType get(String val) {
+    public static MsgsBizType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(MsgsBizType val) {
-        if (val == null) {
+    public boolean eq(MsgsBizType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -62,7 +70,8 @@ public enum MsgsBizType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "USER_LOCK", example = "USER_LOCK")
-    public String getCode() {
+    public String getCode()
+    {
         return name();
     }
 

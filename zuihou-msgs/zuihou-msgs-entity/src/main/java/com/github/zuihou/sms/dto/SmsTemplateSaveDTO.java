@@ -28,7 +28,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "SmsTemplateSaveDTO", description = "短信模板")
-public class SmsTemplateSaveDTO implements Serializable {
+public class SmsTemplateSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

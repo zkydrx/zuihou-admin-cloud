@@ -16,7 +16,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-07-03
  */
-public interface RoleService extends SuperCacheService<Role> {
+public interface RoleService extends SuperCacheService<Role>
+{
 
 
     /**

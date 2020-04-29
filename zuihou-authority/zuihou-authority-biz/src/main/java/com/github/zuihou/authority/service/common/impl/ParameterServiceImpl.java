@@ -37,20 +37,24 @@ import static com.github.zuihou.common.constant.CacheKey.buildTenantKey;
  */
 @Slf4j
 @Service
-public class ParameterServiceImpl extends SuperServiceImpl<ParameterMapper, Parameter> implements ParameterService {
+public class ParameterServiceImpl extends SuperServiceImpl<ParameterMapper, Parameter> implements ParameterService
+{
 
     @Autowired
     private CacheChannel channel;
 
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return PARAMETER;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(Parameter model) {
+    public boolean save(Parameter model)
+    {
         boolean bool = SqlHelper.retBool(baseMapper.insert(model));
-        if (bool) {
+        if (bool)
+        {
             String cacheKey = buildTenantKey(model.getKey());
             channel.set(getRegion(), cacheKey, model.getValue());
         }
@@ -59,46 +63,50 @@ public class ParameterServiceImpl extends SuperServiceImpl<ParameterMapper, Para
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateById(Parameter model) {
+    public boolean updateById(Parameter model)
+    {
         boolean bool = SqlHelper.retBool(getBaseMapper().updateById(model));
-        if (bool) {
+        if (bool)
+        {
             String cacheKey = buildTenantKey(model.getKey());
             channel.set(getRegion(), cacheKey, model.getValue());
 
-            SpringUtils.publishEvent(new ParameterUpdateEvent(
-                    new ParameterUpdate(model.getKey(), model.getValue(), null, BaseContextHandler.getTenant())
-            ));
+            SpringUtils.publishEvent(new ParameterUpdateEvent(new ParameterUpdate(model.getKey(), model.getValue(), null, BaseContextHandler.getTenant())));
         }
         return bool;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
-        if (CollectionUtils.isEmpty(idList)) {
+    public boolean removeByIds(Collection<? extends Serializable> idList)
+    {
+        if (CollectionUtils.isEmpty(idList))
+        {
             return true;
         }
         List<Parameter> parameterList = super.listByIds(idList);
-        if (parameterList.isEmpty()) {
+        if (parameterList.isEmpty())
+        {
             return true;
         }
         boolean bool = SqlHelper.retBool(getBaseMapper().deleteBatchIds(idList));
-        if (bool) {
+        if (bool)
+        {
             String[] cacheKeys = parameterList.stream().map((item) -> buildTenantKey(item.getKey())).toArray(String[]::new);
             channel.evict(getRegion(), cacheKeys);
 
             parameterList.forEach((model -> {
-                SpringUtils.publishEvent(new ParameterUpdateEvent(
-                        new ParameterUpdate(model.getKey(), model.getValue(), null, BaseContextHandler.getTenant())
-                ));
+                SpringUtils.publishEvent(new ParameterUpdateEvent(new ParameterUpdate(model.getKey(), model.getValue(), null, BaseContextHandler.getTenant())));
             }));
         }
         return bool;
     }
 
     @Override
-    public String getValue(String key, String defVal) {
-        if (StrUtil.isEmpty(key)) {
+    public String getValue(String key, String defVal)
+    {
+        if (StrUtil.isEmpty(key))
+        {
             return defVal;
         }
 

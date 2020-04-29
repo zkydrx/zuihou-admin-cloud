@@ -25,7 +25,8 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "VerificationCodeDTO", description = "验证码发送验证DTO")
-public class VerificationCodeDTO implements Serializable {
+public class VerificationCodeDTO implements Serializable
+{
     @ApiModelProperty(value = "手机号")
     @NotEmpty(message = "手机号不能为空")
     private String mobile;

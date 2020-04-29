@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/smsSendStatus")
 @Api(value = "SmsSendStatus", tags = "短信发送状态")
-public class SmsSendStatusController extends SuperSimpleController<SmsSendStatusService, SmsSendStatus>
-        implements QueryController<SmsSendStatus, Long, SmsSendStatus> {
+public class SmsSendStatusController extends SuperSimpleController<SmsSendStatusService, SmsSendStatus> implements QueryController<SmsSendStatus, Long, SmsSendStatus>
+{
 
 }

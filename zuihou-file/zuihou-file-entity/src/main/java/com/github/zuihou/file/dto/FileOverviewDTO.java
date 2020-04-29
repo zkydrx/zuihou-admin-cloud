@@ -14,7 +14,8 @@ import lombok.Data;
 @Data
 @ApiModel(value = "FileOverview", description = "云盘首页概览")
 @Builder
-public class FileOverviewDTO {
+public class FileOverviewDTO
+{
 
     @ApiModelProperty(value = "所有文件数量")
     private Integer allFileNum;
@@ -40,7 +41,8 @@ public class FileOverviewDTO {
     @ApiModelProperty(value = "其他文件数量")
     private Integer otherNum;
 
-    public static FileOverviewDTOBuilder myBuilder() {
+    public static FileOverviewDTOBuilder myBuilder()
+    {
         FileOverviewDTOBuilder builder = FileOverviewDTO.builder();
         return builder.allFileSize(0L).allFileNum(0).dirNum(0).imgNum(0).docNum(0).videoNum(0).
                 audioNum(0).otherNum(0);

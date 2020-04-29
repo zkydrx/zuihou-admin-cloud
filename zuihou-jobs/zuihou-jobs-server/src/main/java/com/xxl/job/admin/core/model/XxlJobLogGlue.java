@@ -6,7 +6,8 @@ package com.xxl.job.admin.core.model;
  *
  * @author xuxueli 2016-5-19 17:57:46
  */
-public class XxlJobLogGlue {
+public class XxlJobLogGlue
+{
 
     /**
      * 主键
@@ -43,59 +44,73 @@ public class XxlJobLogGlue {
      */
     private String updateTime;
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public int getJobId() {
+    public int getJobId()
+    {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(int jobId)
+    {
         this.jobId = jobId;
     }
 
-    public String getGlueType() {
+    public String getGlueType()
+    {
         return glueType;
     }
 
-    public void setGlueType(String glueType) {
+    public void setGlueType(String glueType)
+    {
         this.glueType = glueType;
     }
 
-    public String getGlueSource() {
+    public String getGlueSource()
+    {
         return glueSource;
     }
 
-    public void setGlueSource(String glueSource) {
+    public void setGlueSource(String glueSource)
+    {
         this.glueSource = glueSource;
     }
 
-    public String getGlueRemark() {
+    public String getGlueRemark()
+    {
         return glueRemark;
     }
 
-    public void setGlueRemark(String glueRemark) {
+    public void setGlueRemark(String glueRemark)
+    {
         this.glueRemark = glueRemark;
     }
 
-    public String getAddTime() {
+    public String getAddTime()
+    {
         return addTime;
     }
 
-    public void setAddTime(String addTime) {
+    public void setAddTime(String addTime)
+    {
         this.addTime = addTime;
     }
 
-    public String getUpdateTime() {
+    public String getUpdateTime()
+    {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(String updateTime)
+    {
         this.updateTime = updateTime;
     }
 

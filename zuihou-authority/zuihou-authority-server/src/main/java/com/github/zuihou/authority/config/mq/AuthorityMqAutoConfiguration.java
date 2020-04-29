@@ -24,18 +24,21 @@ import org.springframework.messaging.handler.annotation.Payload;
 @AllArgsConstructor
 @Slf4j
 @ConditionalOnProperty(prefix = "zuihou.rabbitmq", name = "enabled", havingValue = "true")
-public class AuthorityMqAutoConfiguration {
+public class AuthorityMqAutoConfiguration
+{
     private final SystemApiService systemApiService;
 
     @Bean
-    public Queue apiResourceQueue() {
+    public Queue apiResourceQueue()
+    {
         Queue queue = new Queue(QueueConstants.QUEUE_SCAN_API_RESOURCE);
         log.info("Query {} [{}]", QueueConstants.QUEUE_SCAN_API_RESOURCE, queue);
         return queue;
     }
 
     @RabbitListener(queues = QueueConstants.QUEUE_SCAN_API_RESOURCE)
-    public void scanApiResourceRabbitListener(@Payload String param) {
+    public void scanApiResourceRabbitListener(@Payload String param)
+    {
         SystemApiScanSaveDTO scan = JSONObject.parseObject(param, SystemApiScanSaveDTO.class);
         BaseContextHandler.setTenant(scan.getTenant());
 

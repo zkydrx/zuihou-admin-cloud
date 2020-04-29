@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-08-13
  */
 @Repository
-public interface ProductMapper extends BaseMapper<Product> {
+public interface ProductMapper extends BaseMapper<Product>
+{
 
 }

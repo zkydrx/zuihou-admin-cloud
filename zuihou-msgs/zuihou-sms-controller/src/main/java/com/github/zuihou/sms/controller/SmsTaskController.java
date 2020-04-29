@@ -44,7 +44,8 @@ import java.util.List;
 @RequestMapping("/smsTask")
 @Api(value = "SmsTask", tags = "发送任务")
 @PreAuth(replace = "sms:manage:")
-public class SmsTaskController extends SuperController<SmsTaskService, Long, SmsTask, SmsTaskPageDTO, SmsTaskSaveDTO, SmsTaskUpdateDTO> {
+public class SmsTaskController extends SuperController<SmsTaskService, Long, SmsTask, SmsTaskPageDTO, SmsTaskSaveDTO, SmsTaskUpdateDTO>
+{
 
     @Autowired
     private SmsSendStatusService smsSendStatusService;
@@ -53,7 +54,8 @@ public class SmsTaskController extends SuperController<SmsTaskService, Long, Sms
     @ApiOperation(value = "发送短信", notes = "短信发送，需要先在短信系统，或者短信数据库中进行配置供应商和模板")
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     @PreAuth("hasPermit('{}add')")
-    public R<SmsTask> save(@RequestBody SmsSendTaskDTO smsTaskDTO) {
+    public R<SmsTask> save(@RequestBody SmsSendTaskDTO smsTaskDTO)
+    {
         SmsTask smsTask = BeanPlusUtil.toBean(smsTaskDTO, SmsTask.class);
         smsTask.setSourceType(SourceType.SERVICE);
         smsTask.setTemplateParams(smsTaskDTO.getTemplateParam().toString());
@@ -62,7 +64,8 @@ public class SmsTaskController extends SuperController<SmsTaskService, Long, Sms
     }
 
     @Override
-    public R<SmsTask> handlerSave(SmsTaskSaveDTO data) {
+    public R<SmsTask> handlerSave(SmsTaskSaveDTO data)
+    {
         SmsTask smsTask = BeanPlusUtil.toBean(data, SmsTask.class);
         smsTask.setSourceType(SourceType.APP);
         smsTask.setTemplateParams(data.getTemplateParam().toString());
@@ -71,7 +74,8 @@ public class SmsTaskController extends SuperController<SmsTaskService, Long, Sms
     }
 
     @Override
-    public R<Boolean> handlerDelete(List<Long> ids) {
+    public R<Boolean> handlerDelete(List<Long> ids)
+    {
         boolean bool = baseService.removeByIds(ids);
 
         smsSendStatusService.remove(Wraps.<SmsSendStatus>lbQ().in(SmsSendStatus::getTaskId, ids));
@@ -79,7 +83,8 @@ public class SmsTaskController extends SuperController<SmsTaskService, Long, Sms
     }
 
     @Override
-    public R<SmsTask> handlerUpdate(SmsTaskUpdateDTO data) {
+    public R<SmsTask> handlerUpdate(SmsTaskUpdateDTO data)
+    {
         SmsTask smsTask = BeanPlusUtil.toBean(data, SmsTask.class);
         smsTask.setSourceType(SourceType.APP);
         smsTask.setTemplateParams(data.getTemplateParam().toString());

@@ -8,7 +8,8 @@ import java.io.Serializable;
  * @param <T>
  * @author xuxueli 2015-12-4 16:32:31
  */
-public class ReturnT<T> implements Serializable {
+public class ReturnT<T> implements Serializable
+{
     public static final long serialVersionUID = 42L;
 
     public static final int SUCCESS_CODE = 200;
@@ -22,40 +23,49 @@ public class ReturnT<T> implements Serializable {
     private String msg;
     private T content;
 
-    public ReturnT() {
+    public ReturnT()
+    {
     }
 
-    public ReturnT(int code, String msg) {
+    public ReturnT(int code, String msg)
+    {
         this.code = code;
         this.msg = msg;
     }
 
-    public ReturnT(T content) {
+    public ReturnT(T content)
+    {
         this.code = SUCCESS_CODE;
         this.content = content;
     }
 
-    public int getCode() {
+    public int getCode()
+    {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(int code)
+    {
         this.code = code;
     }
 
-    public String getMsg() {
+    public String getMsg()
+    {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public void setMsg(String msg)
+    {
         this.msg = msg;
     }
 
-    public T getContent() {
+    public T getContent()
+    {
         return content;
     }
 
-    public void setContent(T content) {
+    public void setContent(T content)
+    {
         this.content = content;
     }
 
@@ -65,8 +75,10 @@ public class ReturnT<T> implements Serializable {
      *
      * @return
      */
-    public Boolean getIsSuccess() {
-        if (this.code == 0 || this.code == SUCCESS_CODE) {
+    public Boolean getIsSuccess()
+    {
+        if (this.code == 0 || this.code == SUCCESS_CODE)
+        {
             return true;
         }
         return false;
@@ -77,13 +89,15 @@ public class ReturnT<T> implements Serializable {
      *
      * @return
      */
-    public T getData() {
+    public T getData()
+    {
         return this.content;
     }
 
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ReturnT [code=" + code + ", msg=" + msg + ", content=" + content + "]";
     }
 

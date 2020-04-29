@@ -18,7 +18,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-08-01
  */
-public interface MsgsCenterInfoService extends SuperService<MsgsCenterInfo> {
+public interface MsgsCenterInfoService extends SuperService<MsgsCenterInfo>
+{
 
     /**
      * 保存消息

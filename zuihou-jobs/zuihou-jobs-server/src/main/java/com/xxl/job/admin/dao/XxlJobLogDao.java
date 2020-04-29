@@ -16,7 +16,8 @@ import java.util.Map;
  */
 @SqlParser(filter = true)
 @Repository
-public interface XxlJobLogDao {
+public interface XxlJobLogDao
+{
 
     public List<XxlJobLog> pageList(@Param("offset") Integer offset,
                                     @Param("pagesize") Integer pagesize,
@@ -46,8 +47,7 @@ public interface XxlJobLogDao {
 
     public int triggerCountByHandleCode(@Param("handleCode") Integer handleCode);
 
-    public List<Map<String, Object>> triggerCountByDay(@Param("from") Date from,
-                                                       @Param("to") Date to);
+    public List<Map<String, Object>> triggerCountByDay(@Param("from") Date from, @Param("to") Date to);
 
     public int clearLog(@Param("jobGroup") Integer jobGroup,
                         @Param("jobId") Integer jobId,

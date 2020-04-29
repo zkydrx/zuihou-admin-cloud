@@ -36,7 +36,8 @@ import static com.github.zuihou.common.constant.CacheKey.RESOURCE;
  */
 @Slf4j
 @Service
-public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, Resource> implements ResourceService {
+public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, Resource> implements ResourceService
+{
 
     @Autowired
     private CodeGenerate codeGenerate;
@@ -44,13 +45,14 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
     private RoleAuthorityService roleAuthorityService;
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return RESOURCE;
     }
 
     /**
      * 查询用户的可用资源
-     *
+     * <p>
      * 注意：什么地方需要清除 USER_MENU 缓存
      * 给用户重新分配角色时， 角色重新分配资源/菜单时
      *
@@ -58,7 +60,8 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
      * @return
      */
     @Override
-    public List<Resource> findVisibleResource(ResourceQueryDTO resource) {
+    public List<Resource> findVisibleResource(ResourceQueryDTO resource)
+    {
         //1, 先查 cache，cache中没有就执行回调查询DB，并设置到缓存
         String userResourceKey = key(resource.getUserId());
 
@@ -69,11 +72,13 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
         });
 
         //cache 和 db 都没有时直接返回
-        if (cacheObject.getValue() == null) {
+        if (cacheObject.getValue() == null)
+        {
             return Collections.emptyList();
         }
 
-        if (!visibleResource.isEmpty()) {
+        if (!visibleResource.isEmpty())
+        {
             visibleResource.forEach((r) -> {
                 String menuKey = key(r.getId());
                 cacheChannel.set(RESOURCE, menuKey, r);
@@ -86,7 +91,8 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
         List<Long> list = (List<Long>) cacheObject.getValue();
         List<Resource> resourceList = list.stream().map(this::getByIdCache).collect(Collectors.toList());
 
-        if (resource.getMenuId() == null) {
+        if (resource.getMenuId() == null)
+        {
             return resourceList;
         }
 
@@ -94,8 +100,10 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
         return resourceListFilterGroup(resource.getMenuId(), visibleResource);
     }
 
-    private List<Resource> resourceListFilterGroup(Long menuId, List<Resource> visibleResource) {
-        if (menuId == null) {
+    private List<Resource> resourceListFilterGroup(Long menuId, List<Resource> visibleResource)
+    {
+        if (menuId == null)
+        {
             return visibleResource;
         }
         return visibleResource.stream().filter((item) -> Objects.equals(menuId, item.getMenuId())).collect(Collectors.toList());
@@ -103,7 +111,8 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean removeByIdWithCache(List<Long> ids) {
+    public boolean removeByIdWithCache(List<Long> ids)
+    {
         boolean result = this.removeByIds(ids);
 
         // 删除角色的权限
@@ -113,9 +122,11 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void removeByMenuIdWithCache(List<Long> menuIds) {
+    public void removeByMenuIdWithCache(List<Long> menuIds)
+    {
         List<Resource> resources = super.list(Wraps.<Resource>lbQ().in(Resource::getMenuId, menuIds));
-        if (resources.isEmpty()) {
+        if (resources.isEmpty())
+        {
             return;
         }
         List<Long> idList = resources.stream().mapToLong(Resource::getId).boxed().collect(Collectors.toList());
@@ -131,9 +142,11 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean saveWithCache(Resource resource) {
+    public boolean saveWithCache(Resource resource)
+    {
         resource.setCode(StrHelper.getOrDef(resource.getCode(), codeGenerate.next()));
-        if (super.count(Wraps.<Resource>lbQ().eq(Resource::getCode, resource.getCode())) > 0) {
+        if (super.count(Wraps.<Resource>lbQ().eq(Resource::getCode, resource.getCode())) > 0)
+        {
             throw BizException.validFail("编码[%s]重复", resource.getCode());
         }
 
@@ -144,7 +157,8 @@ public class ResourceServiceImpl extends SuperCacheServiceImpl<ResourceMapper, R
     }
 
     @Override
-    public List<Long> findMenuIdByResourceId(List<Long> resourceIdList) {
+    public List<Long> findMenuIdByResourceId(List<Long> resourceIdList)
+    {
         return baseMapper.findMenuIdByResourceId(resourceIdList);
     }
 }

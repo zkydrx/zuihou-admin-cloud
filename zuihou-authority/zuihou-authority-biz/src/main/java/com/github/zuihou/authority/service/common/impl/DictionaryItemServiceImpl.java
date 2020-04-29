@@ -30,22 +30,25 @@ import static java.util.stream.Collectors.toList;
  */
 @Slf4j
 @Service
-public class DictionaryItemServiceImpl extends SuperCacheServiceImpl<DictionaryItemMapper, DictionaryItem> implements DictionaryItemService {
+public class DictionaryItemServiceImpl extends SuperCacheServiceImpl<DictionaryItemMapper, DictionaryItem> implements DictionaryItemService
+{
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return DICTIONARY_ITEM;
     }
 
     @Override
-    public Map<String, Map<String, String>> map(String[] codes) {
-        if (ArrayUtil.isEmpty(codes)) {
+    public Map<String, Map<String, String>> map(String[] codes)
+    {
+        if (ArrayUtil.isEmpty(codes))
+        {
             return Collections.emptyMap();
         }
-        LbqWrapper<DictionaryItem> query = Wraps.<DictionaryItem>lbQ()
-                .in(DictionaryItem::getDictionaryType, codes)
-                .eq(DictionaryItem::getStatus, true)
-                .orderByAsc(DictionaryItem::getSortValue);
+        LbqWrapper<DictionaryItem> query = Wraps.<DictionaryItem>lbQ().in(DictionaryItem::getDictionaryType, codes)
+                                                                      .eq(DictionaryItem::getStatus, true)
+                                                                      .orderByAsc(DictionaryItem::getSortValue);
         List<DictionaryItem> list = super.list(query);
 
         //key 是类型
@@ -62,14 +65,15 @@ public class DictionaryItemServiceImpl extends SuperCacheServiceImpl<DictionaryI
     }
 
     @Override
-    public Map<Serializable, Object> findDictionaryItem(Set<Serializable> codes) {
-        if (codes.isEmpty()) {
+    public Map<Serializable, Object> findDictionaryItem(Set<Serializable> codes)
+    {
+        if (codes.isEmpty())
+        {
             return Collections.emptyMap();
         }
-        LbqWrapper<DictionaryItem> query = Wraps.<DictionaryItem>lbQ()
-                .in(DictionaryItem::getCode, codes)
-                .eq(DictionaryItem::getStatus, true)
-                .orderByAsc(DictionaryItem::getSortValue);
+        LbqWrapper<DictionaryItem> query = Wraps.<DictionaryItem>lbQ().in(DictionaryItem::getCode, codes)
+                                                                      .eq(DictionaryItem::getStatus, true)
+                                                                      .orderByAsc(DictionaryItem::getSortValue);
         List<DictionaryItem> list = super.list(query);
 
         //key 是类型

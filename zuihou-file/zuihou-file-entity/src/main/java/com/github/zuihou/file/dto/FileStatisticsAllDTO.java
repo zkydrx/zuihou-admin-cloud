@@ -15,7 +15,8 @@ import java.util.List;
 @Data
 @Builder
 @ApiModel(value = "FileStatisticsAll", description = "统计所有类型文件的数量和大小")
-public class FileStatisticsAllDTO {
+public class FileStatisticsAllDTO
+{
     private List<String> dateList;
     private List<Long> sizeList;
     private List<Integer> numList;

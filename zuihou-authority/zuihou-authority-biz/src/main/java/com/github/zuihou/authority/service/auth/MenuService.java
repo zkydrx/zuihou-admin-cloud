@@ -14,7 +14,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-07-03
  */
-public interface MenuService extends SuperCacheService<Menu> {
+public interface MenuService extends SuperCacheService<Menu>
+{
 
     /**
      * 根据ID删除

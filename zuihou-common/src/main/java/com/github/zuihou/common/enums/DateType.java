@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @ApiModel(value = "DateType", description = "日期类型-枚举")
-public enum DateType {
+public enum DateType
+{
     /**
      * 一个月
      */
@@ -41,32 +42,40 @@ public enum DateType {
     @ApiModelProperty(value = "描述")
     private String desc;
 
-    public static DateType match(String val, DateType def) {
-        for (DateType enm : DateType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static DateType match(String val, DateType def)
+    {
+        for (DateType enm : DateType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static DateType get(String val) {
+    public static DateType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(DateType val) {
-        if (val == null) {
+    public boolean eq(DateType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
     }
 
     @ApiModelProperty(value = "编码", allowableValues = "MONTH,WEEK,DAY,NUL", example = "NUL")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 }

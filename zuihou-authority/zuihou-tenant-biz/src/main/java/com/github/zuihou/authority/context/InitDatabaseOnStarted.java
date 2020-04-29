@@ -16,12 +16,14 @@ import org.springframework.context.ApplicationListener;
  * @date 2020年03月15日13:12:59
  */
 @AllArgsConstructor
-public class InitDatabaseOnStarted implements ApplicationListener<ApplicationStartedEvent> {
+public class InitDatabaseOnStarted implements ApplicationListener<ApplicationStartedEvent>
+{
 
     private InitSystemContext initSystemContext;
 
     @Override
-    public void onApplicationEvent(ApplicationStartedEvent event) {
+    public void onApplicationEvent(ApplicationStartedEvent event)
+    {
         initSystemContext.initDataSource();
     }
 }

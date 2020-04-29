@@ -26,7 +26,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "ParameterSaveDTO", description = "参数配置")
-public class ParameterSaveDTO implements Serializable {
+public class ParameterSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

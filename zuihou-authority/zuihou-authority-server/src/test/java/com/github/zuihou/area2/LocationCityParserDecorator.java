@@ -8,9 +8,11 @@ import java.util.List;
 
 
 @Component
-public class LocationCityParserDecorator {
+public class LocationCityParserDecorator
+{
 
-    public List<Area> parseProvinces(List<Area> list) {
+    public List<Area> parseProvinces(List<Area> list)
+    {
 
         StaticLog.info("查询出经纬度了. . . ");
         return list;

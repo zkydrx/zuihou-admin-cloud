@@ -23,21 +23,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/seata")
 @Api(value = "SeataTxController", tags = "分布式事务测试类")
-public class SeataTxController {
+public class SeataTxController
+{
 
     @Autowired
     private ProductService productService;
 
 
     @PostMapping("/save")
-    public R<Product> save(@RequestBody Product data) {
+    public R<Product> save(@RequestBody Product data)
+    {
         log.info("data={}", data);
         productService.save(data);
         return R.success(data);
     }
 
     @PostMapping("/saveEx")
-    public R<Product> saveEx(@RequestBody Product data) {
+    public R<Product> saveEx(@RequestBody Product data)
+    {
         log.info("data={}", data);
         productService.saveEx(data);
         return R.success(data);

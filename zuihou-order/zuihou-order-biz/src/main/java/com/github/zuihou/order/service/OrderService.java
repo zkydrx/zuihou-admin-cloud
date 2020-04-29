@@ -12,6 +12,7 @@ import com.github.zuihou.order.entity.Order;
  * @author zuihou
  * @date 2019-08-13
  */
-public interface OrderService extends IService<Order> {
+public interface OrderService extends IService<Order>
+{
 
 }

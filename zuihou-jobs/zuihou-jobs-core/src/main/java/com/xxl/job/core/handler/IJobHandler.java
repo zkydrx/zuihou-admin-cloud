@@ -10,7 +10,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author xuxueli 2015-12-19 19:06:38
  */
 @Slf4j
-public abstract class IJobHandler {
+public abstract class IJobHandler
+{
 
 
     /**
@@ -34,10 +35,14 @@ public abstract class IJobHandler {
      * @return
      * @throws Exception
      */
-    public ReturnT<String> execute(String param) {
-        try {
+    public ReturnT<String> execute(String param)
+    {
+        try
+        {
             return execute2(param);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             log.warn("job 任务处理器执行失败：", e);
             XxlJobLogger.log("任务处理器执行失败", e.getMessage());
             return new ReturnT<>(IJobHandler.FAIL.getCode(), e.getMessage());
@@ -49,7 +54,8 @@ public abstract class IJobHandler {
     /**
      * init handler, invoked when JobThread init
      */
-    public void init() {
+    public void init()
+    {
         // TODO
     }
 
@@ -57,7 +63,8 @@ public abstract class IJobHandler {
     /**
      * destroy handler, invoked when JobThread destroy
      */
-    public void destroy() {
+    public void destroy()
+    {
         // TODO
     }
 

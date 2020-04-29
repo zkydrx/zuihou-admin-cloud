@@ -29,7 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/userToken")
 @Api(value = "UserToken", tags = "token")
 @PreAuth(replace = "userToken:")
-public class UserTokenController extends SuperController<UserTokenService, Long, UserToken, UserTokenPageDTO, UserTokenSaveDTO, UserTokenUpdateDTO> {
+public class UserTokenController extends SuperController<UserTokenService, Long, UserToken, UserTokenPageDTO, UserTokenSaveDTO, UserTokenUpdateDTO>
+{
 
 
 }

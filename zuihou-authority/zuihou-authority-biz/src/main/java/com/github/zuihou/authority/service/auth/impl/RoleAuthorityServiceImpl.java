@@ -34,7 +34,8 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class RoleAuthorityServiceImpl extends SuperServiceImpl<RoleAuthorityMapper, RoleAuthority> implements RoleAuthorityService {
+public class RoleAuthorityServiceImpl extends SuperServiceImpl<RoleAuthorityMapper, RoleAuthority> implements RoleAuthorityService
+{
 
     @Autowired
     private UserRoleService userRoleService;
@@ -44,15 +45,13 @@ public class RoleAuthorityServiceImpl extends SuperServiceImpl<RoleAuthorityMapp
     private CacheChannel cache;
 
     @Override
-    public boolean saveUserRole(UserRoleSaveDTO userRole) {
+    public boolean saveUserRole(UserRoleSaveDTO userRole)
+    {
         userRoleService.remove(Wraps.<UserRole>lbQ().eq(UserRole::getRoleId, userRole.getRoleId()));
         List<UserRole> list = userRole.getUserIdList()
-                .stream()
-                .map((userId) -> UserRole.builder()
-                        .userId(userId)
-                        .roleId(userRole.getRoleId())
-                        .build())
-                .collect(Collectors.toList());
+                                      .stream()
+                                      .map((userId) -> UserRole.builder().userId(userId).roleId(userRole.getRoleId()).build())
+                                      .collect(Collectors.toList());
         userRoleService.saveBatch(list);
 
         //清除 用户拥有的菜单和资源列表
@@ -65,47 +64,51 @@ public class RoleAuthorityServiceImpl extends SuperServiceImpl<RoleAuthorityMapp
     }
 
     @Override
-    public boolean saveRoleAuthority(RoleAuthoritySaveDTO dto) {
+    public boolean saveRoleAuthority(RoleAuthoritySaveDTO dto)
+    {
         //删除角色和资源的关联
         super.remove(Wraps.<RoleAuthority>lbQ().eq(RoleAuthority::getRoleId, dto.getRoleId()));
 
         List<RoleAuthority> list = new ArrayList<>();
-        if (dto.getResourceIdList() != null && !dto.getResourceIdList().isEmpty()) {
+        if (dto.getResourceIdList() != null && !dto.getResourceIdList().isEmpty())
+        {
             List<Long> menuIdList = resourceService.findMenuIdByResourceId(dto.getResourceIdList());
-            if (dto.getMenuIdList() == null || dto.getMenuIdList().isEmpty()) {
+            if (dto.getMenuIdList() == null || dto.getMenuIdList().isEmpty())
+            {
                 dto.setMenuIdList(menuIdList);
-            } else {
+            }
+            else
+            {
                 dto.getMenuIdList().addAll(menuIdList);
             }
 
             //保存授予的资源
-            List<RoleAuthority> resourceList = new HashSet<>(dto.getResourceIdList())
-                    .stream()
-                    .map((resourceId) -> RoleAuthority.builder()
-                            .authorityType(AuthorizeType.RESOURCE)
-                            .authorityId(resourceId)
-                            .roleId(dto.getRoleId())
-                            .build())
-                    .collect(Collectors.toList());
+            List<RoleAuthority> resourceList = new HashSet<>(dto.getResourceIdList()).stream()
+                                                                                     .map((resourceId) -> RoleAuthority.builder()
+                                                                                                                       .authorityType(AuthorizeType.RESOURCE)
+                                                                                                                       .authorityId(resourceId)
+                                                                                                                       .roleId(dto.getRoleId())
+                                                                                                                       .build())
+                                                                                     .collect(Collectors.toList());
             list.addAll(resourceList);
         }
-        if (dto.getMenuIdList() != null && !dto.getMenuIdList().isEmpty()) {
+        if (dto.getMenuIdList() != null && !dto.getMenuIdList().isEmpty())
+        {
             //保存授予的菜单
-            List<RoleAuthority> menuList = new HashSet<>(dto.getMenuIdList())
-                    .stream()
-                    .map((menuId) -> RoleAuthority.builder()
-                            .authorityType(AuthorizeType.MENU)
-                            .authorityId(menuId)
-                            .roleId(dto.getRoleId())
-                            .build())
-                    .collect(Collectors.toList());
+            List<RoleAuthority> menuList = new HashSet<>(dto.getMenuIdList()).stream()
+                                                                             .map((menuId) -> RoleAuthority.builder()
+                                                                                                           .authorityType(AuthorizeType.MENU)
+                                                                                                           .authorityId(menuId)
+                                                                                                           .roleId(dto.getRoleId())
+                                                                                                           .build())
+                                                                             .collect(Collectors.toList());
             list.addAll(menuList);
         }
         super.saveBatch(list);
 
         // 清理
         List<Long> userIdList = userRoleService.listObjs(Wraps.<UserRole>lbQ().select(UserRole::getUserId).eq(UserRole::getRoleId, dto.getRoleId()),
-                (userId) -> Convert.toLong(userId, 0L));
+                                                         (userId) -> Convert.toLong(userId, 0L));
         userIdList.stream().collect(Collectors.toSet()).forEach((userId) -> {
             log.info("清理了 {} 的菜单/资源", userId);
             cache.evict(CacheKey.USER_RESOURCE, String.valueOf(userId));
@@ -118,7 +121,8 @@ public class RoleAuthorityServiceImpl extends SuperServiceImpl<RoleAuthorityMapp
     }
 
     @Override
-    public boolean removeByAuthorityId(List<Long> ids) {
+    public boolean removeByAuthorityId(List<Long> ids)
+    {
         return remove(Wraps.<RoleAuthority>lbQ().eq(RoleAuthority::getAuthorityId, ids));
     }
 }

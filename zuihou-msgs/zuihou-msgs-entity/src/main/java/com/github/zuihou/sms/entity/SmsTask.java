@@ -37,7 +37,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Accessors(chain = true)
 @TableName("sms_task")
 @ApiModel(value = "SmsTask", description = "发送任务")
-public class SmsTask extends Entity<Long> {
+public class SmsTask extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -124,9 +125,21 @@ public class SmsTask extends Entity<Long> {
     private Boolean draft;
 
     @Builder
-    public SmsTask(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                   Long templateId, TaskStatus status, SourceType sourceType, String receiver, String topic,
-                   String templateParams, LocalDateTime sendTime, String content, Boolean draft) {
+    public SmsTask(Long id,
+                   Long createUser,
+                   LocalDateTime createTime,
+                   Long updateUser,
+                   LocalDateTime updateTime,
+                   Long templateId,
+                   TaskStatus status,
+                   SourceType sourceType,
+                   String receiver,
+                   String topic,
+                   String templateParams,
+                   LocalDateTime sendTime,
+                   String content,
+                   Boolean draft)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

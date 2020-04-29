@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
  * @date 2019-08-20
  */
 @Repository
-public interface CCommonAreaMapper extends BaseMapper<CCommonArea> {
+public interface CCommonAreaMapper extends BaseMapper<CCommonArea>
+{
 
     @SqlParser(filter = true)
     CCommonArea getXxx(@Param("id") Long id);

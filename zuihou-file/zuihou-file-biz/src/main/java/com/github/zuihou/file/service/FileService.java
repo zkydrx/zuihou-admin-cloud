@@ -24,7 +24,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-06-24
  */
-public interface FileService extends SuperService<File> {
+public interface FileService extends SuperService<File>
+{
     /**
      * 保存文件夹
      *
@@ -42,8 +43,7 @@ public interface FileService extends SuperService<File> {
      * @param userId   用户id
      * @throws Exception
      */
-    void download(HttpServletRequest request, HttpServletResponse response,
-                  Long[] ids, Long userId) throws Exception;
+    void download(HttpServletRequest request, HttpServletResponse response, Long[] ids, Long userId) throws Exception;
 
     /**
      * 根据文件id和用户id 删除文件或者文件夹
@@ -126,6 +126,5 @@ public interface FileService extends SuperService<File> {
      * @param endTime
      * @return
      */
-    FileStatisticsAllDTO findDownSizeByDate(Long userId, LocalDateTime startTime,
-                                            LocalDateTime endTime);
+    FileStatisticsAllDTO findDownSizeByDate(Long userId, LocalDateTime startTime, LocalDateTime endTime);
 }

@@ -16,13 +16,15 @@ import java.util.regex.Pattern;
  * @date 2018/12/24
  */
 @Slf4j
-public class PhoneUtils {
+public class PhoneUtils
+{
     public final static String REG_EX = "(.*?<(.*?)?>),";
     public final static String REG_EX_SIMPLE = "(.*?<(.*?)?>)";
     public final static String PHONE_SEPARATOR = "<";
     public final static String CONTACTS_SEPARATOR = ",";
 
-    public static Set<String> getPhone(String receiverPhone) {
+    public static Set<String> getPhone(String receiverPhone)
+    {
         return getPhone(receiverPhone, REG_EX);
     }
 
@@ -36,14 +38,17 @@ public class PhoneUtils {
      * @param regEx
      * @return
      */
-    public static Set<String> getPhone(String receiverPhone, String regEx) {
+    public static Set<String> getPhone(String receiverPhone, String regEx)
+    {
         //判断参数类型
-        if (!receiverPhone.contains(PHONE_SEPARATOR)) {
+        if (!receiverPhone.contains(PHONE_SEPARATOR))
+        {
             String[] list = StringUtils.split(receiverPhone, CONTACTS_SEPARATOR);
             return new LinkedHashSet<>(Arrays.asList(list));
         }
 
-        if (!receiverPhone.endsWith(CONTACTS_SEPARATOR)) {
+        if (!receiverPhone.endsWith(CONTACTS_SEPARATOR))
+        {
             receiverPhone += CONTACTS_SEPARATOR;
         }
 
@@ -52,7 +57,8 @@ public class PhoneUtils {
         Matcher matcher = pattern.matcher(receiverPhone);
         // 查找字符串中是否有匹配正则表达式的字符/字符串
         Set<String> list = new LinkedHashSet<>();
-        while (matcher.find()) {
+        while (matcher.find())
+        {
             String key = matcher.group(2);
             log.info("phone={}", key);
             list.add(key);

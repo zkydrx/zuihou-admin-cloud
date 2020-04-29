@@ -25,7 +25,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "SmsSendTask", description = "短信发送DTO")
-public class SmsSendTaskDTO {
+public class SmsSendTaskDTO
+{
 
     /**
      * 短信模板id #sms_template
@@ -44,10 +45,7 @@ public class SmsSendTaskDTO {
      *
      * @mbggenerated
      */
-    @ApiModelProperty(value = "接收者手机号 群发用英文逗号分割.\n" +
-            "支持2种格式:\n" +
-            "1: 手机号,手机号 \n" +
-            "2: 姓名<手机号>,姓名<手机号>")
+    @ApiModelProperty(value = "接收者手机号 群发用英文逗号分割.\n" + "支持2种格式:\n" + "1: 手机号,手机号 \n" + "2: 姓名<手机号>,姓名<手机号>")
     @Length(max = 65535, message = "接收人长度不能超过65535")
     @NotEmpty(message = "接收人不能为空")
     private String receiver;
@@ -107,12 +105,9 @@ public class SmsSendTaskDTO {
      * @param templateParam
      * @return
      */
-    public SmsSendTaskDTO build(TemplateCodeType customCode, String receiver, JSONObject templateParam) {
-        return SmsSendTaskDTO.builder()
-                .customCode(customCode)
-                .receiver(receiver)
-                .templateParam(templateParam)
-                .build();
+    public SmsSendTaskDTO build(TemplateCodeType customCode, String receiver, JSONObject templateParam)
+    {
+        return SmsSendTaskDTO.builder().customCode(customCode).receiver(receiver).templateParam(templateParam).build();
     }
 
 }

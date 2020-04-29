@@ -12,7 +12,8 @@ import javax.annotation.Resource;
  * @author xuxueli 2018-04-02 20:48:20
  */
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer
+{
 
     @Resource
     private PermissionInterceptor permissionInterceptor;
@@ -20,7 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private CookieInterceptor cookieInterceptor;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(InterceptorRegistry registry)
+    {
         registry.addInterceptor(permissionInterceptor).addPathPatterns("/**");
         registry.addInterceptor(cookieInterceptor).addPathPatterns("/**");
         WebMvcConfigurer.super.addInterceptors(registry);

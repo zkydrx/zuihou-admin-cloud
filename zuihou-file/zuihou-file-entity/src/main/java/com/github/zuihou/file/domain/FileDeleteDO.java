@@ -11,7 +11,8 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class FileDeleteDO {
+public class FileDeleteDO
+{
     /**
      * fastDFS返回的组 用于FastDFS
      */

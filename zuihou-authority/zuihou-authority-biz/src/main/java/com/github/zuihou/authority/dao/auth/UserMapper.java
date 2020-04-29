@@ -22,7 +22,8 @@ import java.util.List;
  * @date 2019-07-03
  */
 @Repository
-public interface UserMapper extends SuperMapper<User> {
+public interface UserMapper extends SuperMapper<User>
+{
 
     /**
      * 根据角色id，查询已关联用户
@@ -59,13 +60,13 @@ public interface UserMapper extends SuperMapper<User> {
      */
     int resetPassErrorNum(@Param("id") Long id, @Param("now") LocalDateTime now);
 
-//    /**
-//     * 修改用户最后登录时间
-//     *
-//     * @param id 用户id
-//     * @param now 当前时间
-//     * @return
-//     */
-//    int updateLastLoginTime(@Param("id") Long id, @Param("now") LocalDateTime now);
+    //    /**
+    //     * 修改用户最后登录时间
+    //     *
+    //     * @param id 用户id
+    //     * @param now 当前时间
+    //     * @return
+    //     */
+    //    int updateLastLoginTime(@Param("id") Long id, @Param("now") LocalDateTime now);
 
 }

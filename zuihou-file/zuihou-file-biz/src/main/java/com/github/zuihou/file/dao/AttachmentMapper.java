@@ -22,7 +22,8 @@ import java.util.List;
  * @date 2019-06-24
  */
 @Repository
-public interface AttachmentMapper extends SuperMapper<Attachment> {
+public interface AttachmentMapper extends SuperMapper<Attachment>
+{
     /**
      * 根据业务类型和业务id， 按照分组查询附件
      *

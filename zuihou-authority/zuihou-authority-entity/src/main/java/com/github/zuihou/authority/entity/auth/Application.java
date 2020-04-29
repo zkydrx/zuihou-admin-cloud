@@ -33,7 +33,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @TableName("c_auth_application")
 @ApiModel(value = "Application", description = "应用")
 @AllArgsConstructor
-public class Application extends Entity<Long> {
+public class Application extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -86,7 +87,6 @@ public class Application extends Entity<Long> {
     /**
      * 类型
      * #{SERVER:服务应用;APP:手机应用;PC:PC网页应用;WAP:手机网页应用}
-     *
      */
     @ApiModelProperty(value = "类型")
     @TableField("app_type")
@@ -112,9 +112,20 @@ public class Application extends Entity<Long> {
 
 
     @Builder
-    public Application(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                       String clientId, String clientSecret, String website, String name, String icon,
-                       ApplicationAppTypeEnum appType, String describe, Boolean status) {
+    public Application(Long id,
+                       Long createUser,
+                       LocalDateTime createTime,
+                       Long updateUser,
+                       LocalDateTime updateTime,
+                       String clientId,
+                       String clientSecret,
+                       String website,
+                       String name,
+                       String icon,
+                       ApplicationAppTypeEnum appType,
+                       String describe,
+                       Boolean status)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

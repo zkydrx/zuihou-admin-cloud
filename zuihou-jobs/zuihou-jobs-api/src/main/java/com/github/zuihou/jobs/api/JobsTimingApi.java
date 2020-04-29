@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author zuihou
  * @date 2019/07/05
  */
-@FeignClient(name = "JobsTimingApi", url = "${zuihou.feign.jobs-server:http://127.0.0.1:8767}",
-        path = "/zuihou-jobs-server", fallback = JobsTimingApiFallback.class)
-public interface JobsTimingApi {
+@FeignClient(name = "JobsTimingApi", url = "${zuihou.feign.jobs-server:http://127.0.0.1:8767}", path = "/zuihou-jobs-server", fallback = JobsTimingApiFallback.class)
+public interface JobsTimingApi
+{
 
     /**
      * 定时发送接口

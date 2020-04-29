@@ -16,22 +16,26 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * Created by xuxueli on 17/3/10.
  */
-public class ExecutorRouteLRU extends ExecutorRouter {
+public class ExecutorRouteLRU extends ExecutorRouter
+{
 
     private static ConcurrentHashMap<Integer, LinkedHashMap<String, String>> jobLRUMap = new ConcurrentHashMap<Integer, LinkedHashMap<String, String>>();
     private static long CACHE_VALID_TIME = 0;
 
-    public String route(int jobId, List<String> addressList) {
+    public String route(int jobId, List<String> addressList)
+    {
 
         // cache clear
-        if (System.currentTimeMillis() > CACHE_VALID_TIME) {
+        if (System.currentTimeMillis() > CACHE_VALID_TIME)
+        {
             jobLRUMap.clear();
             CACHE_VALID_TIME = System.currentTimeMillis() + 1000 * 60 * 60 * 24;
         }
 
         // init lru
         LinkedHashMap<String, String> lruItem = jobLRUMap.get(jobId);
-        if (lruItem == null) {
+        if (lruItem == null)
+        {
             /**
              * LinkedHashMap
              *      a、accessOrder：ture=访问顺序排序（get/put时排序）；false=插入顺序排期；
@@ -42,8 +46,10 @@ public class ExecutorRouteLRU extends ExecutorRouter {
         }
 
         // put
-        for (String address : addressList) {
-            if (!lruItem.containsKey(address)) {
+        for (String address : addressList)
+        {
+            if (!lruItem.containsKey(address))
+            {
                 lruItem.put(address, address);
             }
         }
@@ -55,7 +61,8 @@ public class ExecutorRouteLRU extends ExecutorRouter {
     }
 
     @Override
-    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
+    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList)
+    {
         String address = route(triggerParam.getJobId(), addressList);
         return new ReturnT<String>(address);
     }

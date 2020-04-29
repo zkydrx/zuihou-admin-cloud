@@ -14,7 +14,8 @@ import lombok.ToString;
 @Data
 @ApiModel(value = "FileUpload", description = "文件分片上传实体")
 @ToString
-public class FileUploadDTO {
+public class FileUploadDTO
+{
     @ApiModelProperty(value = "md5", notes = "webuploader 自带的md5算法值， 与后端生成的不一致")
     private String md5;
     @ApiModelProperty(value = "大小")

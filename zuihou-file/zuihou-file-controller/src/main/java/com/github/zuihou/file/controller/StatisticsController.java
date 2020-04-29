@@ -32,48 +32,53 @@ import java.util.List;
 @RestController
 @RequestMapping("/statistics")
 @Api(value = "Statistics", tags = "统计接口")
-public class StatisticsController {
+public class StatisticsController
+{
 
     @Autowired
     private FileService fileService;
 
     @ApiOperation(value = "云盘首页数据概览", notes = "云盘首页数据概览")
     @GetMapping(value = "/overview")
-    public R<FileOverviewDTO> overview(@ApiIgnore @LoginUser SysUser user) {
+    public R<FileOverviewDTO> overview(@ApiIgnore @LoginUser SysUser user)
+    {
         return R.success(fileService.findOverview(user.getId(), null, null));
     }
 
     @ApiOperation(value = "按照类型，统计各种类型的 大小和数量", notes = "按照类型，统计当前登录人各种类型的大小和数量")
     @GetMapping(value = "/type")
-    public R<List<FileStatisticsDO>> findAllByDataType(@ApiIgnore @LoginUser SysUser user) {
+    public R<List<FileStatisticsDO>> findAllByDataType(@ApiIgnore @LoginUser SysUser user)
+    {
         return R.success(fileService.findAllByDataType(user.getId()));
     }
 
-//    @ApiOperation(value = "云盘首页个人文件下载数量排行", notes = "云盘首页个人文件下载数量排行")
-//    @GetMapping(value = "/downTop20")
-//    public R<List<FileStatisticsDO>> downTop20() {
-//        return success(fileService.downTop20(getUserId()));
-//    }
+    //    @ApiOperation(value = "云盘首页个人文件下载数量排行", notes = "云盘首页个人文件下载数量排行")
+    //    @GetMapping(value = "/downTop20")
+    //    public R<List<FileStatisticsDO>> downTop20() {
+    //        return success(fileService.downTop20(getUserId()));
+    //    }
 
     @ApiOperation(value = "按照时间统计各种类型的文件的数量和大小", notes = "按照时间统计各种类型的文件的数量和大小 不指定时间，默认查询一个月")
     @GetMapping(value = "")
     public R<FileStatisticsAllDTO> findNumAndSizeToTypeByDate(@RequestParam(value = "startTime", required = false) LocalDateTime startTime,
                                                               @RequestParam(value = "endTime", required = false) LocalDateTime endTime,
-                                                              @ApiIgnore @LoginUser SysUser user) {
+                                                              @ApiIgnore @LoginUser SysUser user)
+    {
         return R.success(fileService.findNumAndSizeToTypeByDate(user.getId(), startTime, endTime));
     }
 
-//    @ApiOperation(value = "按照时间统计下载数量", notes = "按照时间统计下载数量 不指定时间，默认查询一个月")
-//    @GetMapping(value = "/down")
-//    public R<FileStatisticsAllDTO> findDownSizeByDate(@RequestParam(value = "startTime", required = false) LocalDateTime startTime,
-//                                                      @RequestParam(value = "endTime", required = false) LocalDateTime endTime) {
-//        Long userId = getUserId();
-//        return success(fileService.findDownSizeByDate(userId, startTime, endTime));
-//    }
+    //    @ApiOperation(value = "按照时间统计下载数量", notes = "按照时间统计下载数量 不指定时间，默认查询一个月")
+    //    @GetMapping(value = "/down")
+    //    public R<FileStatisticsAllDTO> findDownSizeByDate(@RequestParam(value = "startTime", required = false) LocalDateTime startTime,
+    //                                                      @RequestParam(value = "endTime", required = false) LocalDateTime endTime) {
+    //        Long userId = getUserId();
+    //        return success(fileService.findDownSizeByDate(userId, startTime, endTime));
+    //    }
 
 
     @GetMapping(value = "/test1")
-    public R<Object> test1(@RequestParam(value = "sleep", required = false, defaultValue = "10000") Long sleep) throws Exception {
+    public R<Object> test1(@RequestParam(value = "sleep", required = false, defaultValue = "10000") Long sleep) throws Exception
+    {
         Thread.sleep(sleep);
         return R.success("等了" + sleep);
     }

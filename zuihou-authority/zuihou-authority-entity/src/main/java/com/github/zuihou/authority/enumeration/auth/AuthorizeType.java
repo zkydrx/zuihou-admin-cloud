@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "AuthorizeType", description = "权限类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum AuthorizeType implements BaseEnum {
+public enum AuthorizeType implements BaseEnum
+{
 
     /**
      * MENU="菜单"
@@ -38,25 +39,32 @@ public enum AuthorizeType implements BaseEnum {
     private String desc;
 
 
-    public static AuthorizeType match(String val, AuthorizeType def) {
-        for (AuthorizeType enm : AuthorizeType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static AuthorizeType match(String val, AuthorizeType def)
+    {
+        for (AuthorizeType enm : AuthorizeType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static AuthorizeType get(String val) {
+    public static AuthorizeType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(AuthorizeType val) {
-        if (val == null) {
+    public boolean eq(AuthorizeType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -64,7 +72,8 @@ public enum AuthorizeType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "MENU,RESOURCE", example = "MENU")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

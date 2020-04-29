@@ -30,7 +30,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "OptLogUpdateDTO", description = "系统日志")
-public class OptLogUpdateDTO implements Serializable {
+public class OptLogUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

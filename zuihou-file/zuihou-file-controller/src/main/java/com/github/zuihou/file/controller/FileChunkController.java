@@ -35,7 +35,8 @@ import java.nio.file.Paths;
 @Slf4j
 @RequestMapping("/chunk")
 @Api(value = "文件续传+秒传", tags = "文件续传+秒传功能，所有方法均需要webuploder.js插件进行配合使用， 且4个方法需要配合使用，单核接口没有意义")
-public class FileChunkController {
+public class FileChunkController
+{
     @Autowired
     private FileServerProperties fileProperties;
     @Autowired
@@ -57,8 +58,8 @@ public class FileChunkController {
     @ApiOperation(value = "秒传接口，上传文件前先验证， 存在则启动秒传", notes = "前端通过webUploader获取文件md5，上传前的验证")
     @RequestMapping(value = "/md5", method = RequestMethod.POST)
     @ResponseBody
-    public R<Boolean> saveMd5Check(@RequestParam(name = "md5") String md5,
-                                   @RequestParam(name = "folderId", defaultValue = "0") Long folderId) {
+    public R<Boolean> saveMd5Check(@RequestParam(name = "md5") String md5, @RequestParam(name = "folderId", defaultValue = "0") Long folderId)
+    {
         Long accountId = BaseContextHandler.getUserId();
         File file = fileChunkStrategy.md5Check(md5, folderId, accountId);
         return R.success(file != null ? true : false);
@@ -73,7 +74,8 @@ public class FileChunkController {
     @ApiOperation(value = "续传接口，检查每个分片存不存在", notes = "断点续传功能检查分片是否存在， 已存在的分片无需重复上传， 达到续传效果")
     @RequestMapping(value = "/check", method = RequestMethod.POST)
     @ResponseBody
-    public R<Boolean> chunkCheck(@RequestBody FileChunkCheckDTO info) {
+    public R<Boolean> chunkCheck(@RequestBody FileChunkCheckDTO info)
+    {
         log.info("info={}", info);
         String uploadFolder = FileDataTypeUtil.getUploadPathPrefix(fileProperties.getStoragePath());
         //检查目标分片是否存在且完整
@@ -93,10 +95,12 @@ public class FileChunkController {
     @ApiOperation(value = "分片上传", notes = "前端通过webUploader获取截取分片， 然后逐个上传")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public R<String> uploadFile(FileUploadDTO info, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+    public R<String> uploadFile(FileUploadDTO info, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception
+    {
         String uploadFolder = FileDataTypeUtil.getUploadPathPrefix(fileProperties.getStoragePath());
         //验证请求不会包含数据上传，所以避免NullPoint这里要检查一下file变量是否为null
-        if (file == null || file.isEmpty()) {
+        if (file == null || file.isEmpty())
+        {
             log.error("请求参数不完整");
             return R.fail("请求参数不完整");
         }
@@ -107,7 +111,8 @@ public class FileChunkController {
         因为原始webuploader.js不支持为formData设置函数类型参数，这将导致不能在控件初始化后修改该参数
         文件大小 小于 单个分片时，会执行这里的代码
         */
-        if (info.getChunks() == null || info.getChunks() <= 0) {
+        if (info.getChunks() == null || info.getChunks() <= 0)
+        {
             File upload = fileStrategy.upload(file);
 
             FileAttrDO fileAttrDO = fileService.getFileAttrDo(info.getFolderId());
@@ -118,11 +123,14 @@ public class FileChunkController {
             upload.setTreePath(fileAttrDO.getTreePath());
             fileService.save(upload);
             return R.success(file.getOriginalFilename());
-        } else {
+        }
+        else
+        {
             //为上传的文件准备好对应的位置
             java.io.File target = wu.getReadySpace(info, uploadFolder);
             log.info("target={}", target.getAbsolutePath());
-            if (target == null) {
+            if (target == null)
+            {
                 return R.fail(wu.getErrorMsg());
             }
             //保存上传文件
@@ -144,7 +152,8 @@ public class FileChunkController {
     @RequestMapping(value = "/merge", method = RequestMethod.POST)
     @ResponseBody
     @SysLog("上传大文件")
-    public R<File> saveChunksMerge(@RequestBody FileChunksMergeDTO info) {
+    public R<File> saveChunksMerge(@RequestBody FileChunksMergeDTO info)
+    {
         log.info("info={}", info);
 
         return fileChunkStrategy.chunksMerge(info);

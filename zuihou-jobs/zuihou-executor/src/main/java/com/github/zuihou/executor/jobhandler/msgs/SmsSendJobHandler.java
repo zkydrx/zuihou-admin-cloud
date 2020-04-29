@@ -26,13 +26,15 @@ import org.springframework.stereotype.Component;
 @JobHandler(value = "smsSendJobHandler")
 @Component
 @Slf4j
-public class SmsSendJobHandler extends IJobHandler {
+public class SmsSendJobHandler extends IJobHandler
+{
 
     @Autowired
     private SmsContext smsContext;
 
     @Override
-    public ReturnT<String> execute2(String param) throws Exception {
+    public ReturnT<String> execute2(String param) throws Exception
+    {
         XxlJobLogger.log("执行参数--->param={} ", param);
         JSONObject map = JSONObject.parseObject(param);
         BaseContextHandler.setTenant(map.getString(BaseContextConstants.JWT_KEY_TENANT));

@@ -29,7 +29,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
  * @createTime 2017-12-15 14:42
  */
 @Configuration
-public class JobsConfiguration {
+public class JobsConfiguration
+{
 
     /**
      * json 类型参数 序列化问题
@@ -42,11 +43,12 @@ public class JobsConfiguration {
     @Bean
     @Primary
     @ConditionalOnMissingBean
-    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder)
+    {
         ObjectMapper objectMapper = builder.createXmlMapper(false)
-                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .timeZone(TimeZone.getTimeZone("Asia/Shanghai"))
-                .build();
+                                           .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                                           .timeZone(TimeZone.getTimeZone("Asia/Shanghai"))
+                                           .build();
         //忽略未知字段
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         //日期格式
@@ -72,7 +74,8 @@ public class JobsConfiguration {
      * @return
      */
     @Bean
-    public Converter<String, Date> addNewConvert() {
+    public Converter<String, Date> addNewConvert()
+    {
         return new String2DateConverter();
     }
 
@@ -83,7 +86,8 @@ public class JobsConfiguration {
      * @return
      */
     @Bean("codeGenerate")
-    public CodeGenerate codeGenerate(@Value("${id-generator.machine-code:1}") Long machineCode) {
+    public CodeGenerate codeGenerate(@Value("${id-generator.machine-code:1}") Long machineCode)
+    {
         return new CodeGenerate(machineCode.intValue());
     }
 }

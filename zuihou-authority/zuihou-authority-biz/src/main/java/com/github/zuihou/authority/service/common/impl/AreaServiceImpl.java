@@ -25,25 +25,30 @@ import static com.github.zuihou.common.constant.CacheKey.AREA;
  */
 @Slf4j
 @Service
-public class AreaServiceImpl extends SuperCacheServiceImpl<AreaMapper, Area> implements AreaService {
+public class AreaServiceImpl extends SuperCacheServiceImpl<AreaMapper, Area> implements AreaService
+{
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return AREA;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean recursively(List<Long> ids) {
+    public boolean recursively(List<Long> ids)
+    {
         boolean removeFlag = removeByIds(ids);
         delete(ids);
         return removeFlag;
     }
 
-    private void delete(List<Long> ids) {
+    private void delete(List<Long> ids)
+    {
         // 查询子节点
         List<Long> childIds = super.listObjs(Wraps.<Area>lbQ().select(Area::getId).in(Area::getParentId, ids), Convert::toLong);
-        if (!childIds.isEmpty()) {
+        if (!childIds.isEmpty())
+        {
             removeByIds(childIds);
             delete(childIds);
         }

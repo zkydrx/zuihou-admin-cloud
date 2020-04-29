@@ -23,7 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2018/11/23
  */
 @Slf4j
-public abstract class BaseFilter extends ZuulFilter {
+public abstract class BaseFilter extends ZuulFilter
+{
     protected static UrlPathHelper URL_PATH_HELPER = new UrlPathHelper();
     /**
      * 为zuul设置一个公共的前缀
@@ -37,7 +38,8 @@ public abstract class BaseFilter extends ZuulFilter {
     @Autowired
     protected RouteLocator routeLocator;
 
-    protected boolean isDev() {
+    protected boolean isDev()
+    {
         return !StrPool.PROD.equalsIgnoreCase(profiles);
     }
 
@@ -46,13 +48,15 @@ public abstract class BaseFilter extends ZuulFilter {
      *
      * @return
      */
-    protected Route route() {
+    protected Route route()
+    {
         HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
         String requestURI = URL_PATH_HELPER.getPathWithinApplication(request);
         return routeLocator.getMatchingRoute(requestURI);
     }
 
-    private String getUri() {
+    private String getUri()
+    {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String uri = request.getRequestURI();
@@ -66,13 +70,16 @@ public abstract class BaseFilter extends ZuulFilter {
      *
      * @return
      */
-    protected boolean isIgnoreToken() {
+    protected boolean isIgnoreToken()
+    {
         return ignoreTokenProperties.isIgnoreToken(getUri());
     }
 
-    protected String getHeader(String headerName, HttpServletRequest request) {
+    protected String getHeader(String headerName, HttpServletRequest request)
+    {
         String token = request.getHeader(headerName);
-        if (StringUtils.isBlank(token)) {
+        if (StringUtils.isBlank(token))
+        {
             token = request.getParameter(headerName);
         }
         return token;
@@ -85,13 +92,15 @@ public abstract class BaseFilter extends ZuulFilter {
      * @param body
      * @param code
      */
-    protected void setFailedRequest(String body, int code) {
+    protected void setFailedRequest(String body, int code)
+    {
         log.debug("Reporting error ({}): {}", code, body);
         RequestContext ctx = RequestContext.getCurrentContext();
         // 返回错误码
         ctx.setResponseStatusCode(code);
         ctx.addZuulResponseHeader("Content-Type", "application/json;charset=UTF-8");
-        if (ctx.getResponseBody() == null) {
+        if (ctx.getResponseBody() == null)
+        {
             // 返回错误内容
             ctx.setResponseBody(body);
             // 过滤该请求，不对其进行路由
@@ -99,7 +108,8 @@ public abstract class BaseFilter extends ZuulFilter {
         }
     }
 
-    protected void errorResponse(String errMsg, int errCode, int httpStatusCode) {
+    protected void errorResponse(String errMsg, int errCode, int httpStatusCode)
+    {
         R tokenError = R.fail(errCode, errMsg);
         setFailedRequest(tokenError.toString(), httpStatusCode);
     }

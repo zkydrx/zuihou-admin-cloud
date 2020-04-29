@@ -44,7 +44,8 @@ import static com.github.zuihou.common.constant.CacheKey.ROLE;
  */
 @Slf4j
 @Service
-public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> implements RoleService {
+public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> implements RoleService
+{
     @Autowired
     private RoleOrgService roleOrgService;
     @Autowired
@@ -57,12 +58,14 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
     private CodeGenerate codeGenerate;
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return ROLE;
     }
 
     @Override
-    public boolean isSuperAdmin(Long userId) {
+    public boolean isSuperAdmin(Long userId)
+    {
         return userId != null && userId.equals(1L);
     }
 
@@ -80,8 +83,10 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean removeByIdWithCache(List<Long> ids) {
-        if (ids.isEmpty()) {
+    public boolean removeByIdWithCache(List<Long> ids)
+    {
+        if (ids.isEmpty())
+        {
             return true;
         }
         // 橘色
@@ -91,9 +96,7 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
         // 角色权限
         roleAuthorityService.remove(Wraps.<RoleAuthority>lbQ().in(RoleAuthority::getRoleId, ids));
 
-        List<Long> userIds = userRoleService.listObjs(
-                Wraps.<UserRole>lbQ().select(UserRole::getUserId).in(UserRole::getRoleId, ids),
-                Convert::toLong);
+        List<Long> userIds = userRoleService.listObjs(Wraps.<UserRole>lbQ().select(UserRole::getUserId).in(UserRole::getRoleId, ids), Convert::toLong);
 
         //角色拥有的用户
         userRoleService.remove(Wraps.<UserRole>lbQ().in(UserRole::getRoleId, ids));
@@ -103,7 +106,8 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
             cacheChannel.evict(CacheKey.ROLE_RESOURCE, String.valueOf(id));
         });
 
-        if (!userIds.isEmpty()) {
+        if (!userIds.isEmpty())
+        {
             //用户角色 、 用户菜单、用户资源
             String[] userIdArray = userIds.stream().map(this::key).toArray(String[]::new);
             cacheChannel.evict(CacheKey.USER_ROLE, userIdArray);
@@ -114,7 +118,8 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
     }
 
     @Override
-    public List<Role> findRoleByUserId(Long userId) {
+    public List<Role> findRoleByUserId(Long userId)
+    {
         String key = key(userId);
         List<Role> roleList = new ArrayList<>();
         CacheObject cacheObject = cacheChannel.get(CacheKey.USER_ROLE, key, (k) -> {
@@ -122,12 +127,14 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
             return roleList.stream().mapToLong(Role::getId).boxed().collect(Collectors.toList());
         });
 
-        if (cacheObject.getValue() == null) {
+        if (cacheObject.getValue() == null)
+        {
             return Collections.emptyList();
         }
 
 
-        if (!roleList.isEmpty()) {
+        if (!roleList.isEmpty())
+        {
             // TODO 异步性能 更加
             roleList.forEach((item) -> {
                 String itemKey = key(item.getId());
@@ -139,8 +146,7 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
 
         List<Long> list = (List<Long>) cacheObject.getValue();
 
-        List<Role> menuList = list.stream().map(this::getByIdCache)
-                .filter(Objects::nonNull).collect(Collectors.toList());
+        List<Role> menuList = list.stream().map(this::getByIdCache).filter(Objects::nonNull).collect(Collectors.toList());
 
         return menuList;
     }
@@ -154,7 +160,8 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRole(RoleSaveDTO data, Long userId) {
+    public void saveRole(RoleSaveDTO data, Long userId)
+    {
         Role role = BeanPlusUtil.toBean(data, Role.class);
         role.setCode(StrHelper.getOrDef(data.getCode(), codeGenerate.next()));
         role.setReadonly(false);
@@ -167,7 +174,8 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateRole(RoleUpdateDTO data, Long userId) {
+    public void updateRole(RoleUpdateDTO data, Long userId)
+    {
         Role role = BeanPlusUtil.toBean(data, Role.class);
         updateById(role);
 
@@ -176,22 +184,26 @@ public class RoleServiceImpl extends SuperCacheServiceImpl<RoleMapper, Role> imp
 
     }
 
-    private void saveRoleOrg(Long userId, Role role, List<Long> orgList) {
+    private void saveRoleOrg(Long userId, Role role, List<Long> orgList)
+    {
         // 根据 数据范围类型 和 勾选的组织ID， 重新计算全量的组织ID
         List<Long> orgIds = dataScopeContext.getOrgIdsForDataScope(orgList, role.getDsType(), userId);
-        if (orgIds != null && !orgIds.isEmpty()) {
+        if (orgIds != null && !orgIds.isEmpty())
+        {
             List<RoleOrg> list = orgIds.stream().map((orgId) -> RoleOrg.builder().orgId(orgId).roleId(role.getId()).build()).collect(Collectors.toList());
             roleOrgService.saveBatch(list);
         }
     }
 
     @Override
-    public List<Long> findUserIdByCode(String[] codes) {
+    public List<Long> findUserIdByCode(String[] codes)
+    {
         return baseMapper.findUserIdByCode(codes);
     }
 
     @Override
-    public Boolean check(String code) {
+    public Boolean check(String code)
+    {
         return super.count(Wraps.<Role>lbQ().eq(Role::getCode, code)) > 0;
     }
 }

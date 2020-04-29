@@ -25,7 +25,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "OrderSaveDTO", description = "订单")
-public class OrderSaveDTO implements Serializable {
+public class OrderSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-08-01
  */
 @Repository
-public interface SmsTemplateMapper extends SuperMapper<SmsTemplate> {
+public interface SmsTemplateMapper extends SuperMapper<SmsTemplate>
+{
 
 }

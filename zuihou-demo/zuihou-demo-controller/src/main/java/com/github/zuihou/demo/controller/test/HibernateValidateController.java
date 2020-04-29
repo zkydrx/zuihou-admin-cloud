@@ -24,7 +24,8 @@ import javax.validation.constraints.NotEmpty;
 @RestController
 @RequestMapping("/valid")
 @Api(value = "Valid", tags = "验证")
-public class HibernateValidateController {
+public class HibernateValidateController
+{
 
     /**
      * ok
@@ -34,7 +35,8 @@ public class HibernateValidateController {
      * @return
      */
     @GetMapping("/obj/get2")
-    public String objGet2(@Validated(SuperEntity.Update.class) @Valid ApplicationUpdateDTO data) {
+    public String objGet2(@Validated(SuperEntity.Update.class) @Valid ApplicationUpdateDTO data)
+    {
         return "验证Update组 成功";
     }
 
@@ -47,7 +49,8 @@ public class HibernateValidateController {
      */
     @GetMapping("/obj/get3")
     @SysLog("测试")
-    public String objGet3(@Validated @Valid ApplicationUpdateDTO data) {
+    public String objGet3(@Validated @Valid ApplicationUpdateDTO data)
+    {
         return "验证默认组成功";
     }
 
@@ -60,7 +63,8 @@ public class HibernateValidateController {
      */
     @GetMapping("/obj/get4")
     @SysLog("测试")
-    public String objGet4(ApplicationUpdateDTO data) {
+    public String objGet4(ApplicationUpdateDTO data)
+    {
         return "无法验证";
     }
 
@@ -71,7 +75,8 @@ public class HibernateValidateController {
      * @return
      */
     @GetMapping("/obj/get5")
-    public String objGet5(@Valid ApplicationUpdateDTO data) {
+    public String objGet5(@Valid ApplicationUpdateDTO data)
+    {
         return "可以验证";
     }
 
@@ -83,7 +88,8 @@ public class HibernateValidateController {
      */
     @GetMapping("/obj/get6")
     @Validated
-    public String objGet6(@Valid ApplicationUpdateDTO data) {
+    public String objGet6(@Valid ApplicationUpdateDTO data)
+    {
         return "可以验证";
     }
 
@@ -95,24 +101,28 @@ public class HibernateValidateController {
      */
     @PostMapping("/requestBody/post")
     @Validated(SuperEntity.Update.class)
-    public String bodyPost(@Valid @RequestBody ValidatorDTO data) {
+    public String bodyPost(@Valid @RequestBody ValidatorDTO data)
+    {
         return "类上有 Validated，方法上有@Validated（Update）， 参数有 Valid";
     }
 
 
     @PostMapping("/requestBody/post3")
-    public String bodyPost3(@Validated @Valid @RequestBody ValidatorDTO data) {
+    public String bodyPost3(@Validated @Valid @RequestBody ValidatorDTO data)
+    {
         return "类上有 Validated，方法上有@Validated， 参数有 Valid";
     }
 
 
     @PostMapping("/requestBody/post5")
-    public String bodyPost5(@Valid @RequestBody ValidatorDTO data) {
+    public String bodyPost5(@Valid @RequestBody ValidatorDTO data)
+    {
         return "类上有 Validated，参数有 Valid";
     }
 
     @PostMapping("/requestBody/post6")
-    public String bodyPost6(@RequestBody ValidatorDTO data) {
+    public String bodyPost6(@RequestBody ValidatorDTO data)
+    {
         return "类上有 Validated，方法和参数没有";
     }
 
@@ -126,9 +136,8 @@ public class HibernateValidateController {
      */
     @GetMapping("/requestParam/get")
     @Validated
-    public String paramGet(@Length(max = 3)
-                           @NotEmpty(message = "不能为空")
-                           @RequestParam(value = "code", required = false) String code) {
+    public String paramGet(@Length(max = 3) @NotEmpty(message = "不能为空") @RequestParam(value = "code", required = false) String code)
+    {
         return "方法上的@Validated注解，一般用来指定 验证组";
     }
 
@@ -140,8 +149,8 @@ public class HibernateValidateController {
      * @return
      */
     @GetMapping("/requestParam/get2")
-    public String paramGet2(@NotEmpty(message = "不能为空")
-                            @RequestParam(value = "code", required = false) String code) {
+    public String paramGet2(@NotEmpty(message = "不能为空") @RequestParam(value = "code", required = false) String code)
+    {
         return "方法上没有 @Validated 注解，就用类上的 @Validated 注解";
     }
 }

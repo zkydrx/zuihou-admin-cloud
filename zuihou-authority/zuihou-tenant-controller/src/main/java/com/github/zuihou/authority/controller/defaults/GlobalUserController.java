@@ -49,20 +49,26 @@ import java.util.Map;
 @RequestMapping("/globalUser")
 @Api(value = "GlobalUser", tags = "全局账号")
 @SysLog(enabled = false)
-public class GlobalUserController extends SuperController<GlobalUserService, Long, GlobalUser, GlobalUserPageDTO, GlobalUserSaveDTO, GlobalUserUpdateDTO> {
+public class GlobalUserController extends SuperController<GlobalUserService, Long, GlobalUser, GlobalUserPageDTO, GlobalUserSaveDTO, GlobalUserUpdateDTO>
+{
 
     @Autowired
     private UserService userService;
 
     @Override
-    public R<GlobalUser> handlerSave(GlobalUserSaveDTO model) {
-        if (StrUtil.isEmpty(model.getTenantCode()) || BizConstant.SUPER_TENANT.equals(model.getTenantCode())) {
+    public R<GlobalUser> handlerSave(GlobalUserSaveDTO model)
+    {
+        if (StrUtil.isEmpty(model.getTenantCode()) || BizConstant.SUPER_TENANT.equals(model.getTenantCode()))
+        {
             return success(baseService.save(model));
-        } else {
+        }
+        else
+        {
             BaseContextHandler.setTenant(model.getTenantCode());
             User user = BeanPlusUtil.toBean(model, User.class);
             user.setName(StrHelper.getOrDef(model.getName(), model.getAccount()));
-            if (StrUtil.isEmpty(user.getPassword())) {
+            if (StrUtil.isEmpty(user.getPassword()))
+            {
                 user.setPassword(BizConstant.DEF_PASSWORD);
             }
             user.setStatus(true);
@@ -72,10 +78,14 @@ public class GlobalUserController extends SuperController<GlobalUserService, Lon
     }
 
     @Override
-    public R<GlobalUser> handlerUpdate(GlobalUserUpdateDTO model) {
-        if (StrUtil.isEmpty(model.getTenantCode()) || BizConstant.SUPER_TENANT.equals(model.getTenantCode())) {
+    public R<GlobalUser> handlerUpdate(GlobalUserUpdateDTO model)
+    {
+        if (StrUtil.isEmpty(model.getTenantCode()) || BizConstant.SUPER_TENANT.equals(model.getTenantCode()))
+        {
             return success(baseService.update(model));
-        } else {
+        }
+        else
+        {
             BaseContextHandler.setTenant(model.getTenantCode());
             User user = BeanPlusUtil.toBean(model, User.class);
             userService.updateUser(user);
@@ -83,36 +93,44 @@ public class GlobalUserController extends SuperController<GlobalUserService, Lon
         }
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantCode", value = "企业编码", dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "account", value = "账号", dataType = "string", paramType = "query"),
-    })
+    @ApiImplicitParams({@ApiImplicitParam(name = "tenantCode", value = "企业编码", dataType = "string", paramType = "query"), @ApiImplicitParam(name = "account", value = "账号",
+            dataType = "string", paramType = "query"),})
     @ApiOperation(value = "检测账号是否可用", notes = "检测账号是否可用")
     @GetMapping("/check")
-    public R<Boolean> check(@RequestParam String tenantCode, @RequestParam String account) {
-        if (StrUtil.isEmpty(tenantCode) || BizConstant.SUPER_TENANT.equals(tenantCode)) {
+    public R<Boolean> check(@RequestParam String tenantCode, @RequestParam String account)
+    {
+        if (StrUtil.isEmpty(tenantCode) || BizConstant.SUPER_TENANT.equals(tenantCode))
+        {
             return success(baseService.check(account));
-        } else {
+        }
+        else
+        {
             BaseContextHandler.setTenant(tenantCode);
             return success(userService.check(account));
         }
     }
 
-    private void handlerUserWrapper(QueryWrap<User> wrapper, PageParams<GlobalUserPageDTO> params) {
-        if (CollUtil.isNotEmpty(params.getMap())) {
+    private void handlerUserWrapper(QueryWrap<User> wrapper, PageParams<GlobalUserPageDTO> params)
+    {
+        if (CollUtil.isNotEmpty(params.getMap()))
+        {
             Map<String, String> map = params.getMap();
             //拼装区间
-            for (Map.Entry<String, String> field : map.entrySet()) {
+            for (Map.Entry<String, String> field : map.entrySet())
+            {
                 String key = field.getKey();
                 String value = field.getValue();
-                if (StrUtil.isEmpty(value)) {
+                if (StrUtil.isEmpty(value))
+                {
                     continue;
                 }
-                if (key.endsWith("_st")) {
+                if (key.endsWith("_st"))
+                {
                     String beanField = StrUtil.subBefore(key, "_st", true);
                     wrapper.ge(getDbField(beanField, getEntityClass()), DateUtils.getStartTime(value));
                 }
-                if (key.endsWith("_ed")) {
+                if (key.endsWith("_ed"))
+                {
                     String beanField = StrUtil.subBefore(key, "_ed", true);
                     wrapper.le(getDbField(beanField, getEntityClass()), DateUtils.getEndTime(value));
                 }
@@ -122,14 +140,14 @@ public class GlobalUserController extends SuperController<GlobalUserService, Lon
 
 
     @Override
-    public void query(PageParams<GlobalUserPageDTO> params, IPage<GlobalUser> page, Long defSize) {
+    public void query(PageParams<GlobalUserPageDTO> params, IPage<GlobalUser> page, Long defSize)
+    {
         GlobalUserPageDTO model = params.getModel();
-        if (StrUtil.isEmpty(model.getTenantCode()) || BizConstant.SUPER_TENANT.equals(model.getTenantCode())) {
+        if (StrUtil.isEmpty(model.getTenantCode()) || BizConstant.SUPER_TENANT.equals(model.getTenantCode()))
+        {
             QueryWrap<GlobalUser> wrapper = Wraps.q();
             handlerWrapper(wrapper, params);
-            wrapper.lambda().eq(GlobalUser::getTenantCode, model.getTenantCode())
-                    .like(GlobalUser::getAccount, model.getAccount())
-                    .like(GlobalUser::getName, model.getName());
+            wrapper.lambda().eq(GlobalUser::getTenantCode, model.getTenantCode()).like(GlobalUser::getAccount, model.getAccount()).like(GlobalUser::getName, model.getName());
             baseService.page(page, wrapper);
             return;
         }
@@ -138,9 +156,7 @@ public class GlobalUserController extends SuperController<GlobalUserService, Lon
         IPage<User> userPage = params.getPage();
         QueryWrap<User> wrapper = Wraps.q();
         handlerUserWrapper(wrapper, params);
-        wrapper.lambda()
-                .like(User::getAccount, model.getAccount())
-                .like(User::getName, model.getName());
+        wrapper.lambda().like(User::getAccount, model.getAccount()).like(User::getName, model.getName());
 
         userService.page(userPage, wrapper);
 
@@ -155,14 +171,16 @@ public class GlobalUserController extends SuperController<GlobalUserService, Lon
 
     @ApiOperation(value = "删除")
     @DeleteMapping("/delete")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tenantCode", value = "企业编码", dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "ids[]", value = "主键id", dataType = "array", paramType = "query"),
-    })
-    public R<Boolean> delete(@RequestParam String tenantCode, @RequestParam("ids[]") List<Long> ids) {
-        if (StrUtil.isEmpty(tenantCode) || BizConstant.SUPER_TENANT.equals(tenantCode)) {
+    @ApiImplicitParams({@ApiImplicitParam(name = "tenantCode", value = "企业编码", dataType = "string", paramType = "query"), @ApiImplicitParam(name = "ids[]", value = "主键id",
+            dataType = "array", paramType = "query"),})
+    public R<Boolean> delete(@RequestParam String tenantCode, @RequestParam("ids[]") List<Long> ids)
+    {
+        if (StrUtil.isEmpty(tenantCode) || BizConstant.SUPER_TENANT.equals(tenantCode))
+        {
             return success(baseService.removeByIds(ids));
-        } else {
+        }
+        else
+        {
             BaseContextHandler.setTenant(tenantCode);
             return success(userService.remove(ids));
         }

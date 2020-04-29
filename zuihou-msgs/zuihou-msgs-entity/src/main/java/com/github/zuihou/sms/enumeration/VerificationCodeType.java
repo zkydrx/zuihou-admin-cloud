@@ -19,7 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "VerificationCodeType", description = "验证码类型")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum VerificationCodeType implements BaseEnum {
+public enum VerificationCodeType implements BaseEnum
+{
     /**
      * 用户注册
      */
@@ -30,25 +31,32 @@ public enum VerificationCodeType implements BaseEnum {
     private String desc;
 
 
-    public static VerificationCodeType match(String val, VerificationCodeType def) {
-        for (VerificationCodeType enm : VerificationCodeType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static VerificationCodeType match(String val, VerificationCodeType def)
+    {
+        for (VerificationCodeType enm : VerificationCodeType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static VerificationCodeType get(String val) {
+    public static VerificationCodeType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(VerificationCodeType val) {
-        if (val == null) {
+    public boolean eq(VerificationCodeType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -56,7 +64,8 @@ public enum VerificationCodeType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "REGISTER_USER", example = "REGISTER_USER")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 }

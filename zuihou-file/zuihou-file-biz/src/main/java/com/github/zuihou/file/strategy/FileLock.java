@@ -14,7 +14,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * @date 2019-06-14
  */
 @Component
-public class FileLock {
+public class FileLock
+{
 
     private static Map<String, Lock> LOCKS = new HashMap<String, Lock>();
 
@@ -26,10 +27,14 @@ public class FileLock {
      * @author zuihou
      * @date 2019-06-14 11:30
      */
-    public static synchronized Lock getLock(String key) {
-        if (LOCKS.containsKey(key)) {
+    public static synchronized Lock getLock(String key)
+    {
+        if (LOCKS.containsKey(key))
+        {
             return LOCKS.get(key);
-        } else {
+        }
+        else
+        {
             Lock one = new ReentrantLock();
             LOCKS.put(key, one);
             return one;
@@ -44,7 +49,8 @@ public class FileLock {
      * @author zuihou
      * @date 2019-06-14 11:33
      */
-    public static synchronized void removeLock(String key) {
+    public static synchronized void removeLock(String key)
+    {
         LOCKS.remove(key);
     }
 }

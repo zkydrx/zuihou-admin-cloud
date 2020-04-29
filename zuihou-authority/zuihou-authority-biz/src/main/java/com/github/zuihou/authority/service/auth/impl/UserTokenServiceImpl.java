@@ -28,7 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
-public class UserTokenServiceImpl extends SuperServiceImpl<UserTokenMapper, UserToken> implements UserTokenService {
+public class UserTokenServiceImpl extends SuperServiceImpl<UserTokenMapper, UserToken> implements UserTokenService
+{
 
     @Autowired
     private CacheChannel channel;
@@ -45,17 +46,21 @@ public class UserTokenServiceImpl extends SuperServiceImpl<UserTokenMapper, User
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(UserToken model) {
+    public boolean save(UserToken model)
+    {
         boolean bool = SqlHelper.retBool(baseMapper.insert(model));
         String loginPolicy = parameterService.getValue(ParameterKey.LOGIN_POLICY, ParameterKey.LoginPolicy.MANY.name());
 
-        if (ParameterKey.LoginPolicy.ONLY_ONE.eq(loginPolicy)) {
+        if (ParameterKey.LoginPolicy.ONLY_ONE.eq(loginPolicy))
+        {
             String userIdKey = CacheKey.buildKey(model.getCreateUser());
             CacheObject user = channel.get(CacheKey.USER_TOKEN, userIdKey);
 
             evictPreviousToken(user);
             channel.set(CacheKey.USER_TOKEN, userIdKey, model.getToken());
-        } else if (ParameterKey.LoginPolicy.ONLY_ONE_CLIENT.eq(loginPolicy)) {
+        }
+        else if (ParameterKey.LoginPolicy.ONLY_ONE_CLIENT.eq(loginPolicy))
+        {
             String userIdKey = CacheKey.buildKey(model.getCreateUser(), model.getClientId());
             CacheObject user = channel.get(CacheKey.USER_CLIENT_TOKEN, userIdKey);
 
@@ -74,8 +79,10 @@ public class UserTokenServiceImpl extends SuperServiceImpl<UserTokenMapper, User
      *
      * @param user
      */
-    private void evictPreviousToken(CacheObject user) {
-        if (user.getValue() != null) {
+    private void evictPreviousToken(CacheObject user)
+    {
+        if (user.getValue() != null)
+        {
             String previousToken = (String) user.getValue();
             channel.set(CacheKey.TOKEN_USER_ID, CacheKey.buildKey(previousToken), BizConstant.LOGIN_STATUS);
             super.remove(Wraps.<UserToken>lbQ().eq(UserToken::getToken, previousToken));
@@ -84,7 +91,8 @@ public class UserTokenServiceImpl extends SuperServiceImpl<UserTokenMapper, User
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean reset() {
+    public boolean reset()
+    {
         boolean bool = super.remove(null);
         channel.clear(CacheKey.USER_TOKEN);
         channel.clear(CacheKey.USER_CLIENT_TOKEN);

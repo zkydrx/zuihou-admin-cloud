@@ -18,23 +18,24 @@ import reactor.core.publisher.Mono;
  * @date 2020年03月09日18:02:47
  */
 @Component
-public class TraceFilter implements GlobalFilter, Ordered {
+public class TraceFilter implements GlobalFilter, Ordered
+{
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
+    {
         //链路追踪id
         String traceId = IdUtil.fastSimpleUUID();
         MDC.put(BaseContextConstants.LOG_TRACE_ID, traceId);
-        ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
-                .headers(h -> h.add(BaseContextConstants.TRACE_ID_HEADER, traceId))
-                .build();
+        ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(h -> h.add(BaseContextConstants.TRACE_ID_HEADER, traceId)).build();
 
         ServerWebExchange build = exchange.mutate().request(serverHttpRequest).build();
         return chain.filter(build);
     }
 
     @Override
-    public int getOrder() {
+    public int getOrder()
+    {
         return Ordered.HIGHEST_PRECEDENCE;
     }
 }

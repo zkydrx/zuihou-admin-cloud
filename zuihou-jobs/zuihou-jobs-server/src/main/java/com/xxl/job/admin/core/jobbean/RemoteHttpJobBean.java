@@ -16,12 +16,13 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  * @author xuxueli 2015-12-17 18:20:34
  */
 //@DisallowConcurrentExecution
-public class RemoteHttpJobBean extends QuartzJobBean {
+public class RemoteHttpJobBean extends QuartzJobBean
+{
     private static Logger logger = LoggerFactory.getLogger(RemoteHttpJobBean.class);
 
     @Override
-    protected void executeInternal(JobExecutionContext context)
-            throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException
+    {
 
         logger.info("最开始调度是从这里开始的-------");
         // load jobId

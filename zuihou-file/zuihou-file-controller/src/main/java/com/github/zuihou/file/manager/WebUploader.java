@@ -20,7 +20,8 @@ import java.security.NoSuchAlgorithmException;
 @Service
 @Scope("prototype")
 @Slf4j
-public class WebUploader {
+public class WebUploader
+{
 
     /**
      * 错误详情
@@ -35,7 +36,8 @@ public class WebUploader {
      * @param size 分片文件的大小
      * @return
      */
-    public boolean chunkCheck(String file, Long size) {
+    public boolean chunkCheck(String file, Long size)
+    {
         //检查目标分片是否存在且完整
         java.io.File target = new java.io.File(file);
         return target.isFile() && size == target.length();
@@ -49,28 +51,33 @@ public class WebUploader {
      * @param path 文件保存根路径
      * @return
      */
-    public java.io.File getReadySpace(FileUploadDTO info, String path) {
+    public java.io.File getReadySpace(FileUploadDTO info, String path)
+    {
         //创建上传文件所需的文件夹
-        if (!this.createFileFolder(path, false)) {
+        if (!this.createFileFolder(path, false))
+        {
             return null;
         }
 
         String newFileName;    //上传文件的新名称
 
         //如果是分片上传，则需要为分片创建文件夹
-        if (info.getChunks() > 0) {
+        if (info.getChunks() > 0)
+        {
             newFileName = String.valueOf(info.getChunk());
 
             String fileFolder = this.md5(info.getName() + info.getType() + info.getLastModifiedDate() + info.getSize());
             log.info("fileFolder={}, md5={}", fileFolder, info.getMd5());
-            if (fileFolder == null) {
+            if (fileFolder == null)
+            {
                 return null;
             }
 
             //文件上传路径更新为指定文件信息签名后的临时文件夹，用于后期合并
             path += "/" + fileFolder;
 
-            if (!this.createFileFolder(path, true)) {
+            if (!this.createFileFolder(path, true))
+            {
                 return null;
             }
             return new java.io.File(path, newFileName);
@@ -85,28 +92,40 @@ public class WebUploader {
      * @param hasTmp 是否有临时文件
      * @return
      */
-    private boolean createFileFolder(String file, boolean hasTmp) {
+    private boolean createFileFolder(String file, boolean hasTmp)
+    {
         //创建存放分片文件的临时文件夹
         java.io.File tmpFile = new java.io.File(file);
-        if (!tmpFile.exists()) {
-            try {
+        if (!tmpFile.exists())
+        {
+            try
+            {
                 tmpFile.mkdirs();
-            } catch (SecurityException ex) {
+            }
+            catch (SecurityException ex)
+            {
                 log.error("无法创建文件夹", ex);
                 this.setErrorMsg("无法创建文件夹");
                 return false;
             }
         }
 
-        if (hasTmp) {
+        if (hasTmp)
+        {
             //创建一个对应的文件，用来记录上传分片文件的修改时间，用于清理长期未完成的垃圾分片
             tmpFile = new java.io.File(file + ".tmp");
-            if (tmpFile.exists()) {
+            if (tmpFile.exists())
+            {
                 return tmpFile.setLastModified(System.currentTimeMillis());
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     tmpFile.createNewFile();
-                } catch (IOException ex) {
+                }
+                catch (IOException ex)
+                {
                     log.error("无法创建tmp文件", ex);
                     this.setErrorMsg("无法创建tmp文件");
                     return false;
@@ -124,23 +143,30 @@ public class WebUploader {
      * @param content 要签名的内容
      * @return
      */
-    private String md5(String content) {
+    private String md5(String content)
+    {
         StringBuffer sb = new StringBuffer();
-        try {
+        try
+        {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             md5.update(content.getBytes("UTF-8"));
             byte[] tmpFolder = md5.digest();
 
-            for (int i = 0; i < tmpFolder.length; i++) {
+            for (int i = 0; i < tmpFolder.length; i++)
+            {
                 sb.append(Integer.toString((tmpFolder[i] & 0xff) + 0x100, 16).substring(1));
             }
 
             return sb.toString();
-        } catch (NoSuchAlgorithmException ex) {
+        }
+        catch (NoSuchAlgorithmException ex)
+        {
             log.error("无法生成文件的MD5签名", ex);
             this.setErrorMsg("无法生成文件的MD5签名");
             return null;
-        } catch (UnsupportedEncodingException ex) {
+        }
+        catch (UnsupportedEncodingException ex)
+        {
             log.error("无法生成文件的MD5签名", ex);
             this.setErrorMsg("无法生成文件的MD5签名");
             return null;
@@ -152,7 +178,8 @@ public class WebUploader {
      *
      * @return
      */
-    public String getErrorMsg() {
+    public String getErrorMsg()
+    {
         return this.msg;
     }
 
@@ -161,7 +188,8 @@ public class WebUploader {
      *
      * @param msg 错误详细
      */
-    private void setErrorMsg(String msg) {
+    private void setErrorMsg(String msg)
+    {
         this.msg = msg;
     }
 }

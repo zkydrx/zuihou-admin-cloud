@@ -59,7 +59,8 @@ import static java.util.stream.Collectors.groupingBy;
  */
 @Slf4j
 @Service
-public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implements FileService {
+public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implements FileService
+{
 
     @Autowired
     private FileBiz fileBiz;
@@ -67,7 +68,8 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
     private FileStrategy fileStrategy;
 
     @Override
-    public File upload(MultipartFile simpleFile, Long folderId) {
+    public File upload(MultipartFile simpleFile, Long folderId)
+    {
         FileAttrDO fileAttrDO = this.getFileAttrDo(folderId);
         String treePath = fileAttrDO.getTreePath();
         String folderName = fileAttrDO.getFolderName();
@@ -83,16 +85,19 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
     }
 
     @Override
-    public FileAttrDO getFileAttrDo(Long folderId) {
+    public FileAttrDO getFileAttrDo(Long folderId)
+    {
         String treePath = DEF_ROOT_PATH;
         String folderName = "";
         Integer grade = 1;
-        if (folderId == null || folderId <= 0) {
+        if (folderId == null || folderId <= 0)
+        {
             return new FileAttrDO(treePath, grade, folderName, DEF_PARENT_ID);
         }
         File folder = this.getById(folderId);
 
-        if (folder != null && !folder.getIsDelete() && DataType.DIR.eq(folder.getDataType())) {
+        if (folder != null && !folder.getIsDelete() && DataType.DIR.eq(folder.getDataType()))
+        {
             folderName = folder.getSubmittedFileName();
             treePath = StringUtils.join(folder.getTreePath(), folder.getId(), DEF_ROOT_PATH);
             grade = folder.getGrade() + 1;
@@ -103,13 +108,17 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
 
 
     @Override
-    public FolderDTO saveFolder(FolderSaveDTO folderSaveDto) {
+    public FolderDTO saveFolder(FolderSaveDTO folderSaveDto)
+    {
         File folder = BeanPlusUtil.toBean(folderSaveDto, File.class);
-        if (folderSaveDto.getFolderId() == null || folderSaveDto.getFolderId() <= 0) {
+        if (folderSaveDto.getFolderId() == null || folderSaveDto.getFolderId() <= 0)
+        {
             folder.setFolderId(DEF_PARENT_ID);
             folder.setTreePath(DEF_ROOT_PATH);
             folder.setGrade(1);
-        } else {
+        }
+        else
+        {
             File parent = super.getById(folderSaveDto.getFolderId());
             BizAssert.notNull(parent, BASE_VALID_PARAM.build("父文件夹不能为空"));
             BizAssert.isFalse(parent.getIsDelete(), BASE_VALID_PARAM.build("父文件夹已经被删除"));
@@ -119,7 +128,8 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
             folder.setTreePath(StringUtils.join(parent.getTreePath(), parent.getId(), DEF_ROOT_PATH));
             folder.setGrade(parent.getGrade() + 1);
         }
-        if (folderSaveDto.getOrderNum() == null) {
+        if (folderSaveDto.getOrderNum() == null)
+        {
             folderSaveDto.setOrderNum(0);
         }
         folder.setIsDelete(false);
@@ -130,69 +140,74 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
         return BeanPlusUtil.toBean(folder, FolderDTO.class);
     }
 
-    private void setDate(File file) {
+    private void setDate(File file)
+    {
         LocalDateTime now = LocalDateTime.now();
-        file.setCreateMonth(DateUtils.formatAsYearMonthEn(now))
-                .setCreateWeek(DateUtils.formatAsYearWeekEn(now))
-                .setCreateDay(DateUtils.formatAsDateEn(now));
+        file.setCreateMonth(DateUtils.formatAsYearMonthEn(now)).setCreateWeek(DateUtils.formatAsYearWeekEn(now)).setCreateDay(DateUtils.formatAsDateEn(now));
     }
 
-    public boolean removeFile(Long[] ids, Long userId) {
-        LbuWrapper<File> lambdaUpdate =
-                Wraps.<File>lbU()
-                        .in(File::getId, ids)
-                        .eq(File::getCreateUser, userId);
+    public boolean removeFile(Long[] ids, Long userId)
+    {
+        LbuWrapper<File> lambdaUpdate = Wraps.<File>lbU().in(File::getId, ids).eq(File::getCreateUser, userId);
         File file = File.builder().isDelete(Boolean.TRUE).build();
 
         return super.update(file, lambdaUpdate);
     }
 
     @Override
-    public Boolean removeList(Long userId, List<Long> ids) {
-        if (CollectionUtil.isEmpty(ids)) {
+    public Boolean removeList(Long userId, List<Long> ids)
+    {
+        if (CollectionUtil.isEmpty(ids))
+        {
             return Boolean.TRUE;
         }
         List<File> list = super.list(Wrappers.<File>lambdaQuery().in(File::getId, ids));
-        if (list.isEmpty()) {
+        if (list.isEmpty())
+        {
             return true;
         }
         super.removeByIds(ids);
 
-        fileStrategy.delete(list.stream().map((fi) -> FileDeleteDO.builder()
-                .relativePath(fi.getRelativePath())
-                .fileName(fi.getFilename())
-                .group(fi.getGroup())
-                .path(fi.getPath())
-                .file(false)
-                .build())
-                .collect(Collectors.toList()));
+        fileStrategy.delete(list.stream()
+                                .map((fi) -> FileDeleteDO.builder()
+                                                         .relativePath(fi.getRelativePath())
+                                                         .fileName(fi.getFilename())
+                                                         .group(fi.getGroup())
+                                                         .path(fi.getPath())
+                                                         .file(false)
+                                                         .build())
+                                .collect(Collectors.toList()));
         return true;
     }
 
     @Override
-    public void download(HttpServletRequest request, HttpServletResponse response, Long[] ids, Long userId) throws Exception {
-        if (ids == null || ids.length == 0) {
+    public void download(HttpServletRequest request, HttpServletResponse response, Long[] ids, Long userId) throws Exception
+    {
+        if (ids == null || ids.length == 0)
+        {
             return;
         }
         List<File> list = (List<File>) super.listByIds(Arrays.asList(ids));
 
-        if (list == null || list.size() == 0) {
+        if (list == null || list.size() == 0)
+        {
             return;
         }
-        List<FileDO> listDo = list.stream().map((file) ->
-                FileDO.builder()
-                        .dataType(file.getDataType())
-                        .size(file.getSize())
-                        .submittedFileName(file.getSubmittedFileName())
-                        .url(file.getUrl())
-                        .build())
-                .collect(Collectors.toList());
+        List<FileDO> listDo = list.stream()
+                                  .map((file) -> FileDO.builder()
+                                                       .dataType(file.getDataType())
+                                                       .size(file.getSize())
+                                                       .submittedFileName(file.getSubmittedFileName())
+                                                       .url(file.getUrl())
+                                                       .build())
+                                  .collect(Collectors.toList());
         fileBiz.down(listDo, request, response);
     }
 
 
     @Override
-    public FileOverviewDTO findOverview(Long userId, LocalDateTime startTime, LocalDateTime endTime) {
+    public FileOverviewDTO findOverview(Long userId, LocalDateTime startTime, LocalDateTime endTime)
+    {
         InnerQueryDate innerQueryDate = new InnerQueryDate(userId, startTime, endTime).invoke();
         startTime = innerQueryDate.getStartTime();
         endTime = innerQueryDate.getEndTime();
@@ -202,10 +217,12 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
 
         long allSize = 0L;
         int allNum = 0;
-        for (FileStatisticsDO fs : list) {
+        for (FileStatisticsDO fs : list)
+        {
             allSize += fs.getSize();
             allNum += fs.getNum();
-            switch (fs.getDataType()) {
+            switch (fs.getDataType())
+            {
                 case DIR:
                     builder.dirNum(fs.getNum());
                     break;
@@ -233,7 +250,8 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
     }
 
     @Override
-    public FileStatisticsAllDTO findAllByDate(Long userId, LocalDateTime startTime, LocalDateTime endTime) {
+    public FileStatisticsAllDTO findAllByDate(Long userId, LocalDateTime startTime, LocalDateTime endTime)
+    {
         InnerQueryDate innerQueryDate = new InnerQueryDate(userId, startTime, endTime).invoke();
         startTime = innerQueryDate.getStartTime();
         endTime = innerQueryDate.getEndTime();
@@ -250,15 +268,17 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
         List<Integer> numList = new ArrayList<>();
 
         dateList.forEach((date) -> {
-            if (map.containsKey(date)) {
+            if (map.containsKey(date))
+            {
                 List<FileStatisticsDO> subList = map.get(date);
 
                 Long size = subList.stream().mapToLong(FileStatisticsDO::getSize).sum();
-                Integer num = subList.stream().filter((fs) -> !DataType.DIR.eq(fs.getDataType()))
-                        .mapToInt(FileStatisticsDO::getNum).sum();
+                Integer num = subList.stream().filter((fs) -> !DataType.DIR.eq(fs.getDataType())).mapToInt(FileStatisticsDO::getNum).sum();
                 sizeList.add(size);
                 numList.add(num);
-            } else {
+            }
+            else
+            {
                 sizeList.add(0L);
                 numList.add(0);
             }
@@ -269,7 +289,8 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
 
 
     @Override
-    public List<FileStatisticsDO> findAllByDataType(Long userId) {
+    public List<FileStatisticsDO> findAllByDataType(Long userId)
+    {
         List<DataType> dataTypes = Arrays.asList(DataType.values());
         List<FileStatisticsDO> list = baseMapper.findNumAndSizeByUserId(userId, null, "ALL", null, null);
 
@@ -277,9 +298,12 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
 
         return dataTypes.stream().map((type) -> {
             FileStatisticsDO fs = null;
-            if (map.containsKey(type)) {
+            if (map.containsKey(type))
+            {
                 fs = map.get(type).get(0);
-            } else {
+            }
+            else
+            {
                 fs = FileStatisticsDO.builder().dataType(type).size(0L).num(0).build();
             }
             return fs;
@@ -287,21 +311,21 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
     }
 
     @Override
-    public List<FileStatisticsDO> downTop20(Long userId) {
+    public List<FileStatisticsDO> downTop20(Long userId)
+    {
         return baseMapper.findDownTop20(userId);
     }
 
     @Override
-    public FileStatisticsAllDTO findNumAndSizeToTypeByDate(Long userId, LocalDateTime startTime, LocalDateTime endTime) {
-        return common(userId, startTime, endTime,
-                (qd) -> baseMapper.findNumAndSizeByUserId(qd.getUserId(), qd.getDateType(), "ALL", qd.getStartTime(), qd.getEndTime()));
+    public FileStatisticsAllDTO findNumAndSizeToTypeByDate(Long userId, LocalDateTime startTime, LocalDateTime endTime)
+    {
+        return common(userId, startTime, endTime, (qd) -> baseMapper.findNumAndSizeByUserId(qd.getUserId(), qd.getDateType(), "ALL", qd.getStartTime(), qd.getEndTime()));
     }
 
     @Override
-    public FileStatisticsAllDTO findDownSizeByDate(Long userId, LocalDateTime startTime,
-                                                   LocalDateTime endTime) {
-        return common(userId, startTime, endTime,
-                (qd) -> baseMapper.findDownSizeByDate(qd.getUserId(), qd.getDateType(), qd.getStartTime(), qd.getEndTime()));
+    public FileStatisticsAllDTO findDownSizeByDate(Long userId, LocalDateTime startTime, LocalDateTime endTime)
+    {
+        return common(userId, startTime, endTime, (qd) -> baseMapper.findDownSizeByDate(qd.getUserId(), qd.getDateType(), qd.getStartTime(), qd.getEndTime()));
     }
 
     /**
@@ -313,7 +337,8 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
      * @param function  回调函数
      * @return
      */
-    private FileStatisticsAllDTO common(Long userId, LocalDateTime startTime, LocalDateTime endTime, Function<InnerQueryDate, List<FileStatisticsDO>> function) {
+    private FileStatisticsAllDTO common(Long userId, LocalDateTime startTime, LocalDateTime endTime, Function<InnerQueryDate, List<FileStatisticsDO>> function)
+    {
         InnerQueryDate innerQueryDate = new InnerQueryDate(userId, startTime, endTime).invoke();
         List<String> dateList = innerQueryDate.getDateList();
 
@@ -343,7 +368,8 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
         List<Integer> otherNumList = new ArrayList<>(dateList.size());
 
         dateList.forEach((date) -> {
-            if (map.containsKey(date)) {
+            if (map.containsKey(date))
+            {
                 List<FileStatisticsDO> subList = map.get(date);
 
                 Function<DataType, Stream<FileStatisticsDO>> stream = (dataType) -> subList.stream().filter((fs) -> !dataType.eq(fs.getDataType()));
@@ -352,8 +378,7 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
                 sizeList.add(size);
                 numList.add(num);
 
-                Integer dirNum = subList.stream().filter((fs) -> DataType.DIR.eq(fs.getDataType()))
-                        .mapToInt(FileStatisticsDO::getNum).sum();
+                Integer dirNum = subList.stream().filter((fs) -> DataType.DIR.eq(fs.getDataType())).mapToInt(FileStatisticsDO::getNum).sum();
                 dirNumList.add(dirNum);
 
                 add(imgSizeList, imgNumList, subList, DataType.IMAGE);
@@ -362,7 +387,9 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
                 add(docSizeList, docNumList, subList, DataType.DOC);
                 add(otherSizeList, otherNumList, subList, DataType.OTHER);
 
-            } else {
+            }
+            else
+            {
                 sizeList.add(0L);
                 numList.add(0);
                 dirNumList.add(0);
@@ -380,20 +407,26 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
         });
 
         return FileStatisticsAllDTO.builder()
-                .dateList(dateList)
-                .numList(numList).sizeList(sizeList)
-                .dirNumList(dirNumList)
-                .imgNumList(imgNumList).imgSizeList(imgSizeList)
-                .videoNumList(videoNumList).videoSizeList(videoSizeList)
-                .audioNumList(audioNumList).audioSizeList(audioSizeList)
-                .docNumList(docNumList).docSizeList(docSizeList)
-                .otherNumList(otherNumList).otherSizeList(otherSizeList)
-                .build();
+                                   .dateList(dateList)
+                                   .numList(numList)
+                                   .sizeList(sizeList)
+                                   .dirNumList(dirNumList)
+                                   .imgNumList(imgNumList)
+                                   .imgSizeList(imgSizeList)
+                                   .videoNumList(videoNumList)
+                                   .videoSizeList(videoSizeList)
+                                   .audioNumList(audioNumList)
+                                   .audioSizeList(audioSizeList)
+                                   .docNumList(docNumList)
+                                   .docSizeList(docSizeList)
+                                   .otherNumList(otherNumList)
+                                   .otherSizeList(otherSizeList)
+                                   .build();
     }
 
-    private void add(List<Long> sizeList, List<Integer> numList, List<FileStatisticsDO> subList, DataType dt) {
-        Function<DataType, Stream<FileStatisticsDO>> stream =
-                dataType -> subList.stream().filter(fs -> dataType.eq(fs.getDataType()));
+    private void add(List<Long> sizeList, List<Integer> numList, List<FileStatisticsDO> subList, DataType dt)
+    {
+        Function<DataType, Stream<FileStatisticsDO>> stream = dataType -> subList.stream().filter(fs -> dataType.eq(fs.getDataType()));
 
         Long size = stream.apply(dt).mapToLong(FileStatisticsDO::getSize).sum();
         Integer num = stream.apply(dt).mapToInt(FileStatisticsDO::getNum).sum();
@@ -402,24 +435,29 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
     }
 
     @Getter
-    private static class InnerQueryDate {
+    private static class InnerQueryDate
+    {
         private LocalDateTime startTime;
         private LocalDateTime endTime;
         private List<String> dateList;
         private String dateType;
         private Long userId;
 
-        public InnerQueryDate(Long userId, LocalDateTime startTime, LocalDateTime endTime) {
+        public InnerQueryDate(Long userId, LocalDateTime startTime, LocalDateTime endTime)
+        {
             this.userId = userId;
             this.startTime = startTime;
             this.endTime = endTime;
         }
 
-        public InnerQueryDate invoke() {
-            if (startTime == null) {
+        public InnerQueryDate invoke()
+        {
+            if (startTime == null)
+            {
                 startTime = LocalDateTime.now().plusDays(-9);
             }
-            if (endTime == null) {
+            if (endTime == null)
+            {
                 endTime = LocalDateTime.now();
             }
             endTime = LocalDateTime.of(endTime.toLocalDate(), LocalTime.MAX);

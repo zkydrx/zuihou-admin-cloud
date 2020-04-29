@@ -10,7 +10,8 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author xuxueli 2018-01-22 21:37:34
  */
-public class LocalCacheUtil {
+public class LocalCacheUtil
+{
 
     private static ConcurrentMap<String, LocalCacheData> cacheRepository = new ConcurrentHashMap<String, LocalCacheData>();   // 类型建议用抽象父类，兼容性更好；
 
@@ -22,19 +23,23 @@ public class LocalCacheUtil {
      * @param cacheTime
      * @return
      */
-    public static boolean set(String key, Object val, long cacheTime) {
+    public static boolean set(String key, Object val, long cacheTime)
+    {
 
         // clean timeout cache, before set new cache (avoid cache too much)
         cleanTimeutCache();
 
         // set new cache
-        if (StringUtils.isBlank(key)) {
+        if (StringUtils.isBlank(key))
+        {
             return false;
         }
-        if (val == null) {
+        if (val == null)
+        {
             remove(key);
         }
-        if (cacheTime <= 0) {
+        if (cacheTime <= 0)
+        {
             remove(key);
         }
         long timeoutTime = System.currentTimeMillis() + cacheTime;
@@ -49,8 +54,10 @@ public class LocalCacheUtil {
      * @param key
      * @return
      */
-    public static boolean remove(String key) {
-        if (StringUtils.isBlank(key)) {
+    public static boolean remove(String key)
+    {
+        if (StringUtils.isBlank(key))
+        {
             return false;
         }
         cacheRepository.remove(key);
@@ -63,14 +70,19 @@ public class LocalCacheUtil {
      * @param key
      * @return
      */
-    public static Object get(String key) {
-        if (StringUtils.isBlank(key)) {
+    public static Object get(String key)
+    {
+        if (StringUtils.isBlank(key))
+        {
             return null;
         }
         LocalCacheData localCacheData = cacheRepository.get(key);
-        if (localCacheData != null && System.currentTimeMillis() < localCacheData.getTimeoutTime()) {
+        if (localCacheData != null && System.currentTimeMillis() < localCacheData.getTimeoutTime())
+        {
             return localCacheData.getVal();
-        } else {
+        }
+        else
+        {
             remove(key);
             return null;
         }
@@ -81,11 +93,15 @@ public class LocalCacheUtil {
      *
      * @return
      */
-    public static boolean cleanTimeutCache() {
-        if (!cacheRepository.keySet().isEmpty()) {
-            for (String key : cacheRepository.keySet()) {
+    public static boolean cleanTimeutCache()
+    {
+        if (!cacheRepository.keySet().isEmpty())
+        {
+            for (String key : cacheRepository.keySet())
+            {
                 LocalCacheData localCacheData = cacheRepository.get(key);
-                if (localCacheData != null && System.currentTimeMillis() >= localCacheData.getTimeoutTime()) {
+                if (localCacheData != null && System.currentTimeMillis() >= localCacheData.getTimeoutTime())
+                {
                     cacheRepository.remove(key);
                 }
             }
@@ -93,41 +109,50 @@ public class LocalCacheUtil {
         return true;
     }
 
-    private static class LocalCacheData {
+    private static class LocalCacheData
+    {
         private String key;
         private Object val;
         private long timeoutTime;
 
-        public LocalCacheData() {
+        public LocalCacheData()
+        {
         }
 
-        public LocalCacheData(String key, Object val, long timeoutTime) {
+        public LocalCacheData(String key, Object val, long timeoutTime)
+        {
             this.key = key;
             this.val = val;
             this.timeoutTime = timeoutTime;
         }
 
-        public String getKey() {
+        public String getKey()
+        {
             return key;
         }
 
-        public void setKey(String key) {
+        public void setKey(String key)
+        {
             this.key = key;
         }
 
-        public Object getVal() {
+        public Object getVal()
+        {
             return val;
         }
 
-        public void setVal(Object val) {
+        public void setVal(Object val)
+        {
             this.val = val;
         }
 
-        public long getTimeoutTime() {
+        public long getTimeoutTime()
+        {
             return timeoutTime;
         }
 
-        public void setTimeoutTime(long timeoutTime) {
+        public void setTimeoutTime(long timeoutTime)
+        {
             this.timeoutTime = timeoutTime;
         }
     }

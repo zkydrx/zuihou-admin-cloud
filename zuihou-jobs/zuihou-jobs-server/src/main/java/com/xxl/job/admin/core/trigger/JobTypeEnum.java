@@ -6,7 +6,8 @@ package com.xxl.job.admin.core.trigger;
  * @author zuihou
  * @date 2018/11/23
  */
-public enum JobTypeEnum {
+public enum JobTypeEnum
+{
     /**
      * 表达式定时
      */
@@ -19,21 +20,26 @@ public enum JobTypeEnum {
     private int code;
     private String title;
 
-    JobTypeEnum(int code, String title) {
+    JobTypeEnum(int code, String title)
+    {
         this.code = code;
         this.title = title;
     }
 
-    public int getCode() {
+    public int getCode()
+    {
         return code;
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
-    public boolean eq(Integer type) {
-        if (type != null && type == this.code) {
+    public boolean eq(Integer type)
+    {
+        if (type != null && type == this.code)
+        {
             return true;
         }
         return false;

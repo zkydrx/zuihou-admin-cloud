@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "ProviderType", description = "供应商类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum ProviderType implements BaseEnum {
+public enum ProviderType implements BaseEnum
+{
 
     /**
      * TENCENT="0","腾讯云短信",
@@ -45,25 +46,32 @@ public enum ProviderType implements BaseEnum {
 
     private String regex;
 
-    public static ProviderType match(String val, ProviderType def) {
-        for (ProviderType enm : ProviderType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static ProviderType match(String val, ProviderType def)
+    {
+        for (ProviderType enm : ProviderType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static ProviderType get(String val) {
+    public static ProviderType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(ProviderType val) {
-        if (val == null) {
+    public boolean eq(ProviderType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -71,14 +79,19 @@ public enum ProviderType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "ALI,TENCENT,BAIDU", example = "ALI")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 
-    public SendStatus getTaskStatus(String code) {
-        if (this.val.equalsIgnoreCase(code)) {
+    public SendStatus getTaskStatus(String code)
+    {
+        if (this.val.equalsIgnoreCase(code))
+        {
             return SendStatus.SUCCESS;
-        } else {
+        }
+        else
+        {
             return SendStatus.FAIL;
         }
     }

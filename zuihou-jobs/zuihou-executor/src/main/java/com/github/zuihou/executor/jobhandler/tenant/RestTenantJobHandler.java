@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
 @JobHandler(value = "restTenantJobHandler")
 @Component
 @Slf4j
-public class RestTenantJobHandler extends IJobHandler {
+public class RestTenantJobHandler extends IJobHandler
+{
 
     /**
      * 内置租户
@@ -47,7 +48,8 @@ public class RestTenantJobHandler extends IJobHandler {
     private String database;
 
     @Override
-    public ReturnT<String> execute2(String param) throws Exception {
+    public ReturnT<String> execute2(String param) throws Exception
+    {
         XxlJobLogger.log("执行参数--->param={} ", param);
 
         List<Tenant> list = tenantService.list(Wraps.<Tenant>lbQ().eq(Tenant::getCode, param).ne(Tenant::getCode, DEF_TENANT));
@@ -55,7 +57,8 @@ public class RestTenantJobHandler extends IJobHandler {
         List<String> tenantCodeList = list.parallelStream().map(Tenant::getCode).collect(Collectors.toList());
 
         //删除租户库
-        if (!tenantCodeList.isEmpty()) {
+        if (!tenantCodeList.isEmpty())
+        {
             tenantService.remove(Wraps.<Tenant>lbQ().in(Tenant::getCode, tenantCodeList));
             tenantCodeList.forEach((tenant) -> initDbMapper.dropDatabase(database + StrUtil.UNDERLINE + tenant));
         }

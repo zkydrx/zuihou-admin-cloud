@@ -26,7 +26,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "GlobalUserSaveDTO", description = "全局账号")
-public class GlobalUserSaveDTO implements Serializable {
+public class GlobalUserSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

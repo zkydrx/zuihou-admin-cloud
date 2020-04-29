@@ -32,13 +32,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/systemApi")
 @Api(value = "SystemApi", tags = "API接口")
 @PreAuth(replace = "systemApi:")
-public class SystemApiController extends SuperCacheController<SystemApiService, Long, SystemApi, SystemApi, SystemApiSaveDTO, SystemApiUpdateDTO> {
+public class SystemApiController extends SuperCacheController<SystemApiService, Long, SystemApi, SystemApi, SystemApiSaveDTO, SystemApiUpdateDTO>
+{
 
     @Override
-    public R<SystemApi> handlerSave(SystemApiSaveDTO data) {
+    public R<SystemApi> handlerSave(SystemApiSaveDTO data)
+    {
         SystemApi systemApi = BeanPlusUtil.toBean(data, SystemApi.class);
         systemApi.setIsPersist(false);
-        if (StrUtil.isEmpty(systemApi.getCode())) {
+        if (StrUtil.isEmpty(systemApi.getCode()))
+        {
             systemApi.setCode(DigestUtils.md5Hex(systemApi.getServiceId() + systemApi.getPath()));
         }
 

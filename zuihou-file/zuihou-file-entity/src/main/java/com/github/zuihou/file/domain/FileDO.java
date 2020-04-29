@@ -13,7 +13,8 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class FileDO {
+public class FileDO
+{
     /**
      * 原始文件名
      */

@@ -14,7 +14,8 @@ import java.util.List;
  */
 @SqlParser(filter = true)
 @Repository
-public interface XxlJobLogGlueDao {
+public interface XxlJobLogGlueDao
+{
 
 
     public int save(XxlJobLogGlue xxlJobLogGlue);

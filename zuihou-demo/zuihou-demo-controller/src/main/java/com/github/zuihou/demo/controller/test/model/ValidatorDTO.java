@@ -28,7 +28,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "HiberDTO", description = "测试验证对象")
-public class ValidatorDTO extends Entity<Long> {
+public class ValidatorDTO extends Entity<Long>
+{
 
     /**
      * 应用编码

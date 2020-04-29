@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-07-03
  */
 @Repository
-public interface UserRoleMapper extends SuperMapper<UserRole> {
+public interface UserRoleMapper extends SuperMapper<UserRole>
+{
 
 }

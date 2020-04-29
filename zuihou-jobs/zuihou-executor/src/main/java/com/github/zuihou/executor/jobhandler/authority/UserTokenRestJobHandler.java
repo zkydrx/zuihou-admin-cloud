@@ -30,13 +30,15 @@ import java.time.LocalDateTime;
 @JobHandler(value = "userTokenRestJobHandler")
 @Component
 @Slf4j
-public class UserTokenRestJobHandler extends GlobalTenantJobHandler {
+public class UserTokenRestJobHandler extends GlobalTenantJobHandler
+{
 
     @Autowired
     private UserTokenService userTokenService;
 
     @Override
-    public ReturnT<String> executeBiz(Tenant tenant, String param) {
+    public ReturnT<String> executeBiz(Tenant tenant, String param)
+    {
 
         BaseContextHandler.setTenant(tenant.getCode());
         LbqWrapper<UserToken> wrapper = Wraps.<UserToken>lbQ().le(UserToken::getExpireTime, LocalDateTime.now());

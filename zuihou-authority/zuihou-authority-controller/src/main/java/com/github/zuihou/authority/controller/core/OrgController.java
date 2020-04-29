@@ -43,10 +43,12 @@ import static com.github.zuihou.utils.StrPool.*;
 @RequestMapping("/org")
 @Api(value = "Org", tags = "组织")
 @PreAuth(replace = "org:")
-public class OrgController extends SuperCacheController<OrgService, Long, Org, Org, OrgSaveDTO, OrgUpdateDTO> {
+public class OrgController extends SuperCacheController<OrgService, Long, Org, Org, OrgSaveDTO, OrgUpdateDTO>
+{
 
     @Override
-    public R<Org> handlerSave(OrgSaveDTO model) {
+    public R<Org> handlerSave(OrgSaveDTO model)
+    {
         Org org = BeanPlusUtil.toBean(model, Org.class);
         fillOrg(org);
         this.baseService.save(org);
@@ -54,18 +56,23 @@ public class OrgController extends SuperCacheController<OrgService, Long, Org, O
     }
 
     @Override
-    public R<Org> handlerUpdate(OrgUpdateDTO model) {
+    public R<Org> handlerUpdate(OrgUpdateDTO model)
+    {
         Org org = BeanPlusUtil.toBean(model, Org.class);
         fillOrg(org);
         this.baseService.updateAllById(org);
         return success(org);
     }
 
-    private Org fillOrg(Org org) {
-        if (org.getParentId() == null || org.getParentId() <= 0) {
+    private Org fillOrg(Org org)
+    {
+        if (org.getParentId() == null || org.getParentId() <= 0)
+        {
             org.setParentId(DEF_PARENT_ID);
             org.setTreePath(DEF_ROOT_PATH);
-        } else {
+        }
+        else
+        {
             Org parent = this.baseService.getByIdCache(org.getParentId());
             BizAssert.notNull(parent, "父组织不能为空");
 
@@ -75,7 +82,8 @@ public class OrgController extends SuperCacheController<OrgService, Long, Org, O
     }
 
     @Override
-    public R<Boolean> handlerDelete(List<Long> ids) {
+    public R<Boolean> handlerDelete(List<Long> ids)
+    {
         return this.success(baseService.remove(ids));
     }
 
@@ -91,16 +99,16 @@ public class OrgController extends SuperCacheController<OrgService, Long, Org, O
     @ApiOperation(value = "查询系统所有的组织树", notes = "查询系统所有的组织树")
     @GetMapping("/tree")
     @SysLog("查询系统所有的组织树")
-    public R<List<Org>> tree(@RequestParam(value = "name", required = false) String name,
-                             @RequestParam(value = "status", required = false) Boolean status) {
-        List<Org> list = this.baseService.list(Wraps.<Org>lbQ()
-                .like(Org::getLabel, name).eq(Org::getStatus, status).orderByAsc(Org::getSortValue));
+    public R<List<Org>> tree(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "status", required = false) Boolean status)
+    {
+        List<Org> list = this.baseService.list(Wraps.<Org>lbQ().like(Org::getLabel, name).eq(Org::getStatus, status).orderByAsc(Org::getSortValue));
         return this.success(TreeUtil.buildTree(list));
     }
 
 
     @Override
-    public R<Boolean> handlerImport(List<Map<String, String>> list) {
+    public R<Boolean> handlerImport(List<Map<String, String>> list)
+    {
         List<Org> userList = list.stream().map((map) -> {
             Org item = new Org();
             item.setDescribe(map.getOrDefault("描述", EMPTY));

@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public enum IconType {
+public enum IconType
+{
     /**
      * 图标
      */
@@ -25,93 +26,93 @@ public enum IconType {
     /**
      * 图标
      */
-//    EXE("exe", "fa-exe-o"),
-//    PDF("pdf", "fa-file-pdf-o"),
-//    //    PSD("psd", "fa-ps-o"),
-//    XLX("xls", "fa-file-excel-o"),
-//    /**
-//     * 图标
-//     */
-//    XLSX("xlsx", "fa-file-excel-o"),
-//    /**
-//     * 图标
-//     */
-//    WPS("wps", "fa-file-word-o"),
-//    /**
-//     * 图标
-//     */
-//    WPT("pwt", "fa-file-word-o"),
-//    /**
-//     * 图标
-//     */
-//    JS("js", "fa-file-code-o"),
-//    /**
-//     * 图标
-//     */
-//    JSP("js", "fa-file-code-o"),
-//    /**
-//     * 图标
-//     */
-//    PROPERTIES("properties", "fa-file-code-o"),
+    //    EXE("exe", "fa-exe-o"),
+    //    PDF("pdf", "fa-file-pdf-o"),
+    //    //    PSD("psd", "fa-ps-o"),
+    //    XLX("xls", "fa-file-excel-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    XLSX("xlsx", "fa-file-excel-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    WPS("wps", "fa-file-word-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    WPT("pwt", "fa-file-word-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    JS("js", "fa-file-code-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    JSP("js", "fa-file-code-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    PROPERTIES("properties", "fa-file-code-o"),
 
     /**
      * 图标
      */
-//    CSS("css", "fa-file-code-o"),
-//    SWF("swf", "fa-swf-o"),
+    //    CSS("css", "fa-file-code-o"),
+    //    SWF("swf", "fa-swf-o"),
     /**
      * 图标
      */
-//    DOC("doc", "fa-file-word-o"),
-//    /**
-//     * 图标
-//     */
-//    DOCX("docx", "fa-file-word-o"),
-//    /**
-//     * 图标
-//     */
-//    DOTX("dotx", "fa-file-word-o"),
-//    /**
-//     * 图标
-//     */
-//    PPS("pps", "fa-file-powerpoint-o"),
-//    /**
-//     * 图标
-//     */
-//    PPT("ppt", "fa-file-powerpoint-o"),
-//    /**
-//     * 图标
-//     */
-//    POT("pot", "fa-file-powerpoint-o"),
-//    /**
-//     * 图标
-//     */
-//    PPTX("pptx", "fa-file-powerpoint-o"),
-//    HTML("html", "fa-html-o"),
-//    HTM("htm", "fa-html-o"),
+    //    DOC("doc", "fa-file-word-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    DOCX("docx", "fa-file-word-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    DOTX("dotx", "fa-file-word-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    PPS("pps", "fa-file-powerpoint-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    PPT("ppt", "fa-file-powerpoint-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    POT("pot", "fa-file-powerpoint-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    PPTX("pptx", "fa-file-powerpoint-o"),
+    //    HTML("html", "fa-html-o"),
+    //    HTM("htm", "fa-html-o"),
 
-//    JAR("jar", "fa-file-jar-o"),
-//    WAR("war", "fa-file-war-o"),
+    //    JAR("jar", "fa-file-jar-o"),
+    //    WAR("war", "fa-file-war-o"),
     /**
      * 图标
      */
-//    GZIP("gzip", "fa-file-zip-o"),
-//    /**
-//     * 图标
-//     */
-//    TAR("tar", "fa-file-zip-o"),
-//    /**
-//     * 图标
-//     */
-//    ZIP("zip", "fa-file-zip-o"),
-//    /**
-//     * 图标
-//     */
-//    RAR("rar", "fa-file-zip-o"),
-//    /**
-//     * 图标
-//     */
-//    TAR_GZ("tar.gz", "fa-file-zip-o"),
+    //    GZIP("gzip", "fa-file-zip-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    TAR("tar", "fa-file-zip-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    ZIP("zip", "fa-file-zip-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    RAR("rar", "fa-file-zip-o"),
+    //    /**
+    //     * 图标
+    //     */
+    //    TAR_GZ("tar.gz", "fa-file-zip-o"),
 
     /**
      * 图标
@@ -194,12 +195,16 @@ public enum IconType {
     private String ext;
     private String icon;
 
-    public static IconType getIcon(String ext) {
-        if (ext == null || ext.isEmpty()) {
+    public static IconType getIcon(String ext)
+    {
+        if (ext == null || ext.isEmpty())
+        {
             return OTHER;
         }
-        for (IconType it : IconType.values()) {
-            if (it.getExt().equalsIgnoreCase(ext)) {
+        for (IconType it : IconType.values())
+        {
+            if (it.getExt().equalsIgnoreCase(ext))
+            {
                 return it;
             }
         }

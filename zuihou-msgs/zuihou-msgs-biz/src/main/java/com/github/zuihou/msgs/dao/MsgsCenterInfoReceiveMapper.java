@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-08-01
  */
 @Repository
-public interface MsgsCenterInfoReceiveMapper extends SuperMapper<MsgsCenterInfoReceive> {
+public interface MsgsCenterInfoReceiveMapper extends SuperMapper<MsgsCenterInfoReceive>
+{
 
 }

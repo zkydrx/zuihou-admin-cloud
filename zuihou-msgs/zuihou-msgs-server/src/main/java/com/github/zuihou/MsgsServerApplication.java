@@ -22,26 +22,23 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableTransactionManagement
-@EnableFeignClients(value = {
-        "com.github.zuihou",
-})
+@EnableFeignClients(value = {"com.github.zuihou",})
 @Slf4j
 @EnableLoginArgResolver
 @EnableFormValidator
-public class MsgsServerApplication {
-    public static void main(String[] args) throws UnknownHostException {
+public class MsgsServerApplication
+{
+    public static void main(String[] args) throws UnknownHostException
+    {
         ConfigurableApplicationContext application = SpringApplication.run(MsgsServerApplication.class, args);
         Environment env = application.getEnvironment();
-        log.info("\n----------------------------------------------------------\n\t" +
-                        "应用 '{}' 运行成功! 访问连接:\n\t" +
-                        "Swagger文档: \t\thttp://{}:{}/doc.html\n\t" +
-                        "数据库监控: \t\thttp://{}:{}/druid\n" +
-                        "----------------------------------------------------------",
-                env.getProperty("spring.application.name"),
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"),
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port")
+        log.info("\n----------------------------------------------------------\n\t" + "应用 '{}' 运行成功! 访问连接:\n\t" + "Swagger文档: \t\thttp://{}:{}/doc.html\n\t" + "数据库监控: " + "\t" +
+                         "\thttp://{}:{}/druid\n" + "----------------------------------------------------------",
+                 env.getProperty("spring.application.name"),
+                 InetAddress.getLocalHost().getHostAddress(),
+                 env.getProperty("server.port"),
+                 InetAddress.getLocalHost().getHostAddress(),
+                 env.getProperty("server.port")
 
         );
     }

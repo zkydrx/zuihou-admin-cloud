@@ -35,18 +35,22 @@ import static com.github.zuihou.common.constant.CacheKey.ORG;
  */
 @Slf4j
 @Service
-public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implements OrgService {
+public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implements OrgService
+{
     @Autowired
     private RoleOrgService roleOrgService;
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return ORG;
     }
 
     @Override
-    public List<Org> findChildren(List<Long> ids) {
-        if (CollectionUtil.isEmpty(ids)) {
+    public List<Org> findChildren(List<Long> ids)
+    {
+        if (CollectionUtil.isEmpty(ids))
+        {
             return Collections.emptyList();
         }
         // MySQL 全文索引
@@ -57,7 +61,8 @@ public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implem
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean remove(List<Long> ids) {
+    public boolean remove(List<Long> ids)
+    {
         List<Org> list = this.findChildren(ids);
         List<Long> idList = list.stream().mapToLong(Org::getId).boxed().collect(Collectors.toList());
 
@@ -69,7 +74,8 @@ public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implem
     }
 
     @Override
-    public Map<Serializable, Object> findOrgByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findOrgByIds(Set<Serializable> ids)
+    {
         List<Org> list = getOrgs(ids);
 
         //key 是 组织id， value 是org 对象
@@ -77,22 +83,26 @@ public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implem
         return typeMap;
     }
 
-    private List<Org> getOrgs(Set<Serializable> ids) {
-        if (ids.isEmpty()) {
+    private List<Org> getOrgs(Set<Serializable> ids)
+    {
+        if (ids.isEmpty())
+        {
             return Collections.emptyList();
         }
         List<Long> idList = ids.stream().mapToLong(Convert::toLong).boxed().collect(Collectors.toList());
 
         List<Org> list = null;
-        if (idList.size() <= 1000) {
+        if (idList.size() <= 1000)
+        {
             list = idList.stream().map(this::getByIdCache).filter(Objects::nonNull).collect(Collectors.toList());
-        } else {
-            LbqWrapper<Org> query = Wraps.<Org>lbQ()
-                    .in(Org::getId, idList)
-                    .eq(Org::getStatus, true);
+        }
+        else
+        {
+            LbqWrapper<Org> query = Wraps.<Org>lbQ().in(Org::getId, idList).eq(Org::getStatus, true);
             list = super.list(query);
 
-            if (!list.isEmpty()) {
+            if (!list.isEmpty())
+            {
                 list.forEach(item -> {
                     String itemKey = key(item.getId());
                     cacheChannel.set(getRegion(), itemKey, item);
@@ -103,7 +113,8 @@ public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implem
     }
 
     @Override
-    public Map<Serializable, Object> findOrgNameByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findOrgNameByIds(Set<Serializable> ids)
+    {
         List<Org> list = getOrgs(ids);
 
         //key 是 组织id， value 是org 对象

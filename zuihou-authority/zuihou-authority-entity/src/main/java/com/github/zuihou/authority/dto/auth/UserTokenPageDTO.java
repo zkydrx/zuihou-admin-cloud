@@ -26,7 +26,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserTokenPageDTO", description = "token")
-public class UserTokenPageDTO implements Serializable {
+public class UserTokenPageDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

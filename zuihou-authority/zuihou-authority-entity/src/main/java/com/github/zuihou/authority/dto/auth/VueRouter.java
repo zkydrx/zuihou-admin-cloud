@@ -14,8 +14,9 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VueRouter extends TreeEntity<VueRouter, Long> {
-//public class VueRouter implements ITreeNode<VueRouter, Long>, Serializable {
+public class VueRouter extends TreeEntity<VueRouter, Long>
+{
+    //public class VueRouter implements ITreeNode<VueRouter, Long>, Serializable {
 
     private static final long serialVersionUID = -3327478146308500708L;
     @ApiModelProperty(value = "路径")
@@ -35,30 +36,35 @@ public class VueRouter extends TreeEntity<VueRouter, Long> {
 
     @Override
     @JsonIgnore
-    public Long getId() {
+    public Long getId()
+    {
         return this.id;
     }
 
     @Override
     @JsonIgnore
-    public Long getParentId() {
+    public Long getParentId()
+    {
         return this.parentId;
     }
 
-//    @ApiModelProperty(value = "子路由")
-//    private List<VueRouter> children;
-//
-//    @Override
-//    public List<VueRouter> getChildren() {
-//        return this.children;
-//    }
+    //    @ApiModelProperty(value = "子路由")
+    //    private List<VueRouter> children;
+    //
+    //    @Override
+    //    public List<VueRouter> getChildren() {
+    //        return this.children;
+    //    }
 
-    public Boolean getAlwaysShow() {
+    public Boolean getAlwaysShow()
+    {
         return getChildren() != null && !getChildren().isEmpty();
     }
 
-    public String getComponent() {
-        if (getChildren() != null && !getChildren().isEmpty()) {
+    public String getComponent()
+    {
+        if (getChildren() != null && !getChildren().isEmpty())
+        {
             return "Layout";
         }
         return this.component;

@@ -12,22 +12,24 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  * @date 2019-12-09 17:23
  */
 @Slf4j
-public class OkHttpTracePostProcessor implements BeanPostProcessor {
+public class OkHttpTracePostProcessor implements BeanPostProcessor
+{
 
     final OkhttpTraceInterceptor okhttpTraceInterceptor;
 
-    public OkHttpTracePostProcessor(OkhttpTraceInterceptor okhttpTraceInterceptor) {
+    public OkHttpTracePostProcessor(OkhttpTraceInterceptor okhttpTraceInterceptor)
+    {
         this.okhttpTraceInterceptor = okhttpTraceInterceptor;
     }
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof okhttp3.OkHttpClient) {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException
+    {
+        if (bean instanceof okhttp3.OkHttpClient)
+        {
             //添加过滤器，该过滤器主要是将在请求头中添加追踪信息
             okhttp3.OkHttpClient client = (okhttp3.OkHttpClient) bean;
-            bean = client.newBuilder()
-                    .addInterceptor(okhttpTraceInterceptor)
-                    .build();
+            bean = client.newBuilder().addInterceptor(okhttpTraceInterceptor).build();
             log.info("addInterceptor okhttpTraceInterceptor to bean:{}", beanName);
         }
 
@@ -35,7 +37,8 @@ public class OkHttpTracePostProcessor implements BeanPostProcessor {
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
+    {
         return bean;
     }
 

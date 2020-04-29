@@ -18,7 +18,8 @@ import org.springframework.stereotype.Repository;
  * @date 2019-08-01
  */
 @Repository
-public interface MsgsCenterInfoMapper extends SuperMapper<MsgsCenterInfo> {
+public interface MsgsCenterInfoMapper extends SuperMapper<MsgsCenterInfo>
+{
     /**
      * 查询消息中心分页数据
      *

@@ -36,7 +36,8 @@ import java.time.LocalDateTime;
 @RequestMapping("/loginLog")
 @Api(value = "LoginLog", tags = "登录日志")
 @PreAuth(value = "hasPermit('loginLog:add')", replace = "loginLog:")
-public class LoginLogController extends SuperController<LoginLogService, Long, LoginLog, LoginLog, LoginLog, LoginLogUpdateDTO> {
+public class LoginLogController extends SuperController<LoginLogService, Long, LoginLog, LoginLog, LoginLog, LoginLogUpdateDTO>
+{
 
     /**
      * 分页查询登录日志
@@ -46,44 +47,63 @@ public class LoginLogController extends SuperController<LoginLogService, Long, L
      * @return 查询结果
      */
     @Override
-    public void handlerWrapper(QueryWrap<LoginLog> wrapper, PageParams<LoginLog> params) {
+    public void handlerWrapper(QueryWrap<LoginLog> wrapper, PageParams<LoginLog> params)
+    {
         super.handlerWrapper(wrapper, params);
         LoginLog model = params.getModel();
 
         wrapper.lambda()
-                // 忽略 Wraps.q(model); 时， account  和 requestIp 字段的默认查询规则，
-                .ignore(LoginLog::setAccount)
-                .ignore(LoginLog::setRequestIp)
-                // 使用 自定义的查询规则
-                .likeRight(LoginLog::getAccount, model.getAccount())
-                .likeRight(LoginLog::getRequestIp, model.getRequestIp());
+               // 忽略 Wraps.q(model); 时， account  和 requestIp 字段的默认查询规则，
+               .ignore(LoginLog::setAccount).ignore(LoginLog::setRequestIp)
+               // 使用 自定义的查询规则
+               .likeRight(LoginLog::getAccount, model.getAccount()).likeRight(LoginLog::getRequestIp, model.getRequestIp());
     }
 
     @ApiOperation("清空日志")
     @DeleteMapping("clear")
     @SysLog("清空日志")
-    public R<Boolean> clear(@RequestParam(required = false, defaultValue = "1") Integer type) {
+    public R<Boolean> clear(@RequestParam(required = false, defaultValue = "1") Integer type)
+    {
         LocalDateTime clearBeforeTime = null;
         Integer clearBeforeNum = null;
-        if (type == 1) {
+        if (type == 1)
+        {
             clearBeforeTime = LocalDateTime.now().plusMonths(-1);
-        } else if (type == 2) {
+        }
+        else if (type == 2)
+        {
             clearBeforeTime = LocalDateTime.now().plusMonths(-3);
-        } else if (type == 3) {
+        }
+        else if (type == 3)
+        {
             clearBeforeTime = LocalDateTime.now().plusMonths(-6);
-        } else if (type == 4) {
+        }
+        else if (type == 4)
+        {
             clearBeforeTime = LocalDateTime.now().plusMonths(-12);
-        } else if (type == 5) {
+        }
+        else if (type == 5)
+        {
             clearBeforeNum = 1000;        // 清理一千条以前日志数据
-        } else if (type == 6) {
+        }
+        else if (type == 6)
+        {
             clearBeforeNum = 10000;        // 清理一万条以前日志数据
-        } else if (type == 7) {
+        }
+        else if (type == 7)
+        {
             clearBeforeNum = 30000;        // 清理三万条以前日志数据
-        } else if (type == 8) {
+        }
+        else if (type == 8)
+        {
             clearBeforeNum = 100000;    // 清理十万条以前日志数据
-        } else if (type == 9) {
+        }
+        else if (type == 9)
+        {
             clearBeforeNum = null;            // 清理所有日志数据
-        } else {
+        }
+        else
+        {
             return R.validFail("参数错误");
         }
 

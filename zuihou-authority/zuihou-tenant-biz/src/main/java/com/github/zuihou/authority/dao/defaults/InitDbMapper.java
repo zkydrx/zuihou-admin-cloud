@@ -12,7 +12,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @SqlParser(filter = true)
-public interface InitDbMapper {
+public interface InitDbMapper
+{
     /**
      * 创建数据库
      *

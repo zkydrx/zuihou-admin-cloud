@@ -12,7 +12,8 @@ import java.io.Serializable;
  * @author zuihou
  * @date 2019-05-20
  */
-public class FileConstants implements Serializable {
+public class FileConstants implements Serializable
+{
 
     /**
      * 字段常量
@@ -44,7 +45,8 @@ public class FileConstants implements Serializable {
     public static final String UPDATE_USER = "update_user";
     private static final long serialVersionUID = 1L;
 
-    private FileConstants() {
+    private FileConstants()
+    {
         super();
     }
 }

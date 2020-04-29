@@ -30,7 +30,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "RoleUpdateDTO", description = "角色")
-public class RoleUpdateDTO implements Serializable {
+public class RoleUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

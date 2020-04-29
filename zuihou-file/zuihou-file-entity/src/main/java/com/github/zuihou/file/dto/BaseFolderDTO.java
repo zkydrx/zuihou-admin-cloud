@@ -12,7 +12,8 @@ import javax.validation.constraints.NotEmpty;
  * @date 2019-04-29
  */
 @Data
-public abstract class BaseFolderDTO {
+public abstract class BaseFolderDTO
+{
 
     /**
      * 名称

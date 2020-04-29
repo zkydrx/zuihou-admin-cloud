@@ -17,7 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2019/06/21
  */
 @FeignClient(name = "${zuihou.feign.file-server:zuihou-file-server}"/*, fallback = AttachmentApiFallback.class*/)
-public interface AttachmentApi {
+public interface AttachmentApi
+{
 
     /**
      * 通过feign-form 实现文件 跨服务上传
@@ -29,11 +30,10 @@ public interface AttachmentApi {
      * @return
      */
     @PostMapping(value = "/attachment/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    R<AttachmentDTO> upload(
-            @RequestPart(value = "file") MultipartFile file,
-            @RequestParam(value = "isSingle", required = false, defaultValue = "false") Boolean isSingle,
-            @RequestParam(value = "id", required = false) Long id,
-            @RequestParam(value = "bizId", required = false) String bizId,
-            @RequestParam(value = "bizType", required = false) String bizType);
+    R<AttachmentDTO> upload(@RequestPart(value = "file") MultipartFile file,
+                            @RequestParam(value = "isSingle", required = false, defaultValue = "false") Boolean isSingle,
+                            @RequestParam(value = "id", required = false) Long id,
+                            @RequestParam(value = "bizId", required = false) String bizId,
+                            @RequestParam(value = "bizType", required = false) String bizType);
 
 }

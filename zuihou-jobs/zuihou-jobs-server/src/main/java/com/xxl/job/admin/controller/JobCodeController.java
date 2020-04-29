@@ -23,7 +23,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/jobcode")
-public class JobCodeController {
+public class JobCodeController
+{
 
     @Resource
     private XxlJobInfoDao xxlJobInfoDao;
@@ -31,14 +32,17 @@ public class JobCodeController {
     private XxlJobLogGlueDao xxlJobLogGlueDao;
 
     @RequestMapping
-    public String index(Model model, Integer jobId) {
+    public String index(Model model, Integer jobId)
+    {
         XxlJobInfo jobInfo = xxlJobInfoDao.loadById(jobId);
         List<XxlJobLogGlue> jobLogGlues = xxlJobLogGlueDao.findByJobId(jobId);
 
-        if (jobInfo == null) {
+        if (jobInfo == null)
+        {
             throw new RuntimeException(I18nUtil.getString("jobinfo_glue_jobid_unvalid"));
         }
-        if (GlueTypeEnum.BEAN == GlueTypeEnum.match(jobInfo.getGlueType())) {
+        if (GlueTypeEnum.BEAN == GlueTypeEnum.match(jobInfo.getGlueType()))
+        {
             throw new RuntimeException(I18nUtil.getString("jobinfo_glue_gluetype_unvalid"));
         }
 
@@ -52,16 +56,20 @@ public class JobCodeController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public ReturnT<String> save(Model model, Integer id, String glueSource, String glueRemark) {
+    public ReturnT<String> save(Model model, Integer id, String glueSource, String glueRemark)
+    {
         // valid
-        if (glueRemark == null) {
+        if (glueRemark == null)
+        {
             return new ReturnT<String>(500, (I18nUtil.getString("system_please_input") + I18nUtil.getString("jobinfo_glue_remark")));
         }
-        if (glueRemark.length() < 4 || glueRemark.length() > 100) {
+        if (glueRemark.length() < 4 || glueRemark.length() > 100)
+        {
             return new ReturnT<String>(500, I18nUtil.getString("jobinfo_glue_remark_limit"));
         }
         XxlJobInfo existsJobinfo = xxlJobInfoDao.loadById(id);
-        if (existsJobinfo == null) {
+        if (existsJobinfo == null)
+        {
             return new ReturnT<String>(500, I18nUtil.getString("jobinfo_glue_jobid_unvalid"));
         }
 

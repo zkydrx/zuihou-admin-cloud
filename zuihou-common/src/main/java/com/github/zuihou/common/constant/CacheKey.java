@@ -12,7 +12,8 @@ import com.github.zuihou.utils.StrPool;
  * @author zuihou
  * @date 2019/08/06
  */
-public interface CacheKey {
+public interface CacheKey
+{
     // 权限系统缓存 start
 
     /**
@@ -64,11 +65,11 @@ public interface CacheKey {
      * 完整key: role_resource:{ROLE_ID} -> [RESOURCE_ID, ...]
      */
     String ROLE_RESOURCE = "role_resource";
-//    /**
-//     * 角色拥有那些组织 前缀
-//     * 完整key: role_org:{ROLE_ID} -> [ORG_ID, ...]
-//     */
-//    String ROLE_ORG = "role_org";
+    //    /**
+    //     * 角色拥有那些组织 前缀
+    //     * 完整key: role_org:{ROLE_ID} -> [ORG_ID, ...]
+    //     */
+    //    String ROLE_ORG = "role_org";
 
     /**
      * 用户 前缀
@@ -153,11 +154,11 @@ public interface CacheKey {
      * 完整key: parameter:{id} -> obj
      */
     String PARAMETER = "parameter";
-//    /**
-//     * 用户登录的客户端 前缀： 用于记录用户在那几个设备上登录了
-//     * 完整key: user_login_client:{userid} -> [client, client, ...] (Set)
-//     */
-//    String USER_LOGIN_CLIENT = "user_login_client";
+    //    /**
+    //     * 用户登录的客户端 前缀： 用于记录用户在那几个设备上登录了
+    //     * 完整key: user_login_client:{userid} -> [client, client, ...] (Set)
+    //     */
+    //    String USER_LOGIN_CLIENT = "user_login_client";
 
     /**
      * 用户客户端token 前缀
@@ -200,10 +201,14 @@ public interface CacheKey {
      * @param args
      * @return
      */
-    static String buildTenantKey(Object... args) {
-        if (args.length > 0) {
+    static String buildTenantKey(Object... args)
+    {
+        if (args.length > 0)
+        {
             return StrUtil.join(StrPool.COLON, BaseContextHandler.getTenant(), args);
-        } else {
+        }
+        else
+        {
             return BaseContextHandler.getTenant();
         }
     }
@@ -214,12 +219,18 @@ public interface CacheKey {
      * @param args
      * @return
      */
-    static String buildKey(Object... args) {
-        if (args.length == 1) {
+    static String buildKey(Object... args)
+    {
+        if (args.length == 1)
+        {
             return String.valueOf(args[0]);
-        } else if (args.length > 0) {
+        }
+        else if (args.length > 0)
+        {
             return StrUtil.join(StrPool.COLON, args);
-        } else {
+        }
+        else
+        {
             return "";
         }
     }

@@ -25,7 +25,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "SystemApiScanSaveDTO", description = "API接口")
-public class SystemApiScanSaveDTO implements Serializable {
+public class SystemApiScanSaveDTO implements Serializable
+{
     @Valid
     @ApiModelProperty(value = "api列表")
     private List<SystemApiSaveDTO> systemApiList;

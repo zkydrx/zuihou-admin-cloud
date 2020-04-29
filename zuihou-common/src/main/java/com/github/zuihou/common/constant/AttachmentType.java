@@ -15,22 +15,22 @@ import java.util.Arrays;
  * @author zuihou
  * @date 2018/12/11
  */
-public class AttachmentType {
+public class AttachmentType
+{
 
     /**
      * 后端代码不需要使用该 业务类型时， 无需使用常量，直接在ALL_TYPES数组中写字符串即可。
      * 命名规则:
      * 业务表名_字段名
      */
-    public static final String[] ALL_TYPES = {
-            Authority.APPLICATION_LOGO_URL,
-            Authority.APPLICATION_TITLE_ICON,
-    };
+    public static final String[] ALL_TYPES = {Authority.APPLICATION_LOGO_URL, Authority.APPLICATION_TITLE_ICON,};
 
-    private AttachmentType() {
+    private AttachmentType()
+    {
     }
 
-    public static boolean assertType(String type) {
+    public static boolean assertType(String type)
+    {
         boolean flag = Arrays.asList(ALL_TYPES).contains(type);
         BizAssert.isTrue(flag, ExceptionCode.BAD_GATEWAY);
         return flag;
@@ -41,7 +41,8 @@ public class AttachmentType {
      *
      * @author zuihou
      */
-    interface Authority {
+    interface Authority
+    {
         /**
          * 权限管理系统中的应用表中的logo
          */
@@ -55,7 +56,8 @@ public class AttachmentType {
     /**
      * 文件 业务类型定义
      */
-    interface File {
+    interface File
+    {
 
     }
 
@@ -63,7 +65,8 @@ public class AttachmentType {
     /**
      * 消息系统 业务类型定义
      */
-    interface Msgs {
+    interface Msgs
+    {
 
     }
 

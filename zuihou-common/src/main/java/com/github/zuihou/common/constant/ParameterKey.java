@@ -6,11 +6,13 @@ package com.github.zuihou.common.constant;
  * @author zuihou
  * @date 2020年04月02日22:37:05
  */
-public interface ParameterKey {
+public interface ParameterKey
+{
 
     String LOGIN_POLICY = "LOGIN_POLICY";
 
-    enum LoginPolicy {
+    enum LoginPolicy
+    {
         /**
          * 一个用户在一个应用只能登录一次（如一个用户只能在一个APP上登录，也只能在一个PC端登录，但能同时登录PC和APP）
          * 后面的用户T掉前面的用户
@@ -28,7 +30,8 @@ public interface ParameterKey {
         ONLY_ONE,
         ;
 
-        public boolean eq(String val) {
+        public boolean eq(String val)
+        {
             return this.name().equalsIgnoreCase(val);
         }
     }

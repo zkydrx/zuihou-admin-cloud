@@ -12,7 +12,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019/06/17
  */
-public interface FileStrategy {
+public interface FileStrategy
+{
     /**
      * 文件上传
      *

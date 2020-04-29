@@ -26,13 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/parameter")
 @Api(value = "Parameter", tags = "参数配置")
-public class ParameterController {
+public class ParameterController
+{
     @Autowired
     private ParameterService parameterService;
 
 
     @GetMapping("/value")
-    public R<String> getValue(@RequestParam(value = "key") String key, @RequestParam(value = "defVal") String defVal) {
+    public R<String> getValue(@RequestParam(value = "key") String key, @RequestParam(value = "defVal") String defVal)
+    {
         return R.success(parameterService.getValue(key, defVal));
     }
 

@@ -19,25 +19,25 @@ import static com.github.zuihou.zuul.properties.IgnoreTokenProperties.PREFIX;
  */
 @Data
 @ConfigurationProperties(prefix = PREFIX)
-public class IgnoreTokenProperties {
+public class IgnoreTokenProperties
+{
     public static final String PREFIX = "ignore.token";
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
-    private List<String> url = CollUtil.newArrayList(
-            "/error",
-            "/actuator/**",
-            "/gate/**",
-            "/static/**",
-            "/anno/**",
-            "/**/anno/**",
-            "/**/swagger-ui.html",
-            "/**/doc.html",
-            "/**/webjars/**",
-            "/**/v2/api-docs/**",
-            "/**/v2/api-docs-ext/**",
-            "/**/swagger-resources/**"
-    );
+    private List<String> url = CollUtil.newArrayList("/error",
+                                                     "/actuator/**",
+                                                     "/gate/**",
+                                                     "/static/**",
+                                                     "/anno/**",
+                                                     "/**/anno/**",
+                                                     "/**/swagger-ui.html",
+                                                     "/**/doc.html",
+                                                     "/**/webjars/**",
+                                                     "/**/v2/api-docs/**",
+                                                     "/**/v2/api-docs-ext/**",
+                                                     "/**/swagger-resources/**");
 
-    public boolean isIgnoreToken(String path) {
+    public boolean isIgnoreToken(String path)
+    {
         return getUrl().stream().anyMatch((url) -> path.startsWith(url) || ANT_PATH_MATCHER.match(url, path));
     }
 }

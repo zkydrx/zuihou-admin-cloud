@@ -14,7 +14,8 @@ import com.github.zuihou.base.service.SuperService;
  * @author zuihou
  * @date 2019-10-25
  */
-public interface GlobalUserService extends SuperService<GlobalUser> {
+public interface GlobalUserService extends SuperService<GlobalUser>
+{
 
     /**
      * 检测账号是否可用

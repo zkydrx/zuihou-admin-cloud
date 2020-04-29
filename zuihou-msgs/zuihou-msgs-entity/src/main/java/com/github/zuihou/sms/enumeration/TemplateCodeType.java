@@ -19,7 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "TemplateCodeType", description = "短信模板类型")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum TemplateCodeType implements BaseEnum {
+public enum TemplateCodeType implements BaseEnum
+{
     /**
      * 通用短信
      */
@@ -38,25 +39,32 @@ public enum TemplateCodeType implements BaseEnum {
     private String desc;
 
 
-    public static TemplateCodeType match(String val, TemplateCodeType def) {
-        for (TemplateCodeType enm : TemplateCodeType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static TemplateCodeType match(String val, TemplateCodeType def)
+    {
+        for (TemplateCodeType enm : TemplateCodeType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static TemplateCodeType get(String val) {
+    public static TemplateCodeType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(TemplateCodeType val) {
-        if (val == null) {
+    public boolean eq(TemplateCodeType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -64,7 +72,8 @@ public enum TemplateCodeType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "ZUIHOU_COMMON,TFD_REG,SGW_REG", example = "ZUIHOU_COMMON")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 }

@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
  * @author zuihou
  * @date 2019-07-02
  */
-public interface OptLogService extends SuperService<OptLog> {
+public interface OptLogService extends SuperService<OptLog>
+{
 
     /**
      * 保存日志

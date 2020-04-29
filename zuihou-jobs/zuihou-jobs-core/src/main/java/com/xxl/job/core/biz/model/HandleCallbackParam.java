@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * Created by xuxueli on 17/3/2.
  */
-public class HandleCallbackParam implements Serializable {
+public class HandleCallbackParam implements Serializable
+{
     private static final long serialVersionUID = 42L;
 
     private int logId;
@@ -13,46 +14,51 @@ public class HandleCallbackParam implements Serializable {
 
     private ReturnT<String> executeResult;
 
-    public HandleCallbackParam() {
+    public HandleCallbackParam()
+    {
     }
 
-    public HandleCallbackParam(int logId, long logDateTim, ReturnT<String> executeResult) {
+    public HandleCallbackParam(int logId, long logDateTim, ReturnT<String> executeResult)
+    {
         this.logId = logId;
         this.logDateTim = logDateTim;
         this.executeResult = executeResult;
     }
 
-    public int getLogId() {
+    public int getLogId()
+    {
         return logId;
     }
 
-    public void setLogId(int logId) {
+    public void setLogId(int logId)
+    {
         this.logId = logId;
     }
 
-    public long getLogDateTim() {
+    public long getLogDateTim()
+    {
         return logDateTim;
     }
 
-    public void setLogDateTim(long logDateTim) {
+    public void setLogDateTim(long logDateTim)
+    {
         this.logDateTim = logDateTim;
     }
 
-    public ReturnT<String> getExecuteResult() {
+    public ReturnT<String> getExecuteResult()
+    {
         return executeResult;
     }
 
-    public void setExecuteResult(ReturnT<String> executeResult) {
+    public void setExecuteResult(ReturnT<String> executeResult)
+    {
         this.executeResult = executeResult;
     }
 
     @Override
-    public String toString() {
-        return "HandleCallbackParam{" +
-                "logId=" + logId +
-                ", logDateTim=" + logDateTim +
-                ", executeResult=" + executeResult +
-                '}';
+    public String toString()
+    {
+        return "HandleCallbackParam{" + "logId=" + logId + ", logDateTim=" + logDateTim + ", executeResult=" + executeResult + '}';
     }
 
 }

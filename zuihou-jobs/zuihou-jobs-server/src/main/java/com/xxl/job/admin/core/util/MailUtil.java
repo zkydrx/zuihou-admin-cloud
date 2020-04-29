@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author xuxueli 2016-3-12 15:06:20
  */
-public class MailUtil {
+public class MailUtil
+{
     private static Logger logger = LoggerFactory.getLogger(MailUtil.class);
 
     /**
@@ -21,9 +22,11 @@ public class MailUtil {
      * @param mailBody    邮件正文
      * @return
      */
-    public static boolean sendMail(String toAddress, String mailSubject, String mailBody) {
+    public static boolean sendMail(String toAddress, String mailSubject, String mailBody)
+    {
 
-        try {
+        try
+        {
             // Create the email message
             HtmlEmail email = new HtmlEmail();
 
@@ -33,10 +36,13 @@ public class MailUtil {
 
             email.setHostName(XxlJobAdminConfig.getAdminConfig().getMailHost());
 
-            if (XxlJobAdminConfig.getAdminConfig().isMailSSL()) {
+            if (XxlJobAdminConfig.getAdminConfig().isMailSSL())
+            {
                 email.setSslSmtpPort(XxlJobAdminConfig.getAdminConfig().getMailPort());
                 email.setSSLOnConnect(true);
-            } else {
+            }
+            else
+            {
                 email.setSmtpPort(Integer.valueOf(XxlJobAdminConfig.getAdminConfig().getMailPort()));
             }
 
@@ -52,7 +58,9 @@ public class MailUtil {
 
             email.send();                // send the email
             return true;
-        } catch (EmailException e) {
+        }
+        catch (EmailException e)
+        {
             logger.error(e.getMessage(), e);
 
         }

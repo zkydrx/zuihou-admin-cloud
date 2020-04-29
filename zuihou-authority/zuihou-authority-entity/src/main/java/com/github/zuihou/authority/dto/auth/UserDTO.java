@@ -29,7 +29,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserDTO", description = "用户")
-public class UserDTO implements Serializable {
+public class UserDTO implements Serializable
+{
 
     @ApiModelProperty(value = "ID")
     private Long id;

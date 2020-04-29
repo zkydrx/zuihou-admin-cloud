@@ -11,7 +11,8 @@ import com.github.zuihou.file.entity.File;
  * @author zuihou
  * @date 2019/06/19
  */
-public interface FileChunkStrategy {
+public interface FileChunkStrategy
+{
 
     /**
      * 根据md5检测文件

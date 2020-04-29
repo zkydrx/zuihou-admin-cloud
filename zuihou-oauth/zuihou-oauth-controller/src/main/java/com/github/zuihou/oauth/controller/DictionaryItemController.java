@@ -31,7 +31,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("/dictionaryItem")
 @Api(value = "DictionaryItem", tags = "字典项")
-public class DictionaryItemController {
+public class DictionaryItemController
+{
     @Autowired
     private DictionaryItemService dictionaryItemService;
 
@@ -47,13 +48,15 @@ public class DictionaryItemController {
      */
     @ApiOperation(value = "查询字典项", notes = "根据id查询字典项")
     @GetMapping("/findDictionaryItem")
-    public Map<Serializable, Object> findDictionaryItem(@RequestParam Set<Serializable> codes) {
+    public Map<Serializable, Object> findDictionaryItem(@RequestParam Set<Serializable> codes)
+    {
         return this.dictionaryItemService.findDictionaryItem(codes);
     }
 
     @ApiOperation(value = "根据类型查询字典条目", notes = "根据类型查询字典条目")
     @GetMapping("codes")
-    public R<Map<String, Map<String, String>>> list(@RequestParam("codes[]") String[] codes) {
+    public R<Map<String, Map<String, String>>> list(@RequestParam("codes[]") String[] codes)
+    {
         return R.success(this.dictionaryItemService.map(codes));
     }
 

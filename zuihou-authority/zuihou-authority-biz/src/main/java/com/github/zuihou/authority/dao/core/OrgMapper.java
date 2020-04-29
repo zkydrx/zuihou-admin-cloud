@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-07-22
  */
 @Repository
-public interface OrgMapper extends SuperMapper<Org> {
+public interface OrgMapper extends SuperMapper<Org>
+{
 
 }

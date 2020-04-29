@@ -24,7 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "TaskStatus", description = "执行状态-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum TaskStatus implements BaseEnum {
+public enum TaskStatus implements BaseEnum
+{
 
     /**
      * WAITING="等待执行"
@@ -44,25 +45,32 @@ public enum TaskStatus implements BaseEnum {
     private String desc;
 
 
-    public static TaskStatus match(String val, TaskStatus def) {
-        for (TaskStatus enm : TaskStatus.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static TaskStatus match(String val, TaskStatus def)
+    {
+        for (TaskStatus enm : TaskStatus.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static TaskStatus get(String val) {
+    public static TaskStatus get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(TaskStatus val) {
-        if (val == null) {
+    public boolean eq(TaskStatus val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -70,7 +78,8 @@ public enum TaskStatus implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "WAITING,SUCCESS,FAIL", example = "WAITING")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

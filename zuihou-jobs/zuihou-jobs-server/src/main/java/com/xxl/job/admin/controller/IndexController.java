@@ -30,84 +30,97 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
  * @author xuxueli 2015-12-19 16:13:16
  */
 @Controller
-public class IndexController {
+public class IndexController
+{
 
-	@Resource
-	private XxlJobService xxlJobService;
+    @Resource
+    private XxlJobService xxlJobService;
 
-	@RequestMapping("/")
-	public String index(Model model) {
+    @RequestMapping("/")
+    public String index(Model model)
+    {
 
-		Map<String, Object> dashboardMap = xxlJobService.dashboardInfo();
-		model.addAllAttributes(dashboardMap);
+        Map<String, Object> dashboardMap = xxlJobService.dashboardInfo();
+        model.addAllAttributes(dashboardMap);
 
-		return "index";
-	}
+        return "index";
+    }
 
-	@RequestMapping("/chartInfo")
-	@ResponseBody
-	public ReturnT<Map<String, Object>> chartInfo(Date startDate, Date endDate) {
-		ReturnT<Map<String, Object>> chartInfo = xxlJobService.chartInfo(startDate, endDate);
-		return chartInfo;
-	}
+    @RequestMapping("/chartInfo")
+    @ResponseBody
+    public ReturnT<Map<String, Object>> chartInfo(Date startDate, Date endDate)
+    {
+        ReturnT<Map<String, Object>> chartInfo = xxlJobService.chartInfo(startDate, endDate);
+        return chartInfo;
+    }
 
-	@RequestMapping("/toLogin")
-	@PermessionLimit(limit = false)
-	public String toLogin(Model model, HttpServletRequest request) {
-		if (PermissionInterceptor.ifLogin(request)) {
-			return "redirect:/";
-		}
-		return "login";
-	}
+    @RequestMapping("/toLogin")
+    @PermessionLimit(limit = false)
+    public String toLogin(Model model, HttpServletRequest request)
+    {
+        if (PermissionInterceptor.ifLogin(request))
+        {
+            return "redirect:/";
+        }
+        return "login";
+    }
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	@ResponseBody
-	@PermessionLimit(limit = false)
-	public ReturnT<String> loginDo(HttpServletRequest request, HttpServletResponse response, String userName, String password, String ifRemember) {
-		// valid
-		if (PermissionInterceptor.ifLogin(request)) {
-			return ReturnT.SUCCESS;
-		}
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @ResponseBody
+    @PermessionLimit(limit = false)
+    public ReturnT<String> loginDo(HttpServletRequest request, HttpServletResponse response, String userName, String password, String ifRemember)
+    {
+        // valid
+        if (PermissionInterceptor.ifLogin(request))
+        {
+            return ReturnT.SUCCESS;
+        }
 
-		// param
-		if (StrUtil.isBlank(userName) || StrUtil.isBlank(password)) {
-			return new ReturnT<String>(500, I18nUtil.getString("login_param_empty"));
-		}
-		boolean ifRem = (StrUtil.isNotBlank(ifRemember) && "on".equals(ifRemember)) ? true : false;
+        // param
+        if (StrUtil.isBlank(userName) || StrUtil.isBlank(password))
+        {
+            return new ReturnT<String>(500, I18nUtil.getString("login_param_empty"));
+        }
+        boolean ifRem = (StrUtil.isNotBlank(ifRemember) && "on".equals(ifRemember)) ? true : false;
 
-		// do login
-		boolean loginRet = PermissionInterceptor.login(response, userName, password, ifRem);
-		if (!loginRet) {
-			return new ReturnT<String>(500, I18nUtil.getString("login_param_unvalid"));
-		}
-		return ReturnT.SUCCESS;
-	}
+        // do login
+        boolean loginRet = PermissionInterceptor.login(response, userName, password, ifRem);
+        if (!loginRet)
+        {
+            return new ReturnT<String>(500, I18nUtil.getString("login_param_unvalid"));
+        }
+        return ReturnT.SUCCESS;
+    }
 
-	@RequestMapping(value = "logout", method = RequestMethod.POST)
-	@ResponseBody
-	@PermessionLimit(limit = false)
-	public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response) {
-		if (PermissionInterceptor.ifLogin(request)) {
-			PermissionInterceptor.logout(request, response);
-		}
-		return ReturnT.SUCCESS;
-	}
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    @ResponseBody
+    @PermessionLimit(limit = false)
+    public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response)
+    {
+        if (PermissionInterceptor.ifLogin(request))
+        {
+            PermissionInterceptor.logout(request, response);
+        }
+        return ReturnT.SUCCESS;
+    }
 
-	@RequestMapping("/help")
-	public String help() {
+    @RequestMapping("/help")
+    public String help()
+    {
 
 		/*if (!PermissionInterceptor.ifLogin(request)) {
 			return "redirect:/toLogin";
 		}*/
 
-		return "help";
-	}
+        return "help";
+    }
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT);
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-	}
+    @InitBinder
+    public void initBinder(WebDataBinder binder)
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT);
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
 }

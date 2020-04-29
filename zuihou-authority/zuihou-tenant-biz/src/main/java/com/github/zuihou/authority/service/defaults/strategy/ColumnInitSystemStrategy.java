@@ -35,7 +35,8 @@ import java.util.Map;
  */
 @Service("COLUMN")
 @Slf4j
-public class ColumnInitSystemStrategy implements InitSystemStrategy {
+public class ColumnInitSystemStrategy implements InitSystemStrategy
+{
     private static final String ORG = "org";
     private static final String STATION = "station";
     private static final String USER = "user";
@@ -83,7 +84,8 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
      * @return
      */
     @Override
-    public boolean init(String tenant) {
+    public boolean init(String tenant)
+    {
         // 初始化数据
         //1, 生成并关联 ID TENANT
         DatabaseProperties.Id id = databaseProperties.getId();
@@ -117,20 +119,44 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
         return menuFlag && resourceFlag && roleFlag && roleAuthorityFlag;
     }
 
-    private boolean initApplication() {
+    private boolean initApplication()
+    {
         List<Application> list = new ArrayList<>();
-        list.add(Application.builder().clientId("zuihou_ui").clientSecret("zuihou_ui_secret").website("http://tangyh.top:10000/zuihou-ui/").name("SaaS微服务管理后台").appType(ApplicationAppTypeEnum.PC).status(true).build());
-        list.add(Application.builder().clientId("zuihou_admin_ui").clientSecret("zuihou_admin_ui_secret").website("http://tangyh.top:180/zuihou-admin-ui/").name("SaaS微服务管理后台").appType(ApplicationAppTypeEnum.PC).status(true).build());
+        list.add(Application.builder()
+                            .clientId("zuihou_ui")
+                            .clientSecret("zuihou_ui_secret")
+                            .website("http://tangyh.top:10000/zuihou-ui/")
+                            .name("SaaS微服务管理后台")
+                            .appType(ApplicationAppTypeEnum.PC)
+                            .status(true)
+                            .build());
+        list.add(Application.builder()
+                            .clientId("zuihou_admin_ui")
+                            .clientSecret("zuihou_admin_ui_secret")
+                            .website("http://tangyh.top:180/zuihou-admin-ui/")
+                            .name("SaaS微服务管理后台")
+                            .appType(ApplicationAppTypeEnum.PC)
+                            .status(true)
+                            .build());
         return applicationService.saveBatch(list);
     }
 
-    private boolean initParameter() {
+    private boolean initParameter()
+    {
         List<Parameter> list = new ArrayList<>();
-        list.add(Parameter.builder().key(ParameterKey.LOGIN_POLICY).name("登录策略").value(ParameterKey.LoginPolicy.MANY.name()).describe("ONLY_ONE:一个用户只能登录一次; MANY:用户可以任意登录; ONLY_ONE_CLIENT:一个用户在一个应用只能登录一次").status(true).readonly(true).build());
+        list.add(Parameter.builder()
+                          .key(ParameterKey.LOGIN_POLICY)
+                          .name("登录策略")
+                          .value(ParameterKey.LoginPolicy.MANY.name())
+                          .describe("ONLY_ONE:一个用户只能登录一次; MANY:用户可以任意登录; ONLY_ONE_CLIENT:一个用户在一个应用只能登录一次")
+                          .status(true)
+                          .readonly(true)
+                          .build());
         return parameterService.saveBatch(list);
     }
 
-    private boolean initRoleAuthority(List<Menu> menuList, List<Resource> resourceList, Long roleId) {
+    private boolean initRoleAuthority(List<Menu> menuList, List<Resource> resourceList, Long roleId)
+    {
         List<RoleAuthority> roleAuthorityList = new ArrayList<>();
         menuList.forEach(item -> {
             roleAuthorityList.add(RoleAuthority.builder().authorityType(AuthorizeType.MENU).authorityId(item.getId()).roleId(roleId).build());
@@ -141,12 +167,14 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
         return roleAuthorityService.saveBatch(roleAuthorityList);
     }
 
-    private boolean initRole(Long roleId) {
+    private boolean initRole(Long roleId)
+    {
         Role role = Role.builder().id(roleId).name("平台管理员").code("PT_ADMIN").describe("平台内置管理员").dsType(DataScopeType.ALL).readonly(true).build();
         return roleService.save(role);
     }
 
-    private boolean initResource(List<Resource> resourceList, Map<String, Long> menuMap) {
+    private boolean initResource(List<Resource> resourceList, Map<String, Long> menuMap)
+    {
         Long orgId = menuMap.get(ORG);
         resourceList.add(Resource.builder().code("org:add").name("新增").menuId(orgId).build());
         resourceList.add(Resource.builder().code("org:delete").name("删除").menuId(orgId).build());
@@ -277,7 +305,8 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
         return resourceService.saveBatch(resourceList);
     }
 
-    private boolean initMenu(Snowflake snowflake, List<Menu> menuList, Map<String, Long> menuMap) {
+    private boolean initMenu(Snowflake snowflake, List<Menu> menuList, Map<String, Long> menuMap)
+    {
         Long menuUserCenterId = snowflake.nextId();
         Long authId = snowflake.nextId();
         Long baseId = snowflake.nextId();
@@ -324,16 +353,37 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
 
         Long applicationApi = snowflake.nextId();
         menuMap.put(APPLICATION, applicationApi);
-        menuList.add(Menu.builder().id(applicationApi).parentId(developerId).label("应用管理").path("/developer/application").component("zuihou/developer/application/Index").sortValue(1).build());
+        menuList.add(Menu.builder()
+                         .id(applicationApi)
+                         .parentId(developerId)
+                         .label("应用管理")
+                         .path("/developer/application")
+                         .component("zuihou/developer/application/Index")
+                         .sortValue(1)
+                         .build());
         Long systemId = snowflake.nextId();
         menuMap.put(SYSTEM_API, systemId);
-        menuList.add(Menu.builder().id(systemId).parentId(developerId).label("接口查询").path("/developer/systemApi").component("zuihou/developer/systemApi/Index").sortValue(2).build());
+        menuList.add(Menu.builder()
+                         .id(systemId)
+                         .parentId(developerId)
+                         .label("接口查询")
+                         .path("/developer/systemApi")
+                         .component("zuihou/developer/systemApi/Index")
+                         .sortValue(2)
+                         .build());
         Long optLogId = snowflake.nextId();
         menuMap.put(OPT_LOG, optLogId);
         menuList.add(Menu.builder().id(optLogId).parentId(developerId).label("操作日志").path("/developer/optLog").component("zuihou/developer/optLog/Index").sortValue(3).build());
         Long loginLogId = snowflake.nextId();
         menuMap.put(LOGIN_LOG, loginLogId);
-        menuList.add(Menu.builder().id(loginLogId).parentId(developerId).label("登录日志").path("/developer/loginLog").component("zuihou/developer/loginLog/Index").sortValue(4).build());
+        menuList.add(Menu.builder()
+                         .id(loginLogId)
+                         .parentId(developerId)
+                         .label("登录日志")
+                         .path("/developer/loginLog")
+                         .component("zuihou/developer/loginLog/Index")
+                         .sortValue(4)
+                         .build());
         Long dbId = snowflake.nextId();
         menuMap.put(DB, dbId);
         menuList.add(Menu.builder().id(dbId).parentId(developerId).label("数据库监控").path("/developer/db").component("zuihou/developer/db/Index").sortValue(5).build());
@@ -372,7 +422,8 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
     }
 
 
-    private boolean initDict() {
+    private boolean initDict()
+    {
         List<Dictionary> dictionaryList = new ArrayList<>();
         dictionaryList.add(Dictionary.builder().type("NATION").name("民族").build());
         dictionaryList.add(Dictionary.builder().type("POSITION_STATUS").name("在职状态").build());
@@ -384,171 +435,211 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
 
         Dictionary nation = dictionaryList.get(0);
         Integer nationSort = 1;
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_hanz").name("汉族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_zz").name("壮族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_mz").name("满族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_hz").name("回族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_miaoz").name("苗族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_wwez").name("维吾尔族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_tjz").name("土家族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_yz").name("彝族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_mgz").name("蒙古族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_zhangz").name("藏族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_byz").name("布依族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_dz").name("侗族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_yaoz").name("瑶族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_cxz").name("朝鲜族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_bz").name("白族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_hnz").name("哈尼族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_hskz").name("哈萨克族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_lz").name("黎族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_daiz").name("傣族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_sz").name("畲族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_llz").name("傈僳族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_glz").name("仡佬族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_dxz").name("东乡族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_gsz").name("高山族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_lhz").name("拉祜族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_shuiz").name("水族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_wz").name("佤族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_nxz").name("纳西族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_qz").name("羌族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_tz").name("土族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_zlz").name("仫佬族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_xbz").name("锡伯族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_kehzz").name("柯尔克孜族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_dwz").name("达斡尔族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_jpz").name("景颇族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_mlz").name("毛南族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_slz").name("撒拉族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_tjkz").name("塔吉克族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_acz").name("阿昌族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_pmz").name("普米族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_ewkz").name("鄂温克族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_nz").name("怒族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_jz").name("京族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_jnz").name("基诺族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_daz").name("德昂族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_baz").name("保安族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_elsz").name("俄罗斯族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_ygz").name("裕固族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_wzbkz").name("乌兹别克族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_mbz").name("门巴族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_elcz").name("鄂伦春族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_dlz").name("独龙族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_tkez").name("塔塔尔族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_hzz").name("赫哲族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_lbz").name("珞巴族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_blz").name("布朗族").sortValue(nationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType())
-                .code("mz_qt").name("其他").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_hanz").name("汉族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_zz").name("壮族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_mz").name("满族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_hz").name("回族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_miaoz").name("苗族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_wwez").name("维吾尔族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_tjz").name("土家族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_yz").name("彝族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_mgz").name("蒙古族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_zhangz").name("藏族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_byz").name("布依族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_dz").name("侗族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_yaoz").name("瑶族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_cxz").name("朝鲜族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_bz").name("白族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_hnz").name("哈尼族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_hskz").name("哈萨克族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_lz").name("黎族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_daiz").name("傣族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_sz").name("畲族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_llz").name("傈僳族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_glz").name("仡佬族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_dxz").name("东乡族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_gsz").name("高山族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_lhz").name("拉祜族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_shuiz").name("水族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_wz").name("佤族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_nxz").name("纳西族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_qz").name("羌族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_tz").name("土族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_zlz").name("仫佬族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_xbz").name("锡伯族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(nation.getId())
+                                             .dictionaryType(nation.getType())
+                                             .code("mz_kehzz")
+                                             .name("柯尔克孜族")
+                                             .sortValue(nationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_dwz").name("达斡尔族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_jpz").name("景颇族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_mlz").name("毛南族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_slz").name("撒拉族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_tjkz").name("塔吉克族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_acz").name("阿昌族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_pmz").name("普米族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_ewkz").name("鄂温克族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_nz").name("怒族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_jz").name("京族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_jnz").name("基诺族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_daz").name("德昂族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_baz").name("保安族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_elsz").name("俄罗斯族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_ygz").name("裕固族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(nation.getId())
+                                             .dictionaryType(nation.getType())
+                                             .code("mz_wzbkz")
+                                             .name("乌兹别克族")
+                                             .sortValue(nationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_mbz").name("门巴族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_elcz").name("鄂伦春族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_dlz").name("独龙族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_tkez").name("塔塔尔族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_hzz").name("赫哲族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_lbz").name("珞巴族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_blz").name("布朗族").sortValue(nationSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(nation.getId()).dictionaryType(nation.getType()).code("mz_qt").name("其他").sortValue(nationSort++).build());
 
 
         Dictionary positionStatus = dictionaryList.get(1);
         Integer positionStatusSort = 1;
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(positionStatus.getId()).dictionaryType(positionStatus.getType())
-                .code("WORKING").name("在职").sortValue(positionStatusSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(positionStatus.getId()).dictionaryType(positionStatus.getType())
-                .code("QUIT").name("离职").sortValue(positionStatusSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(positionStatus.getId()).dictionaryType(positionStatus.getType())
-                .code("LEAVE").name("请假").sortValue(positionStatusSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(positionStatus.getId())
+                                             .dictionaryType(positionStatus.getType())
+                                             .code("WORKING")
+                                             .name("在职")
+                                             .sortValue(positionStatusSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(positionStatus.getId())
+                                             .dictionaryType(positionStatus.getType())
+                                             .code("QUIT")
+                                             .name("离职")
+                                             .sortValue(positionStatusSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(positionStatus.getId())
+                                             .dictionaryType(positionStatus.getType())
+                                             .code("LEAVE")
+                                             .name("请假")
+                                             .sortValue(positionStatusSort++)
+                                             .build());
 
         Dictionary education = dictionaryList.get(2);
         Integer educationSort = 1;
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("XIAOXUE").name("小学").sortValue(educationSort++).build());
         dictionaryItemList.add(DictionaryItem.builder()
-                .dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("ZHONGXUE").name("中学").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("GAOZHONG").name("高中").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("ZHUANKE").name("专科").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("COLLEGE").name("本科").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("SUOSHI").name("硕士").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("BOSHI").name("博士").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("BOSHIHOU").name("博士后").sortValue(educationSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(education.getId()).dictionaryType(education.getType())
-                .code("QITA").name("其他").sortValue(educationSort++).build());
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("XIAOXUE")
+                                             .name("小学")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("ZHONGXUE")
+                                             .name("中学")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("GAOZHONG")
+                                             .name("高中")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("ZHUANKE")
+                                             .name("专科")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("COLLEGE")
+                                             .name("本科")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("SUOSHI")
+                                             .name("硕士")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("BOSHI")
+                                             .name("博士")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("BOSHIHOU")
+                                             .name("博士后")
+                                             .sortValue(educationSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(education.getId())
+                                             .dictionaryType(education.getType())
+                                             .code("QITA")
+                                             .name("其他")
+                                             .sortValue(educationSort++)
+                                             .build());
 
         Dictionary areaLevel = dictionaryList.get(3);
         Integer areaLevelSort = 1;
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(areaLevel.getId()).dictionaryType(areaLevel.getType())
-                .code("COUNTRY").name("国家").sortValue(areaLevelSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(areaLevel.getId()).dictionaryType(areaLevel.getType())
-                .code("PROVINCE").name("省份/直辖市").sortValue(areaLevelSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(areaLevel.getId()).dictionaryType(areaLevel.getType())
-                .code("CITY").name("地市").sortValue(areaLevelSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(areaLevel.getId()).dictionaryType(areaLevel.getType())
-                .code("COUNTY").name("区县").sortValue(areaLevelSort++).build());
-        dictionaryItemList.add(DictionaryItem.builder().dictionaryId(areaLevel.getId()).dictionaryType(areaLevel.getType())
-                .code("TOWNS").name("乡镇").sortValue(areaLevelSort++).build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(areaLevel.getId())
+                                             .dictionaryType(areaLevel.getType())
+                                             .code("COUNTRY")
+                                             .name("国家")
+                                             .sortValue(areaLevelSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(areaLevel.getId())
+                                             .dictionaryType(areaLevel.getType())
+                                             .code("PROVINCE")
+                                             .name("省份/直辖市")
+                                             .sortValue(areaLevelSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(areaLevel.getId())
+                                             .dictionaryType(areaLevel.getType())
+                                             .code("CITY")
+                                             .name("地市")
+                                             .sortValue(areaLevelSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(areaLevel.getId())
+                                             .dictionaryType(areaLevel.getType())
+                                             .code("COUNTY")
+                                             .name("区县")
+                                             .sortValue(areaLevelSort++)
+                                             .build());
+        dictionaryItemList.add(DictionaryItem.builder()
+                                             .dictionaryId(areaLevel.getId())
+                                             .dictionaryType(areaLevel.getType())
+                                             .code("TOWNS")
+                                             .name("乡镇")
+                                             .sortValue(areaLevelSort++)
+                                             .build());
 
         return dictionaryItemService.saveBatch(dictionaryItemList);
     }
 
     @Override
-    public boolean reset(String tenant) {
+    public boolean reset(String tenant)
+    {
         //TODO 待实现
         // 1，清空所有表的数据
         // 2，重新初始化 tenant
@@ -558,7 +649,8 @@ public class ColumnInitSystemStrategy implements InitSystemStrategy {
     }
 
     @Override
-    public boolean delete(List<String> tenantCodeList) {
+    public boolean delete(List<String> tenantCodeList)
+    {
         // 清空所有表中当前租户的数据
         //TODO 待实现
         //1,查询系统中的所有表

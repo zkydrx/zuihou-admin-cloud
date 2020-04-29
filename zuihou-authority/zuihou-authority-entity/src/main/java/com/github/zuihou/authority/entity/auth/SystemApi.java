@@ -32,7 +32,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("c_auth_system_api")
 @ApiModel(value = "SystemApi", description = "API接口")
-public class SystemApi extends Entity<Long> {
+public class SystemApi extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -157,10 +158,25 @@ public class SystemApi extends Entity<Long> {
 
 
     @Builder
-    public SystemApi(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                     String code, String name, String describe, String requestMethod, String contentType,
-                     String serviceId, String path, Boolean status, Boolean isPersist, Boolean isAuth, Boolean isOpen,
-                     String className, String methodName) {
+    public SystemApi(Long id,
+                     Long createUser,
+                     LocalDateTime createTime,
+                     Long updateUser,
+                     LocalDateTime updateTime,
+                     String code,
+                     String name,
+                     String describe,
+                     String requestMethod,
+                     String contentType,
+                     String serviceId,
+                     String path,
+                     Boolean status,
+                     Boolean isPersist,
+                     Boolean isAuth,
+                     Boolean isOpen,
+                     String className,
+                     String methodName)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

@@ -17,19 +17,20 @@ import java.util.Map;
  * @author zuihou
  * @date 2019-10-20
  */
-public interface LoginLogService extends SuperService<LoginLog> {
+public interface LoginLogService extends SuperService<LoginLog>
+{
 
-//    /**
-//     * 记录登录日志
-//     *
-//     * @param account     账号
-//     * @param ua          浏览器
-//     * @param ip          客户端IP
-//     * @param location    客户端地址
-//     * @param description 登陆描述消息
-//     * @return
-//     */
-//    LoginLog save(String account, String ua, String ip, String location, String description);
+    //    /**
+    //     * 记录登录日志
+    //     *
+    //     * @param account     账号
+    //     * @param ua          浏览器
+    //     * @param ip          客户端IP
+    //     * @param location    客户端地址
+    //     * @param description 登陆描述消息
+    //     * @return
+    //     */
+    //    LoginLog save(String account, String ua, String ip, String location, String description);
 
     /**
      * 记录登录日志

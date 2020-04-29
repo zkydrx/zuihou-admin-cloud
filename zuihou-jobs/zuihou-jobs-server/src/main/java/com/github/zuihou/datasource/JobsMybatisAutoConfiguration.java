@@ -16,23 +16,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 @EnableConfigurationProperties({DatabaseProperties.class})
-public class JobsMybatisAutoConfiguration extends BaseMybatisConfiguration {
+public class JobsMybatisAutoConfiguration extends BaseMybatisConfiguration
+{
 
 
-    public JobsMybatisAutoConfiguration(DatabaseProperties databaseProperties) {
+    public JobsMybatisAutoConfiguration(DatabaseProperties databaseProperties)
+    {
         super(databaseProperties);
 
     }
 
-//    /**
-//     * 数据权限插件
-//     *
-//     * @return DataScopeInterceptor
-//     */
-//    @Bean
-//    @ConditionalOnProperty(name = "zuihou.database.isDataScope", havingValue = "true", matchIfMissing = true)
-//    public DataScopeInterceptor dataScopeInterceptor() {
-//        return new DataScopeInterceptor((userId) -> SpringUtils.getBean(UserService.class).getDataScopeById(userId));
-//    }
+    //    /**
+    //     * 数据权限插件
+    //     *
+    //     * @return DataScopeInterceptor
+    //     */
+    //    @Bean
+    //    @ConditionalOnProperty(name = "zuihou.database.isDataScope", havingValue = "true", matchIfMissing = true)
+    //    public DataScopeInterceptor dataScopeInterceptor() {
+    //        return new DataScopeInterceptor((userId) -> SpringUtils.getBean(UserService.class).getDataScopeById(userId));
+    //    }
 
 }

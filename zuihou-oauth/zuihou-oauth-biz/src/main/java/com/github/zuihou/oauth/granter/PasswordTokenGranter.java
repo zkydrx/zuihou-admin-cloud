@@ -14,12 +14,14 @@ import static com.github.zuihou.oauth.granter.PasswordTokenGranter.GRANT_TYPE;
  * @date 2020年03月31日10:22:55
  */
 @Component(GRANT_TYPE)
-public class PasswordTokenGranter extends AbstractTokenGranter implements TokenGranter {
+public class PasswordTokenGranter extends AbstractTokenGranter implements TokenGranter
+{
 
     public static final String GRANT_TYPE = "password";
 
     @Override
-    public R<AuthInfo> grant(LoginParamDTO tokenParameter) {
+    public R<AuthInfo> grant(LoginParamDTO tokenParameter)
+    {
         return login(tokenParameter);
     }
 }

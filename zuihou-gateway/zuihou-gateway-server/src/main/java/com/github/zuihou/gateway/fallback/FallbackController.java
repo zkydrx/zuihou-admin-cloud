@@ -13,10 +13,12 @@ import reactor.core.publisher.Mono;
  * @author zuihou
  */
 @RestController
-public class FallbackController {
+public class FallbackController
+{
 
     @RequestMapping("/fallback")
-    public Mono<R> fallback() {
+    public Mono<R> fallback()
+    {
         return Mono.just(R.fail(ExceptionCode.SYSTEM_TIMEOUT));
     }
 }

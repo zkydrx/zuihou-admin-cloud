@@ -6,23 +6,28 @@ package com.github.zuihou.area;
  * @author zuihou
  */
 
-class Area {
+class Area
+{
     private String code;
     private String name;
 
-    public String getCode() {
+    public String getCode()
+    {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(String code)
+    {
         this.code = code;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 

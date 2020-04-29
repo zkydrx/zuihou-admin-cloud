@@ -41,7 +41,8 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 @Component
 @Slf4j
 @EnableConfigurationProperties({IgnoreTokenProperties.class})
-public class TokenContextFilter extends BaseFilter {
+public class TokenContextFilter extends BaseFilter
+{
     @Autowired
     private TokenUtil tokenUtil;
 
@@ -57,7 +58,8 @@ public class TokenContextFilter extends BaseFilter {
      * @return
      */
     @Override
-    public String filterType() {
+    public String filterType()
+    {
         // 前置过滤器
         return PRE_TYPE;
     }
@@ -68,7 +70,8 @@ public class TokenContextFilter extends BaseFilter {
      * @return
      */
     @Override
-    public int filterOrder() {
+    public int filterOrder()
+    {
         // 数字越大，优先级越低
         /**
          * 一定要在 {@link org.springframework.cloud.netflix.zuul.filters.pre.PreDecorationFilter} 过滤器之后执行，因为这个过滤器做了路由  而我们需要这个路由信息来鉴权
@@ -83,7 +86,8 @@ public class TokenContextFilter extends BaseFilter {
      * @return
      */
     @Override
-    public boolean shouldFilter() {
+    public boolean shouldFilter()
+    {
         return true;
     }
 
@@ -94,23 +98,27 @@ public class TokenContextFilter extends BaseFilter {
      * @return
      */
     @Override
-    public Object run() {
+    public Object run()
+    {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
 
         BaseContextHandler.setGrayVersion(getHeader(BaseContextConstants.GRAY_VERSION, request));
 
         AuthInfo authInfo = null;
-        try {
+        try
+        {
             //1, 请求头中的租户信息
             String base64Tenant = getHeader(JWT_KEY_TENANT, request);
-            if (StrUtil.isNotEmpty(base64Tenant)) {
+            if (StrUtil.isNotEmpty(base64Tenant))
+            {
                 String tenant = JwtUtil.base64Decoder(base64Tenant);
                 BaseContextHandler.setTenant(tenant);
             }
 
             // 不进行拦截的地址
-            if (isIgnoreToken()) {
+            if (isIgnoreToken())
+            {
                 log.debug("access filter not execute");
                 return null;
             }
@@ -119,33 +127,42 @@ public class TokenContextFilter extends BaseFilter {
             String token = getHeader(BEARER_HEADER_KEY, request);
 
             //添加测试环境的特殊token
-            if (isDev() && StrPool.TEST.equalsIgnoreCase(token)) {
-                authInfo = new AuthInfo().setAccount("zuihou").setUserId(1L)
-                        .setTokenType(BEARER_HEADER_KEY).setName("平台管理员");
+            if (isDev() && StrPool.TEST.equalsIgnoreCase(token))
+            {
+                authInfo = new AuthInfo().setAccount("zuihou").setUserId(1L).setTokenType(BEARER_HEADER_KEY).setName("平台管理员");
             }
-            if (authInfo == null) {
+            if (authInfo == null)
+            {
                 authInfo = tokenUtil.getAuthInfo(token);
             }
 
             String newToken = JwtUtil.getToken(token);
             String tokenKey = CacheKey.buildKey(newToken);
             CacheObject tokenCache = channel.get(CacheKey.TOKEN_USER_ID, tokenKey);
-            if (tokenCache.getValue() == null) {
+            if (tokenCache.getValue() == null)
+            {
                 // 为空就认为是没登录或者被T会有bug，该 bug 取决于登录成功后，异步调用UserTokenService.save 方法的延迟
-            } else if (StrUtil.equals(BizConstant.LOGIN_STATUS, (String) tokenCache.getValue())) {
+            }
+            else if (StrUtil.equals(BizConstant.LOGIN_STATUS, (String) tokenCache.getValue()))
+            {
                 errorResponse(JWT_OFFLINE.getMsg(), JWT_OFFLINE.getCode(), 200);
                 return null;
             }
-        } catch (BizException e) {
+        }
+        catch (BizException e)
+        {
             errorResponse(e.getMessage(), e.getCode(), 200);
             return null;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             errorResponse("验证token出错", R.FAIL_CODE, 200);
             return null;
         }
 
         //3, 将信息放入header
-        if (authInfo != null) {
+        if (authInfo != null)
+        {
             addHeader(ctx, BaseContextConstants.JWT_KEY_ACCOUNT, authInfo.getAccount());
             addHeader(ctx, BaseContextConstants.JWT_KEY_USER_ID, authInfo.getUserId());
             addHeader(ctx, BaseContextConstants.JWT_KEY_NAME, authInfo.getName());
@@ -159,8 +176,10 @@ public class TokenContextFilter extends BaseFilter {
         return null;
     }
 
-    private void addHeader(RequestContext ctx, String name, Object value) {
-        if (StringUtils.isEmpty(value)) {
+    private void addHeader(RequestContext ctx, String name, Object value)
+    {
+        if (StringUtils.isEmpty(value))
+        {
             return;
         }
         String valueStr = value.toString();

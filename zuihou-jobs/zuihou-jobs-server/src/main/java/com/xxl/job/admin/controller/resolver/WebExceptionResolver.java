@@ -20,19 +20,21 @@ import java.io.IOException;
  * @author xuxueli 2016-1-6 19:22:18
  */
 @Component
-public class WebExceptionResolver implements HandlerExceptionResolver {
+public class WebExceptionResolver implements HandlerExceptionResolver
+{
     private static transient Logger logger = LoggerFactory.getLogger(WebExceptionResolver.class);
 
     @Override
-    public ModelAndView resolveException(HttpServletRequest request,
-                                         HttpServletResponse response, Object handler, Exception ex) {
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+    {
         logger.error("WebExceptionResolver:{}", ex);
 
         // if json
         boolean isJson = false;
         HandlerMethod method = (HandlerMethod) handler;
         ResponseBody responseBody = method.getMethodAnnotation(ResponseBody.class);
-        if (responseBody != null) {
+        if (responseBody != null)
+        {
             isJson = true;
         }
 
@@ -41,15 +43,21 @@ public class WebExceptionResolver implements HandlerExceptionResolver {
 
         // response
         ModelAndView mv = new ModelAndView();
-        if (isJson) {
-            try {
+        if (isJson)
+        {
+            try
+            {
                 response.setContentType("application/json;charset=utf-8");
                 response.getWriter().print(JacksonUtil.writeValueAsString(errorResult));
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 logger.error(e.getMessage(), e);
             }
             return mv;
-        } else {
+        }
+        else
+        {
 
             mv.addObject("exceptionMsg", errorResult.getMsg());
             mv.setViewName("/common/common.exception");

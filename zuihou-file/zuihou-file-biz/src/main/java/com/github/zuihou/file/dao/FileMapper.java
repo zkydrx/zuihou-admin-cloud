@@ -20,7 +20,8 @@ import java.util.List;
  * @date 2019-06-24
  */
 @Repository
-public interface FileMapper extends SuperMapper<File> {
+public interface FileMapper extends SuperMapper<File>
+{
     /**
      * 查询文件以及它的父类
      *

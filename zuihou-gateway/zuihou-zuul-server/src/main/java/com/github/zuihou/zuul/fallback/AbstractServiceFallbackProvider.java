@@ -19,38 +19,47 @@ import java.nio.charset.Charset;
  * @author zuihou
  * @date 2018/07/09
  */
-public abstract class AbstractServiceFallbackProvider implements FallbackProvider {
+public abstract class AbstractServiceFallbackProvider implements FallbackProvider
+{
 
     @Override
-    public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
-        return new ClientHttpResponse() {
+    public ClientHttpResponse fallbackResponse(String route, Throwable cause)
+    {
+        return new ClientHttpResponse()
+        {
             @Override
-            public HttpStatus getStatusCode() throws IOException {
+            public HttpStatus getStatusCode() throws IOException
+            {
                 return HttpStatus.OK;
             }
 
             @Override
-            public int getRawStatusCode() throws IOException {
+            public int getRawStatusCode() throws IOException
+            {
                 return this.getStatusCode().value();
             }
 
             @Override
-            public String getStatusText() throws IOException {
+            public String getStatusText() throws IOException
+            {
                 return this.getStatusCode().getReasonPhrase();
             }
 
             @Override
-            public void close() {
+            public void close()
+            {
 
             }
 
             @Override
-            public InputStream getBody() throws IOException {
+            public InputStream getBody() throws IOException
+            {
                 return new ByteArrayInputStream(R.fail(ExceptionCode.SYSTEM_TIMEOUT).toString().getBytes());
             }
 
             @Override
-            public HttpHeaders getHeaders() {
+            public HttpHeaders getHeaders()
+            {
                 HttpHeaders headers = new HttpHeaders();
                 MediaType mt = new MediaType("application", "json", Charset.forName("UTF-8"));
                 headers.setContentType(mt);

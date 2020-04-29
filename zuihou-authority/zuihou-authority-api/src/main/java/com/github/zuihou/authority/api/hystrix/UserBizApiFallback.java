@@ -13,9 +13,11 @@ import java.util.List;
  * @date 2019/07/23
  */
 @Component
-public class UserBizApiFallback implements UserBizApi {
+public class UserBizApiFallback implements UserBizApi
+{
     @Override
-    public R<List<Long>> findAllUserId() {
+    public R<List<Long>> findAllUserId()
+    {
         return R.timeout();
     }
 }

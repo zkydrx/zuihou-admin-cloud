@@ -21,7 +21,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @ApiModel(value = "DataType", description = "数据类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum DataType implements BaseEnum {
+public enum DataType implements BaseEnum
+{
 
     /**
      * DIR="目录"
@@ -52,25 +53,32 @@ public enum DataType implements BaseEnum {
     @ApiModelProperty(value = "描述")
     private String desc;
 
-    public static DataType match(String val, DataType def) {
-        for (DataType enm : DataType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static DataType match(String val, DataType def)
+    {
+        for (DataType enm : DataType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static DataType get(String val) {
+    public static DataType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(DataType val) {
-        if (val == null) {
+    public boolean eq(DataType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -78,7 +86,8 @@ public enum DataType implements BaseEnum {
 
     @ApiModelProperty(value = "编码", allowableValues = "DIR,IMAGE,VIDEO,AUDIO,DOC,OTHER", example = "DIR")
     @Override
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

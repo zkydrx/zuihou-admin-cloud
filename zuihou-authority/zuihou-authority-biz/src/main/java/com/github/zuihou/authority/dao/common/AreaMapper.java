@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-07-02
  */
 @Repository
-public interface AreaMapper extends SuperMapper<Area> {
+public interface AreaMapper extends SuperMapper<Area>
+{
 
 }

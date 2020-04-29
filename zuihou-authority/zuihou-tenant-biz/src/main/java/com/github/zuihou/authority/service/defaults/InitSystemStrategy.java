@@ -9,7 +9,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019/10/25
  */
-public interface InitSystemStrategy {
+public interface InitSystemStrategy
+{
     /**
      * 初始化系统
      *
@@ -29,7 +30,8 @@ public interface InitSystemStrategy {
      *
      * @return
      */
-    default boolean initDataSource() {
+    default boolean initDataSource()
+    {
         return true;
     }
 

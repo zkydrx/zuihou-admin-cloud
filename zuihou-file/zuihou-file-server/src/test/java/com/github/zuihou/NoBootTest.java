@@ -15,9 +15,11 @@ import java.util.List;
  * @author zuihou
  * @date 2019/08/12
  */
-public class NoBootTest {
+public class NoBootTest
+{
     @Test
-    public void testCopy() throws Exception {
+    public void testCopy() throws Exception
+    {
         File src = new File("/projects/uploadfile/file/2019/08/4b4c5f2f3d945db915d4645e26189d6e.mp4");
         File target = new File("/projects/uploadfile/file/2019/08/appache/1.mp4");
         File target2 = new File("/projects/uploadfile/file/2019/08/hutool/1.mp4");
@@ -29,7 +31,8 @@ public class NoBootTest {
     }
 
     @Test
-    public void testSort() {
+    public void testSort()
+    {
         List<com.github.zuihou.file.entity.File> list = new ArrayList<>();
         list.add(com.github.zuihou.file.entity.File.builder().id(3L).build());
         list.add(com.github.zuihou.file.entity.File.builder().id(1L).build());

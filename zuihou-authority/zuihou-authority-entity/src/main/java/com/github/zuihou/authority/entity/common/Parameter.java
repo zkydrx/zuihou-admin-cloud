@@ -32,7 +32,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @TableName("c_common_parameter")
 @ApiModel(value = "Parameter", description = "参数配置")
 @AllArgsConstructor
-public class Parameter extends Entity<Long> {
+public class Parameter extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -93,8 +94,18 @@ public class Parameter extends Entity<Long> {
 
 
     @Builder
-    public Parameter(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                     String key, String name, String value, String describe, Boolean status, Boolean readonly) {
+    public Parameter(Long id,
+                     Long createUser,
+                     LocalDateTime createTime,
+                     Long updateUser,
+                     LocalDateTime updateTime,
+                     String key,
+                     String name,
+                     String value,
+                     String describe,
+                     Boolean status,
+                     Boolean readonly)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

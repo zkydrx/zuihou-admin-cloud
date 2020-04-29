@@ -24,14 +24,16 @@ import java.util.Arrays;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class MsgsCenterTest {
+public class MsgsCenterTest
+{
     @Autowired
     MsgsCenterInfoMapper msgsCenterInfoMapper;
     @Autowired
     MsgsCenterInfoService msgsCenterInfoService;
 
     @Test
-    public void testMsgs() {
+    public void testMsgs()
+    {
         MsgsCenterInfoQueryDTO data = new MsgsCenterInfoQueryDTO();
         data.setIsRead(true);
         data.setUserId(1L);
@@ -43,7 +45,8 @@ public class MsgsCenterTest {
 
 
     @Test
-    public void testMark() {
+    public void testMark()
+    {
         msgsCenterInfoService.mark(Arrays.asList(588744392009842721L, 588746158852014433L), 1L);
     }
 }

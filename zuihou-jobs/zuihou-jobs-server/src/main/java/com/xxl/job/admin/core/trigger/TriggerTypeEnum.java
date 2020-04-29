@@ -8,7 +8,8 @@ import com.xxl.job.admin.core.util.I18nUtil;
  *
  * @author xuxueli 2018-09-16 04:56:41
  */
-public enum TriggerTypeEnum {
+public enum TriggerTypeEnum
+{
 
     /**
      * jobconf_trigger_type_cron=Cron触发
@@ -30,11 +31,13 @@ public enum TriggerTypeEnum {
 
     private String title;
 
-    private TriggerTypeEnum(String title) {
+    private TriggerTypeEnum(String title)
+    {
         this.title = title;
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 

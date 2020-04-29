@@ -13,7 +13,8 @@ import com.github.zuihou.base.service.SuperCacheService;
  * @author zuihou
  * @date 2019-12-15
  */
-public interface SystemApiService extends SuperCacheService<SystemApi> {
+public interface SystemApiService extends SuperCacheService<SystemApi>
+{
     /**
      * 批量保存
      *

@@ -32,24 +32,28 @@ import static com.github.zuihou.utils.BizAssert.isFalse;
  */
 @Slf4j
 @Service
-public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenant> implements TenantService {
+public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenant> implements TenantService
+{
 
     @Autowired
     private InitSystemContext initSystemContext;
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return TENANT;
     }
 
     @Override
-    public Tenant getByCode(String tenant) {
+    public Tenant getByCode(String tenant)
+    {
         return super.getOne(Wraps.<Tenant>lbQ().eq(Tenant::getCode, tenant));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Tenant save(TenantSaveDTO data) {
+    public Tenant save(TenantSaveDTO data)
+    {
         // defaults 库
         isFalse(check(data.getCode()), "编码重复，请重新输入");
 
@@ -66,15 +70,18 @@ public class TenantServiceImpl extends SuperCacheServiceImpl<TenantMapper, Tenan
     }
 
     @Override
-    public boolean check(String tenantCode) {
+    public boolean check(String tenantCode)
+    {
         return super.count(Wraps.<Tenant>lbQ().eq(Tenant::getCode, tenantCode)) > 0;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean delete(List<Long> ids) {
+    public Boolean delete(List<Long> ids)
+    {
         List<String> tenantCodeList = listObjs(Wraps.<Tenant>lbQ().select(Tenant::getCode).in(Tenant::getId, ids), Convert::toStr);
-        if (tenantCodeList.isEmpty()) {
+        if (tenantCodeList.isEmpty())
+        {
             return true;
         }
         removeByIds(ids);

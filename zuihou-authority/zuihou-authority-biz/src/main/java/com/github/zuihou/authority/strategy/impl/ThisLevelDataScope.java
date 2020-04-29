@@ -19,14 +19,17 @@ import java.util.List;
  * @date 2019-06-08 15:44
  */
 @Component("THIS_LEVEL")
-public class ThisLevelDataScope implements AbstractDataScopeHandler {
+public class ThisLevelDataScope implements AbstractDataScopeHandler
+{
     @Autowired
     private UserService userService;
 
     @Override
-    public List<Long> getOrgIds(List<Long> orgList, Long userId) {
+    public List<Long> getOrgIds(List<Long> orgList, Long userId)
+    {
         User user = userService.getById(userId);
-        if (user == null) {
+        if (user == null)
+        {
             return Collections.emptyList();
         }
         Long orgId = RemoteData.getKey(user.getOrg());

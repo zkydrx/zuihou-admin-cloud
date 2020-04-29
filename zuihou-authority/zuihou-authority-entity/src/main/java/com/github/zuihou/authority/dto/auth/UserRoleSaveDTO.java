@@ -28,7 +28,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserRoleSaveDTO", description = "角色分配 账号角色绑定")
-public class UserRoleSaveDTO implements Serializable {
+public class UserRoleSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

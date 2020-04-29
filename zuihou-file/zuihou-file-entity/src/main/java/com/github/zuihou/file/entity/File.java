@@ -29,7 +29,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("f_file")
 @ApiModel(value = "File", description = "文件表")
-public class File extends Entity<Long> {
+public class File extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -203,11 +204,32 @@ public class File extends Entity<Long> {
 
 
     @Builder
-    public File(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                DataType dataType, String submittedFileName, String treePath, Integer grade, Boolean isDelete,
-                Long folderId, String url, Long size, String folderName, String group, String path,
-                String relativePath, String fileMd5, String contextType, String filename, String ext, String icon,
-                String createMonth, String createWeek, String createDay) {
+    public File(Long id,
+                LocalDateTime createTime,
+                Long createUser,
+                LocalDateTime updateTime,
+                Long updateUser,
+                DataType dataType,
+                String submittedFileName,
+                String treePath,
+                Integer grade,
+                Boolean isDelete,
+                Long folderId,
+                String url,
+                Long size,
+                String folderName,
+                String group,
+                String path,
+                String relativePath,
+                String fileMd5,
+                String contextType,
+                String filename,
+                String ext,
+                String icon,
+                String createMonth,
+                String createWeek,
+                String createDay)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

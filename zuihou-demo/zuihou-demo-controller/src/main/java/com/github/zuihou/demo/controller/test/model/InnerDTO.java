@@ -27,7 +27,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "InnerDTO", description = "InnerDTO验证对象")
-public class InnerDTO extends Entity<Long> {
+public class InnerDTO extends Entity<Long>
+{
 
     /**
      * 应用编码

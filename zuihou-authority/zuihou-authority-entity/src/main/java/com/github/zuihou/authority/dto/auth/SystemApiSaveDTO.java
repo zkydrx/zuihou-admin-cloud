@@ -26,7 +26,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "SystemApiSaveDTO", description = "API接口")
-public class SystemApiSaveDTO implements Serializable {
+public class SystemApiSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

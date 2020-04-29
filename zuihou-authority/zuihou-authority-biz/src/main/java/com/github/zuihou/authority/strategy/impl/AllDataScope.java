@@ -17,13 +17,15 @@ import java.util.stream.Collectors;
  * @date 2019-06-08 16:27
  */
 @Component("ALL")
-public class AllDataScope implements AbstractDataScopeHandler {
+public class AllDataScope implements AbstractDataScopeHandler
+{
 
     @Autowired
     private OrgService orgService;
 
     @Override
-    public List<Long> getOrgIds(List<Long> orgList, Long userId) {
+    public List<Long> getOrgIds(List<Long> orgList, Long userId)
+    {
         List<Org> list = orgService.lambdaQuery().select(Org::getId).list();
         return list.stream().map(Org::getId).collect(Collectors.toList());
     }

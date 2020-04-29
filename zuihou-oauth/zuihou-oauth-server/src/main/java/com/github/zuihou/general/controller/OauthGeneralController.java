@@ -41,11 +41,13 @@ import java.util.Map;
 @RestController
 @RefreshScope
 @Api(value = "Common", tags = "通用Controller")
-public class OauthGeneralController {
+public class OauthGeneralController
+{
 
     private final static Map<String, Map<String, String>> ENUM_MAP = new HashMap<>(8);
 
-    static {
+    static
+    {
         // 权限服务
         ENUM_MAP.put(HttpMethod.class.getSimpleName(), BaseEnum.getMap(HttpMethod.values()));
         ENUM_MAP.put(DataScopeType.class.getSimpleName(), BaseEnum.getMap(DataScopeType.values()));
@@ -71,15 +73,19 @@ public class OauthGeneralController {
 
     @ApiOperation(value = "获取当前系统指定枚举", notes = "获取当前系统指定枚举")
     @GetMapping("/enums")
-    public R<Map<String, Map<String, String>>> enums(@RequestParam(value = "codes[]", required = false) String[] codes) {
-        if (ArrayUtil.isEmpty(codes)) {
+    public R<Map<String, Map<String, String>>> enums(@RequestParam(value = "codes[]", required = false) String[] codes)
+    {
+        if (ArrayUtil.isEmpty(codes))
+        {
             return R.success(ENUM_MAP);
         }
 
         Map<String, Map<String, String>> map = new HashMap<>(codes.length);
 
-        for (String code : codes) {
-            if (ENUM_MAP.containsKey(code)) {
+        for (String code : codes)
+        {
+            if (ENUM_MAP.containsKey(code))
+            {
                 map.put(code, ENUM_MAP.get(code));
             }
         }
@@ -87,7 +93,8 @@ public class OauthGeneralController {
     }
 
     @GetMapping("/aaaa")
-    public R<Object> test() {
+    public R<Object> test()
+    {
         log.warn("warn");
         log.error("error");
         log.debug("debug");
@@ -96,7 +103,8 @@ public class OauthGeneralController {
     }
 
     @GetMapping("/aaa2")
-    public R<Object> test22() {
+    public R<Object> test22()
+    {
         log.warn("warn");
         log.error("error");
         log.debug("debug");
@@ -105,7 +113,8 @@ public class OauthGeneralController {
     }
 
     @GetMapping("/aaa3")
-    public R<Object> test3() {
+    public R<Object> test3()
+    {
         log.warn("warn");
         log.error("error");
         log.debug("debug");
@@ -115,7 +124,8 @@ public class OauthGeneralController {
 
     @PreAuth("hasRole('user')")
     @GetMapping("/aaa4")
-    public R<Object> test4() {
+    public R<Object> test4()
+    {
         log.warn("warn");
         log.error("error");
         log.debug("debug");
@@ -125,7 +135,8 @@ public class OauthGeneralController {
 
     @PreAuth("hasRole('PT_ADMIN')")
     @GetMapping("/aaa5")
-    public R<Object> test5() {
+    public R<Object> test5()
+    {
         log.warn("warn");
         log.error("error");
         log.debug("debug");

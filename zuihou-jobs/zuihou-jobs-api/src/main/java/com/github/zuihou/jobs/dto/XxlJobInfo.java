@@ -18,7 +18,8 @@ import java.util.Map;
  */
 @Data
 @Accessors(chain = true)
-public class XxlJobInfo {
+public class XxlJobInfo
+{
     public static final ThreadLocal<Map<String, Object>> THREAD_LOCAL = new ThreadLocal<>();
     /**
      * 执行器主键ID	(JobKey.group)
@@ -61,44 +62,50 @@ public class XxlJobInfo {
      */
     private String executorParam;
 
-    private XxlJobInfo(String jobGroupName, Date startExecuteTime, String executorHandler) {
+    private XxlJobInfo(String jobGroupName, Date startExecuteTime, String executorHandler)
+    {
         this.jobGroupName = jobGroupName;
         this.startExecuteTime = startExecuteTime;
         this.executorHandler = executorHandler;
     }
 
-    private XxlJobInfo(String jobGroupName, Date startExecuteTime, String executorHandler, String executorParam) {
+    private XxlJobInfo(String jobGroupName, Date startExecuteTime, String executorHandler, String executorParam)
+    {
         this(jobGroupName, startExecuteTime, executorHandler);
         this.executorParam = executorParam;
     }
 
-    private static Map<String, Object> getLocalMap() {
+    private static Map<String, Object> getLocalMap()
+    {
         Map<String, Object> map = THREAD_LOCAL.get();
-        if (map == null) {
+        if (map == null)
+        {
             map = new HashMap<>();
             THREAD_LOCAL.set(map);
         }
         return map;
     }
 
-    private static String getCurAuthor() {
+    private static String getCurAuthor()
+    {
         Map<String, Object> map = getLocalMap();
         return (String) map.getOrDefault("name", "");
     }
 
-    public static XxlJobInfo build(String jobGroupName, Date startExecuteTime, String executorHandler) {
-        return new XxlJobInfo(jobGroupName, startExecuteTime, executorHandler)
-                .setAuthor(getCurAuthor());
+    public static XxlJobInfo build(String jobGroupName, Date startExecuteTime, String executorHandler)
+    {
+        return new XxlJobInfo(jobGroupName, startExecuteTime, executorHandler).setAuthor(getCurAuthor());
     }
 
-    public static XxlJobInfo build(String jobGroupName, Date startExecuteTime, String executorHandler, String executorParam) {
+    public static XxlJobInfo build(String jobGroupName, Date startExecuteTime, String executorHandler, String executorParam)
+    {
         Assert.assertNotNull("发送时间能为空", startExecuteTime);
         Assert.assertNotNull("处理类不能为空", executorHandler);
-        return new XxlJobInfo(jobGroupName, startExecuteTime, executorHandler, executorParam)
-                .setAuthor(getCurAuthor());
+        return new XxlJobInfo(jobGroupName, startExecuteTime, executorHandler, executorParam).setAuthor(getCurAuthor());
     }
 
-    public static XxlJobInfo build(String jobGroupName, LocalDateTime startExecuteTime, String executorHandler, String executorParam) {
+    public static XxlJobInfo build(String jobGroupName, LocalDateTime startExecuteTime, String executorHandler, String executorParam)
+    {
         Assert.assertNotNull("发送时间能为空", startExecuteTime);
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zdt = startExecuteTime.atZone(zoneId);

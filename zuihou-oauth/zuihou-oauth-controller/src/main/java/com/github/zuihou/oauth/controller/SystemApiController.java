@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/systemApi")
 @Api(value = "SystemApi", tags = "API接口")
-public class SystemApiController {
+public class SystemApiController
+{
 
     @Autowired
     private SystemApiService systemApiService;
@@ -45,7 +46,8 @@ public class SystemApiController {
     @PostMapping("/batch")
     @SysLog("批量新增API接口")
     @PreAuth
-    public R<Boolean> batchSave(@RequestBody @Validated SystemApiScanSaveDTO data) {
+    public R<Boolean> batchSave(@RequestBody @Validated SystemApiScanSaveDTO data)
+    {
         return R.success(systemApiService.batchSave(data));
     }
 

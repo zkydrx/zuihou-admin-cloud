@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @SqlParser(filter = true)
-public interface GlobalUserMapper extends SuperMapper<GlobalUser> {
+public interface GlobalUserMapper extends SuperMapper<GlobalUser>
+{
 
 }

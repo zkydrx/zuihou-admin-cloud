@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class CCommonAreaServiceImpl extends ServiceImpl<CCommonAreaMapper, CCommonArea> implements CCommonAreaService {
+public class CCommonAreaServiceImpl extends ServiceImpl<CCommonAreaMapper, CCommonArea> implements CCommonAreaService
+{
 
 }

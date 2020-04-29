@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2020-02-05
  */
 @Repository
-public interface ParameterMapper extends SuperMapper<Parameter> {
+public interface ParameterMapper extends SuperMapper<Parameter>
+{
 
 }

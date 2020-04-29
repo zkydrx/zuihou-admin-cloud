@@ -39,7 +39,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @TableName("c_auth_user")
 @ApiModel(value = "User", description = "用户")
 @AllArgsConstructor
-public class User extends Entity<Long> {
+public class User extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -223,10 +224,30 @@ public class User extends Entity<Long> {
 
 
     @Builder
-    public User(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                String account, String name, RemoteData<Long, Org> orgId, RemoteData<Long, String> stationId, String email,
-                String mobile, Sex sex, Boolean status, String avatar, RemoteData<String, String> nation, RemoteData<String, String> education,
-                RemoteData<String, String> positionStatus, String workDescribe, LocalDateTime passwordErrorLastTime, Integer passwordErrorNum, LocalDateTime passwordExpireTime, String password, LocalDateTime lastLoginTime) {
+    public User(Long id,
+                Long createUser,
+                LocalDateTime createTime,
+                Long updateUser,
+                LocalDateTime updateTime,
+                String account,
+                String name,
+                RemoteData<Long, Org> orgId,
+                RemoteData<Long, String> stationId,
+                String email,
+                String mobile,
+                Sex sex,
+                Boolean status,
+                String avatar,
+                RemoteData<String, String> nation,
+                RemoteData<String, String> education,
+                RemoteData<String, String> positionStatus,
+                String workDescribe,
+                LocalDateTime passwordErrorLastTime,
+                Integer passwordErrorNum,
+                LocalDateTime passwordExpireTime,
+                String password,
+                LocalDateTime lastLoginTime)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

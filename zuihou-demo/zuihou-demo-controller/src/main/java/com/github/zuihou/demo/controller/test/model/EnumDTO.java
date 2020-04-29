@@ -15,14 +15,16 @@ import java.util.List;
  */
 @Data
 @ToString
-public class EnumDTO implements Serializable {
+public class EnumDTO implements Serializable
+{
     private Long id;
     private String name;
     private HttpMethod httpMethod;
 
     private List<Producttt> list;
 
-    public void testEx() throws Exception {
+    public void testEx() throws Exception
+    {
         throw new Exception("eeeeee");
     }
 }

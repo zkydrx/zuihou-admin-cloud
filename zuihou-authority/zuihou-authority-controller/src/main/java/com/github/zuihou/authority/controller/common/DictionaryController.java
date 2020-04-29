@@ -35,13 +35,15 @@ import java.util.List;
 @RequestMapping("/dictionary")
 @Api(value = "Dictionary", tags = "字典类型")
 @PreAuth(replace = "dict:")
-public class DictionaryController extends SuperController<DictionaryService, Long, Dictionary, Dictionary, DictionarySaveDTO, DictionaryUpdateDTO> {
+public class DictionaryController extends SuperController<DictionaryService, Long, Dictionary, Dictionary, DictionarySaveDTO, DictionaryUpdateDTO>
+{
 
     @Autowired
     private DictionaryItemService dictionaryItemService;
 
     @Override
-    public R<Boolean> handlerDelete(List<Long> ids) {
+    public R<Boolean> handlerDelete(List<Long> ids)
+    {
         this.baseService.removeByIds(ids);
         this.dictionaryItemService.remove(Wraps.<DictionaryItem>lbQ().in(DictionaryItem::getDictionaryId, ids));
         return this.success(true);

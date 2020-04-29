@@ -12,7 +12,8 @@ import com.github.zuihou.sms.entity.SmsTemplate;
  * @author zuihou
  * @date 2019-08-01
  */
-public interface SmsTemplateService extends SuperService<SmsTemplate> {
+public interface SmsTemplateService extends SuperService<SmsTemplate>
+{
     /**
      * 保存模板，并且将模板内容解析成json格式
      *

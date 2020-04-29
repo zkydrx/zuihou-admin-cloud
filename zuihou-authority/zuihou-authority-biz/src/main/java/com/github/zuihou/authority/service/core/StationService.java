@@ -18,7 +18,8 @@ import java.util.Set;
  * @author zuihou
  * @date 2019-07-22
  */
-public interface StationService extends SuperCacheService<Station> {
+public interface StationService extends SuperCacheService<Station>
+{
     /**
      * 按权限查询岗位的分页信息
      *

@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "MsgsCenterType", description = "消息类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum MsgsCenterType implements BaseEnum {
+public enum MsgsCenterType implements BaseEnum
+{
 
     /**
      * WAIT="待办"
@@ -46,25 +47,32 @@ public enum MsgsCenterType implements BaseEnum {
     private String desc;
 
 
-    public static MsgsCenterType match(String val, MsgsCenterType def) {
-        for (MsgsCenterType enm : MsgsCenterType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static MsgsCenterType match(String val, MsgsCenterType def)
+    {
+        for (MsgsCenterType enm : MsgsCenterType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static MsgsCenterType get(String val) {
+    public static MsgsCenterType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(MsgsCenterType val) {
-        if (val == null) {
+    public boolean eq(MsgsCenterType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -72,7 +80,8 @@ public enum MsgsCenterType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "WAIT,NOTIFY,PUBLICITY,WARN", example = "WAIT")
-    public String getCode() {
+    public String getCode()
+    {
         return name();
     }
 

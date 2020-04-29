@@ -14,7 +14,8 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "Folder", description = "文件夹")
-public class FolderDTO extends BaseFolderDTO implements Serializable {
+public class FolderDTO extends BaseFolderDTO implements Serializable
+{
     @ApiModelProperty(value = "id", notes = "文件夹id", required = true)
     private Long id;
 }

@@ -12,7 +12,8 @@ import com.github.zuihou.base.service.SuperService;
  * @author zuihou
  * @date 2020-02-05
  */
-public interface ParameterService extends SuperService<Parameter> {
+public interface ParameterService extends SuperService<Parameter>
+{
     /**
      * 根据参数键查询参数值
      *

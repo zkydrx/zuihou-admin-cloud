@@ -21,44 +21,50 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  * @date 2019/08/13
  */
 @Component
-public class MySwaggerXForwardedHeadersFilter implements HttpHeadersFilter, Ordered {
+public class MySwaggerXForwardedHeadersFilter implements HttpHeadersFilter, Ordered
+{
     @Value("${server.servlet.context-path:/api}")
     private String contextPath;
 
     @Override
-    public int getOrder() {
+    public int getOrder()
+    {
         return 1;
     }
 
     @Override
-    public boolean supports(Type type) {
+    public boolean supports(Type type)
+    {
         return true;
     }
 
     @Override
-    public HttpHeaders filter(HttpHeaders input, ServerWebExchange exchange) {
+    public HttpHeaders filter(HttpHeaders input, ServerWebExchange exchange)
+    {
         HttpHeaders original = input;
         HttpHeaders updated = new HttpHeaders();
 
-        original.entrySet().stream()
-                .forEach(entry -> updated.addAll(entry.getKey(), entry.getValue()));
+        original.entrySet().stream().forEach(entry -> updated.addAll(entry.getKey(), entry.getValue()));
 
         LinkedHashSet<URI> originalUris = exchange.getAttribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
         URI requestUri = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
 
-        if (originalUris != null && requestUri != null) {
+        if (originalUris != null && requestUri != null)
+        {
 
             originalUris.stream().forEach(originalUri -> {
-                if (originalUri != null && originalUri.getPath() != null) {
+                if (originalUri != null && originalUri.getPath() != null)
+                {
                     String prefix = originalUri.getPath();
 
                     String originalUriPath = stripTrailingSlash(originalUri);
                     String requestUriPath = stripTrailingSlash(requestUri);
 
-                    if (requestUriPath != null && (originalUriPath.endsWith(requestUriPath))) {
+                    if (requestUriPath != null && (originalUriPath.endsWith(requestUriPath)))
+                    {
                         prefix = originalUriPath.replace(requestUriPath, "");
-                        if (prefix != null && prefix.length() > 0 &&
-                                prefix.length() <= originalUri.getPath().length()) {
+                        if (prefix != null && prefix.length() > 0 && prefix.length() <= originalUri.getPath().length())
+                        {
                             updated.set(X_FORWARDED_PREFIX_HEADER, contextPath + prefix);
                         }
                     }
@@ -69,10 +75,14 @@ public class MySwaggerXForwardedHeadersFilter implements HttpHeadersFilter, Orde
         return updated;
     }
 
-    private String stripTrailingSlash(URI uri) {
-        if (uri.getPath().endsWith("/")) {
+    private String stripTrailingSlash(URI uri)
+    {
+        if (uri.getPath().endsWith("/"))
+        {
             return uri.getPath().substring(0, uri.getPath().length() - 1);
-        } else {
+        }
+        else
+        {
             return uri.getPath();
         }
     }

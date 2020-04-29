@@ -27,7 +27,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "ApplicationPageDTO", description = "应用")
-public class ApplicationPageDTO implements Serializable {
+public class ApplicationPageDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

@@ -15,7 +15,8 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "AttachmentResult", description = "附件列表")
-public class AttachmentResultDTO {
+public class AttachmentResultDTO
+{
     @ApiModelProperty(value = "业务id")
     private String bizId;
     @ApiModelProperty(value = "业务类型")

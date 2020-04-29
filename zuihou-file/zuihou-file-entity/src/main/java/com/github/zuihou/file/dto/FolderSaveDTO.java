@@ -13,5 +13,6 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "FolderSave", description = "文件夹保存")
-public class FolderSaveDTO extends BaseFolderDTO implements Serializable {
+public class FolderSaveDTO extends BaseFolderDTO implements Serializable
+{
 }

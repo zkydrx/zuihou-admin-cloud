@@ -28,7 +28,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("m_order")
 @ApiModel(value = "Order", description = "订单")
-public class Order extends Entity<Long> {
+public class Order extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -50,8 +51,8 @@ public class Order extends Entity<Long> {
 
 
     @Builder
-    public Order(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                 String name, String code) {
+    public Order(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser, String name, String code)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

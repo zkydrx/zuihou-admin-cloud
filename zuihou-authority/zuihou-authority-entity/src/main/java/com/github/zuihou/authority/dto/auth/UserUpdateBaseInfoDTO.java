@@ -34,7 +34,8 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.DICTIONA
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserUpdateBaseInfoDTO", description = "用户修改基础信息实体")
-public class UserUpdateBaseInfoDTO implements Serializable {
+public class UserUpdateBaseInfoDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

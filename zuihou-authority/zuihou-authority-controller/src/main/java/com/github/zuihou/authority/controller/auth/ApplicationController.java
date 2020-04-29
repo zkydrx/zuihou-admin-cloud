@@ -31,10 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/application")
 @Api(value = "Application", tags = "应用")
 @PreAuth(replace = "application:")
-public class ApplicationController extends SuperController<ApplicationService, Long, Application, ApplicationPageDTO, ApplicationSaveDTO, ApplicationUpdateDTO> {
+public class ApplicationController extends SuperController<ApplicationService, Long, Application, ApplicationPageDTO, ApplicationSaveDTO, ApplicationUpdateDTO>
+{
 
     @Override
-    public R<Application> handlerSave(ApplicationSaveDTO applicationSaveDTO) {
+    public R<Application> handlerSave(ApplicationSaveDTO applicationSaveDTO)
+    {
         applicationSaveDTO.setClientId(RandomUtil.randomString(24));
         applicationSaveDTO.setClientSecret(RandomUtil.randomString(32));
         return super.handlerSave(applicationSaveDTO);

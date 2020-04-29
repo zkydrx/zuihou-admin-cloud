@@ -18,7 +18,8 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class ParameterUpdate implements Serializable {
+public class ParameterUpdate implements Serializable
+{
     private static final long serialVersionUID = -3124612657759050173L;
 
     private String key;

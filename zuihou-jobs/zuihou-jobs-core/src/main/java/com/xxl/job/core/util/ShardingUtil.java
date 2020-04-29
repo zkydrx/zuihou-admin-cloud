@@ -7,15 +7,18 @@ import lombok.ToString;
  *
  * @author xuxueli 2017-07-25 21:26:38
  */
-public class ShardingUtil {
+public class ShardingUtil
+{
 
     private static InheritableThreadLocal<ShardingVO> contextHolder = new InheritableThreadLocal<ShardingVO>();
 
-    public static ShardingVO getShardingVo() {
+    public static ShardingVO getShardingVo()
+    {
         return contextHolder.get();
     }
 
-    public static void setShardingVo(ShardingVO shardingVo) {
+    public static void setShardingVo(ShardingVO shardingVo)
+    {
         contextHolder.set(shardingVo);
     }
 
@@ -26,29 +29,35 @@ public class ShardingUtil {
      * @date 2019-07-25 14:26
      */
     @ToString
-    public static class ShardingVO {
+    public static class ShardingVO
+    {
 
         private int index;
         private int total;
 
-        public ShardingVO(int index, int total) {
+        public ShardingVO(int index, int total)
+        {
             this.index = index;
             this.total = total;
         }
 
-        public int getIndex() {
+        public int getIndex()
+        {
             return index;
         }
 
-        public void setIndex(int index) {
+        public void setIndex(int index)
+        {
             this.index = index;
         }
 
-        public int getTotal() {
+        public int getTotal()
+        {
             return total;
         }
 
-        public void setTotal(int total) {
+        public void setTotal(int total)
+        {
             this.total = total;
         }
     }

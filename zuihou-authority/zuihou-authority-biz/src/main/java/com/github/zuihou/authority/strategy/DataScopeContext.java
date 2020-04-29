@@ -16,7 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2019/07/22
  */
 @Service
-public class DataScopeContext {
+public class DataScopeContext
+{
 
     private final Map<String, AbstractDataScopeHandler> strategyMap = new ConcurrentHashMap<>();
 
@@ -26,7 +27,8 @@ public class DataScopeContext {
      * @param strategyMap
      */
     @Autowired
-    public DataScopeContext(Map<String, AbstractDataScopeHandler> strategyMap) {
+    public DataScopeContext(Map<String, AbstractDataScopeHandler> strategyMap)
+    {
         strategyMap.forEach(this.strategyMap::put);
     }
 
@@ -37,9 +39,11 @@ public class DataScopeContext {
      * @param dsType
      * @return
      */
-    public List<Long> getOrgIdsForDataScope(List<Long> orgList, DataScopeType dsType, Long userId) {
+    public List<Long> getOrgIdsForDataScope(List<Long> orgList, DataScopeType dsType, Long userId)
+    {
         AbstractDataScopeHandler handler = strategyMap.get(dsType.name());
-        if (handler == null) {
+        if (handler == null)
+        {
             return Collections.emptyList();
         }
         return handler.getOrgIds(orgList, userId);

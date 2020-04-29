@@ -24,11 +24,13 @@ import java.util.Set;
  */
 @Component("TENCENT")
 @Slf4j
-public class SmsTencentStrategy extends AbstractSmsStrategy {
+public class SmsTencentStrategy extends AbstractSmsStrategy
+{
 
     private final static Map<String, String> ERROR_CODE_MAP = new HashMap<>();
 
-    static {
+    static
+    {
         ERROR_CODE_MAP.put("1001", "sig 校验失败");
         ERROR_CODE_MAP.put("1002", "短信/语音内容中含有敏感词");
         ERROR_CODE_MAP.put("1003", "请求包体没有 sig 字段或 sig 为空");
@@ -67,8 +69,10 @@ public class SmsTencentStrategy extends AbstractSmsStrategy {
     }
 
     @Override
-    protected SmsResult send(SmsDO smsDO) {
-        try {
+    protected SmsResult send(SmsDO smsDO)
+    {
+        try
+        {
             //初始化单发
             SmsSingleSender singleSender = new SmsSingleSender(Convert.toInt(smsDO.getAppId(), 0), smsDO.getAppSecret());
 
@@ -79,17 +83,28 @@ public class SmsTencentStrategy extends AbstractSmsStrategy {
             Set<Map.Entry<String, Object>> sets = param.entrySet();
 
             ArrayList<String> paramList = new ArrayList<>();
-            for (Map.Entry<String, Object> val : sets) {
+            for (Map.Entry<String, Object> val : sets)
+            {
                 paramList.add(val.getValue().toString());
             }
 
-            SmsSingleSenderResult singleSenderResult = singleSender.sendWithParam("86", smsDO.getPhone(),
-                    Convert.toInt(smsDO.getTemplateCode()), paramList, smsDO.getSignName(), "", "");
+            SmsSingleSenderResult singleSenderResult = singleSender.sendWithParam("86",
+                                                                                  smsDO.getPhone(),
+                                                                                  Convert.toInt(smsDO.getTemplateCode()),
+                                                                                  paramList,
+                                                                                  smsDO.getSignName(),
+                                                                                  "",
+                                                                                  "");
             log.info("tencent result={}", singleSenderResult.toString());
-            return SmsResult.build(ProviderType.TENCENT, String.valueOf(singleSenderResult.result),
-                    singleSenderResult.sid, singleSenderResult.ext,
-                    ERROR_CODE_MAP.getOrDefault(String.valueOf(singleSenderResult.result), singleSenderResult.errMsg), singleSenderResult.fee);
-        } catch (Exception e) {
+            return SmsResult.build(ProviderType.TENCENT,
+                                   String.valueOf(singleSenderResult.result),
+                                   singleSenderResult.sid,
+                                   singleSenderResult.ext,
+                                   ERROR_CODE_MAP.getOrDefault(String.valueOf(singleSenderResult.result), singleSenderResult.errMsg),
+                                   singleSenderResult.fee);
+        }
+        catch (Exception e)
+        {
             log.error(e.getMessage());
             return SmsResult.fail(e.getMessage());
         }

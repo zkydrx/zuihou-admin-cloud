@@ -29,7 +29,8 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/jobinfo")
-public class JobInfoController {
+public class JobInfoController
+{
 
     @Resource
     private XxlJobGroupDao xxlJobGroupDao;
@@ -37,7 +38,8 @@ public class JobInfoController {
     private XxlJobService xxlJobService;
 
     @RequestMapping("/index1")
-    public String index1(Model model, @RequestParam(required = false, defaultValue = "-1") Integer jobGroup) {
+    public String index1(Model model, @RequestParam(required = false, defaultValue = "-1") Integer jobGroup)
+    {
 
         // 枚举-字典
         model.addAttribute("ExecutorRouteStrategyEnum", ExecutorRouteStrategyEnum.values());    // 路由策略-列表
@@ -53,7 +55,8 @@ public class JobInfoController {
     }
 
     @RequestMapping("/index2")
-    public String index2(Model model, @RequestParam(required = false, defaultValue = "-1") Integer jobGroup) {
+    public String index2(Model model, @RequestParam(required = false, defaultValue = "-1") Integer jobGroup)
+    {
 
         // 枚举-字典
         model.addAttribute("ExecutorRouteStrategyEnum", ExecutorRouteStrategyEnum.values());    // 路由策略-列表
@@ -72,37 +75,47 @@ public class JobInfoController {
     @ResponseBody
     public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") Integer start,
                                         @RequestParam(required = false, defaultValue = "10") Integer length,
-                                        Integer jobGroup, String jobDesc, String executorHandler, String filterTime, Integer type) {
+                                        Integer jobGroup,
+                                        String jobDesc,
+                                        String executorHandler,
+                                        String filterTime,
+                                        Integer type)
+    {
         return xxlJobService.pageList(start, length, jobGroup, jobDesc, executorHandler, filterTime, type);
     }
 
     @RequestMapping("/add")
     @ResponseBody
-    public ReturnT<String> add(XxlJobInfo jobInfo) {
+    public ReturnT<String> add(XxlJobInfo jobInfo)
+    {
         return xxlJobService.add(jobInfo);
     }
 
     @RequestMapping("/update")
     @ResponseBody
-    public ReturnT<String> update(XxlJobInfo jobInfo) {
+    public ReturnT<String> update(XxlJobInfo jobInfo)
+    {
         return xxlJobService.update(jobInfo);
     }
 
     @RequestMapping("/remove")
     @ResponseBody
-    public ReturnT<String> remove(Integer id) {
+    public ReturnT<String> remove(Integer id)
+    {
         return xxlJobService.remove(id);
     }
 
     @RequestMapping("/stop")        //  pause >> stop
     @ResponseBody
-    public ReturnT<String> pause(Integer id) {
+    public ReturnT<String> pause(Integer id)
+    {
         return xxlJobService.stop(id);
     }
 
     @RequestMapping("/start")        //  resume >> start
     @ResponseBody
-    public ReturnT<String> start(Integer id) {
+    public ReturnT<String> start(Integer id)
+    {
         return xxlJobService.start(id);
     }
 
@@ -116,9 +129,11 @@ public class JobInfoController {
     @RequestMapping("/trigger")
     @ResponseBody
     //@PermessionLimit(limit = false)
-    public ReturnT<String> triggerJob(int id, String executorParam) {
+    public ReturnT<String> triggerJob(int id, String executorParam)
+    {
         // force cover job param
-        if (executorParam == null) {
+        if (executorParam == null)
+        {
             executorParam = "";
         }
 
@@ -129,7 +144,8 @@ public class JobInfoController {
     @RequestMapping("/addTimingTask")
     @ResponseBody
     @PermessionLimit(limit = false)
-    public ReturnT<String> addTimingTask(@RequestBody XxlJobInfo dto) {
+    public ReturnT<String> addTimingTask(@RequestBody XxlJobInfo dto)
+    {
         return xxlJobService.addStart(dto);
     }
 }

@@ -32,7 +32,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/roleAuthority")
 @Api(value = "RoleAuthority", tags = "角色的资源")
-public class RoleAuthorityController {
+public class RoleAuthorityController
+{
 
     @Autowired
     private RoleAuthorityService roleAuthorityService;
@@ -46,7 +47,8 @@ public class RoleAuthorityController {
     @ApiOperation(value = "查询指定角色关联的菜单和资源", notes = "查询指定角色关联的菜单和资源")
     @GetMapping("/{roleId}")
     @SysLog(value = "'查询指定角色关联的菜单和资源", response = false)
-    public R<List<RoleAuthority>> queryByRoleId(@PathVariable Long roleId) {
+    public R<List<RoleAuthority>> queryByRoleId(@PathVariable Long roleId)
+    {
         return R.success(roleAuthorityService.list(Wraps.<RoleAuthority>lbQ().eq(RoleAuthority::getRoleId, roleId)));
     }
 

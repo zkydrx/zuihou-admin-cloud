@@ -7,14 +7,18 @@ import com.github.zuihou.model.RemoteData;
 /**
  * @author by jueyue on 18-8-3.
  */
-public class ExcelDictHandlerImpl implements IExcelDictHandler {
+public class ExcelDictHandlerImpl implements IExcelDictHandler
+{
 
     @Override
-    public String toName(String dict, Object obj, String name, Object value) {
-        if (value == null) {
+    public String toName(String dict, Object obj, String name, Object value)
+    {
+        if (value == null)
+        {
             return null;
         }
-        if ("nation".equals(dict)) {
+        if ("nation".equals(dict))
+        {
             return ((RemoteData<String, String>) value).getData();
         }
         return null;
@@ -30,14 +34,18 @@ public class ExcelDictHandlerImpl implements IExcelDictHandler {
      * @return
      */
     @Override
-    public String toValue(String dict, Object obj, String name, Object value) {
-        if (value == null) {
+    public String toValue(String dict, Object obj, String name, Object value)
+    {
+        if (value == null)
+        {
             return null;
         }
-        if ("sex".equals(dict)) {
+        if ("sex".equals(dict))
+        {
             return Sex.matchDesc(value.toString(), Sex.N).name();
         }
-        if ("education".equals(dict)) {
+        if ("education".equals(dict))
+        {
             return "汉族";
         }
         return null;

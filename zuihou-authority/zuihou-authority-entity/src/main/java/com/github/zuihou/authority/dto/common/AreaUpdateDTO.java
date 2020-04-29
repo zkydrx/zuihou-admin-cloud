@@ -33,7 +33,8 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.DICTIONA
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "AreaUpdateDTO", description = "地区表")
-public class AreaUpdateDTO implements Serializable {
+public class AreaUpdateDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "名称")

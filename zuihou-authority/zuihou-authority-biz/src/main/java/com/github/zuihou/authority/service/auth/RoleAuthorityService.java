@@ -16,7 +16,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-07-03
  */
-public interface RoleAuthorityService extends SuperService<RoleAuthority> {
+public interface RoleAuthorityService extends SuperService<RoleAuthority>
+{
 
     /**
      * 给用户分配角色

@@ -17,7 +17,8 @@ import java.util.Set;
  * @author zuihou
  * @date 2019-07-22
  */
-public interface OrgService extends SuperCacheService<Org> {
+public interface OrgService extends SuperCacheService<Org>
+{
     /**
      * 查询指定id集合下的所有子集
      *

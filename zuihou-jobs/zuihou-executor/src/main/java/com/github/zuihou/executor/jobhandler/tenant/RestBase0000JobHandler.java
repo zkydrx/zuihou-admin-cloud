@@ -18,7 +18,8 @@ import org.springframework.stereotype.Component;
 @JobHandler(value = "restBase0000JobHandler")
 @Component
 @Slf4j
-public class RestBase0000JobHandler extends IJobHandler {
+public class RestBase0000JobHandler extends IJobHandler
+{
     /**
      * 内置租户
      */
@@ -27,7 +28,8 @@ public class RestBase0000JobHandler extends IJobHandler {
     private InitSystemContext initSystemContext;
 
     @Override
-    public ReturnT<String> execute2(String param) throws Exception {
+    public ReturnT<String> execute2(String param) throws Exception
+    {
         XxlJobLogger.log("执行参数--->param={} ", param);
 
         initSystemContext.reset(DEF_TENANT);

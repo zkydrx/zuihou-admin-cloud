@@ -19,7 +19,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @ApiModel(value = "ResourceQueryDTO", description = "资源查询")
-public class ResourceQueryDTO {
+public class ResourceQueryDTO
+{
 
     /**
      * 父资源id， 用于查询按钮

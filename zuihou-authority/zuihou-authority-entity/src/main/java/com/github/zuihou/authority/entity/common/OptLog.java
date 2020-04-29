@@ -34,7 +34,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Accessors(chain = true)
 @TableName("c_common_opt_log")
 @ApiModel(value = "OptLog", description = "系统日志")
-public class OptLog extends SuperEntity<Long> {
+public class OptLog extends SuperEntity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -177,10 +178,26 @@ public class OptLog extends SuperEntity<Long> {
 
 
     @Builder
-    public OptLog(Long id, LocalDateTime createTime, Long createUser,
-                  String requestIp, LogType type, String userName, String description, String classPath,
-                  String actionMethod, String requestUri, HttpMethod httpMethod, String params, String result, String exDesc,
-                  String exDetail, LocalDateTime startTime, LocalDateTime finishTime, Long consumingTime, String ua) {
+    public OptLog(Long id,
+                  LocalDateTime createTime,
+                  Long createUser,
+                  String requestIp,
+                  LogType type,
+                  String userName,
+                  String description,
+                  String classPath,
+                  String actionMethod,
+                  String requestUri,
+                  HttpMethod httpMethod,
+                  String params,
+                  String result,
+                  String exDesc,
+                  String exDetail,
+                  LocalDateTime startTime,
+                  LocalDateTime finishTime,
+                  Long consumingTime,
+                  String ua)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-12-15
  */
 @Repository
-public interface ApplicationMapper extends SuperMapper<Application> {
+public interface ApplicationMapper extends SuperMapper<Application>
+{
 
 }

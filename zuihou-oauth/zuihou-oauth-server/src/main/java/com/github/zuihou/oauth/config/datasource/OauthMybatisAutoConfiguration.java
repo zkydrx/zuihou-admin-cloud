@@ -22,10 +22,12 @@ import org.springframework.core.annotation.Order;
 @Configuration
 @Slf4j
 @EnableConfigurationProperties({DatabaseProperties.class})
-public class OauthMybatisAutoConfiguration extends BaseMybatisConfiguration {
+public class OauthMybatisAutoConfiguration extends BaseMybatisConfiguration
+{
 
 
-    public OauthMybatisAutoConfiguration(DatabaseProperties databaseProperties) {
+    public OauthMybatisAutoConfiguration(DatabaseProperties databaseProperties)
+    {
         super(databaseProperties);
     }
 
@@ -37,7 +39,8 @@ public class OauthMybatisAutoConfiguration extends BaseMybatisConfiguration {
     @Order(10)
     @Bean
     @ConditionalOnProperty(prefix = DatabaseProperties.PREFIX, name = "isDataScope", havingValue = "true", matchIfMissing = true)
-    public DataScopeInterceptor dataScopeInterceptor() {
+    public DataScopeInterceptor dataScopeInterceptor()
+    {
         return new DataScopeInterceptor((userId) -> SpringUtils.getBean(UserService.class).getDataScopeById(userId));
     }
 

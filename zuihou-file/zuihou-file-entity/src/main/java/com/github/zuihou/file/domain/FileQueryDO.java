@@ -11,7 +11,8 @@ import lombok.Data;
  * @date 2019/05/07
  */
 @Data
-public class FileQueryDO extends File {
+public class FileQueryDO extends File
+{
     private File parent;
 
 }

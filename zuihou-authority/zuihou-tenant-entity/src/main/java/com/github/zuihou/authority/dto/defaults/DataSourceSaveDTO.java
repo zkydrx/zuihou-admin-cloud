@@ -10,7 +10,8 @@ import javax.validation.constraints.NotBlank;
  * @date 2020/1/27
  */
 @Data
-public class DataSourceSaveDTO {
+public class DataSourceSaveDTO
+{
 
     @NotBlank
     @ApiModelProperty(value = "连接池名称", example = "0000")
@@ -21,7 +22,8 @@ public class DataSourceSaveDTO {
     private String driverClassName;
 
     @NotBlank
-    @ApiModelProperty(value = "JDBC url 地址", example = "jdbc:mysql://127.0.0.1:3306/zuihou_base_0000?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true")
+    @ApiModelProperty(value = "JDBC url 地址", example = "jdbc:mysql://127.0.0.1:3306/zuihou_base_0000?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false" +
+            "&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true")
     private String url;
 
     @NotBlank

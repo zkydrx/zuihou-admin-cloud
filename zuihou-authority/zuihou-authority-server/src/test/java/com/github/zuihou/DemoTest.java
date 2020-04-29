@@ -18,29 +18,26 @@ import java.util.List;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class DemoTest {
+public class DemoTest
+{
     private static final String SUPER_TENANT = "admin";
     @Autowired
     private GlobalUserService globalUserService;
 
     // @Test
-    public void test() {
+    public void test()
+    {
         String account = "admin";
-        GlobalUser user =
-                globalUserService.getOne(
-                        Wrappers.<GlobalUser>lambdaQuery()
-                                .eq(GlobalUser::getAccount, account)
-                                .eq(GlobalUser::getTenantCode, SUPER_TENANT));
+        GlobalUser user = globalUserService.getOne(Wrappers.<GlobalUser>lambdaQuery().eq(GlobalUser::getAccount, account).eq(GlobalUser::getTenantCode, SUPER_TENANT));
         System.out.println(user.toString());
     }
 
     @Test
-    public void test2() {
+    public void test2()
+    {
         String account = "admin";
         List<GlobalUser> list = globalUserService.list(Wrappers.lambdaQuery(GlobalUser.builder().account(account).tenantCode(SUPER_TENANT).build()));
-        List<GlobalUser> list1 =
-                globalUserService.list(
-                        Wrappers.<GlobalUser>lambdaQuery().eq(GlobalUser::getAccount, account));
+        List<GlobalUser> list1 = globalUserService.list(Wrappers.<GlobalUser>lambdaQuery().eq(GlobalUser::getAccount, account));
 
         System.out.println(list.size());
     }

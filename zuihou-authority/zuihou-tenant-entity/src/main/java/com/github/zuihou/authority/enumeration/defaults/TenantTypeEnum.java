@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "TenantTypeEnum", description = "类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum TenantTypeEnum implements BaseEnum {
+public enum TenantTypeEnum implements BaseEnum
+{
 
     /**
      * CREATE="创建"
@@ -38,25 +39,32 @@ public enum TenantTypeEnum implements BaseEnum {
     private String desc;
 
 
-    public static TenantTypeEnum match(String val, TenantTypeEnum def) {
-        for (TenantTypeEnum enm : TenantTypeEnum.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static TenantTypeEnum match(String val, TenantTypeEnum def)
+    {
+        for (TenantTypeEnum enm : TenantTypeEnum.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static TenantTypeEnum get(String val) {
+    public static TenantTypeEnum get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(TenantTypeEnum val) {
-        if (val == null) {
+    public boolean eq(TenantTypeEnum val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -64,7 +72,8 @@ public enum TenantTypeEnum implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "CREATE,REGISTER", example = "CREATE")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

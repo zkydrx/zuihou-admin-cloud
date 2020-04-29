@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 @ConditionalOnProperty(name = "zuihou.zipkin.enabled", havingValue = "true")
-public class OkHttpTraceAutoConfig {
+public class OkHttpTraceAutoConfig
+{
 
     /**
      * 如果还未定义OkHttpClient的bean，则采用此OkHttpClient
@@ -26,23 +27,25 @@ public class OkHttpTraceAutoConfig {
      */
     @Bean
     @ConditionalOnMissingBean(OkHttpClient.class)
-    public OkHttpClient okHttpClient() {
-        return new OkHttpClient.Builder()
-                .connectTimeout(2, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
-                .writeTimeout(3, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .connectionPool(new ConnectionPool(20, 10L, TimeUnit.SECONDS))
-                .build();
+    public OkHttpClient okHttpClient()
+    {
+        return new OkHttpClient.Builder().connectTimeout(2, TimeUnit.SECONDS)
+                                         .readTimeout(3, TimeUnit.SECONDS)
+                                         .writeTimeout(3, TimeUnit.SECONDS)
+                                         .retryOnConnectionFailure(true)
+                                         .connectionPool(new ConnectionPool(20, 10L, TimeUnit.SECONDS))
+                                         .build();
     }
 
     @Bean
-    public OkhttpTraceInterceptor okhttpTraceInterceptor() {
+    public OkhttpTraceInterceptor okhttpTraceInterceptor()
+    {
         return new OkhttpTraceInterceptor();
     }
 
     @Bean
-    public OkHttpTracePostProcessor okHttpTracePostProcessor() {
+    public OkHttpTracePostProcessor okHttpTracePostProcessor()
+    {
         return new OkHttpTracePostProcessor(okhttpTraceInterceptor());
     }
 }

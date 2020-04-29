@@ -8,7 +8,8 @@ package com.github.zuihou.common.constant;
  * @author zuihou
  * @date 2020年01月20日11:16:37
  */
-public abstract class InjectionFieldConstants {
+public abstract class InjectionFieldConstants
+{
 
     /**
      * 数据字典项 feign查询类 切记，一定要在 DictionaryItemApi 上面添加属性：

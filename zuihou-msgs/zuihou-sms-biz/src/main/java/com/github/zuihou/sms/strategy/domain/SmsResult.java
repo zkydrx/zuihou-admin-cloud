@@ -16,7 +16,8 @@ import lombok.Data;
  * @date 2019-05-15
  */
 @Data
-public class SmsResult {
+public class SmsResult
+{
 
     /**
      * 阿里：RequestId 请求ID
@@ -49,10 +50,12 @@ public class SmsResult {
 
     private SendStatus sendStatus = SendStatus.WAITING;
 
-    SmsResult() {
+    SmsResult()
+    {
     }
 
-    public static SmsResult build(ProviderType type, String code, String bizId, String ext, String message, int fee) {
+    public static SmsResult build(ProviderType type, String code, String bizId, String ext, String message, int fee)
+    {
         SmsResult smsResult = new SmsResult();
         smsResult.setCode(code);
         smsResult.setBizId(bizId);
@@ -65,14 +68,16 @@ public class SmsResult {
         return smsResult;
     }
 
-    public static SmsResult fail(String message) {
+    public static SmsResult fail(String message)
+    {
         SmsResult smsResult = new SmsResult();
         smsResult.setSendStatus(SendStatus.FAIL);
         smsResult.setMessage(message);
         return smsResult;
     }
 
-    public boolean isSuccess() {
+    public boolean isSuccess()
+    {
         return SendStatus.SUCCESS.eq(sendStatus);
     }
 

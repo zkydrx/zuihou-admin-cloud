@@ -28,7 +28,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("msgs_center_info_receive")
 @ApiModel(value = "MsgsCenterInfoReceive", description = "消息中心接收表")
-public class MsgsCenterInfoReceive extends Entity<Long> {
+public class MsgsCenterInfoReceive extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -60,8 +61,8 @@ public class MsgsCenterInfoReceive extends Entity<Long> {
 
 
     @Builder
-    public MsgsCenterInfoReceive(Long id, LocalDateTime createTime, Long createUser, Long updateUser, LocalDateTime updateTime,
-                                 Long msgsCenterId, Long userId, Boolean isRead) {
+    public MsgsCenterInfoReceive(Long id, LocalDateTime createTime, Long createUser, Long updateUser, LocalDateTime updateTime, Long msgsCenterId, Long userId, Boolean isRead)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

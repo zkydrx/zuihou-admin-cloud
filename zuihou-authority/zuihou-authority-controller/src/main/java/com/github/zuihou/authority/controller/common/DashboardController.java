@@ -30,7 +30,8 @@ import java.util.Map;
 @Validated
 @RestController
 @Api(value = "dashboard", tags = "首页")
-public class DashboardController {
+public class DashboardController
+{
 
     @Autowired
     private LoginLogService loginLogService;
@@ -43,7 +44,8 @@ public class DashboardController {
      * @return
      */
     @GetMapping("/dashboard/visit")
-    public R<Map<String, Object>> index(@ApiIgnore @LoginUser SysUser user) {
+    public R<Map<String, Object>> index(@ApiIgnore @LoginUser SysUser user)
+    {
         Map<String, Object> data = new HashMap<>();
         // 获取系统访问记录
         data.put("totalVisitCount", loginLogService.findTotalVisitCount());
@@ -64,7 +66,8 @@ public class DashboardController {
      * @return
      */
     @GetMapping("/common/generateId")
-    public R<Long> generate() {
+    public R<Long> generate()
+    {
         DatabaseProperties.Id id = databaseProperties.getId();
         return R.success(IdUtil.getSnowflake(id.getWorkerId(), id.getDataCenterId()).nextId());
     }

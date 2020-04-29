@@ -20,22 +20,26 @@ import java.util.Set;
 
 @Data
 @ToString
-public class D2 {
+public class D2
+{
     private String date;
     private String d2;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
         System.out.println(ConfigTools.encrypt("Zkhy@1234"));
     }
 
     @Test
-    public void testId1() {
+    public void testId1()
+    {
         DefaultIdentifierGenerator defaultIdentifierGenerator = new DefaultIdentifierGenerator(0, 0);
         Set<Long> ids = new HashSet<>();
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000000; i++)
+        {
             ids.add(defaultIdentifierGenerator.nextId(null));
         }
 
@@ -46,12 +50,14 @@ public class D2 {
     }
 
     @Test
-    public void testId2() {
+    public void testId2()
+    {
         Snowflake snowflake = IdUtil.getSnowflake(0, 0);
         Set<Long> ids = new HashSet<>();
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000000; i++)
+        {
             ids.add(snowflake.nextId());
         }
         long end = System.currentTimeMillis();

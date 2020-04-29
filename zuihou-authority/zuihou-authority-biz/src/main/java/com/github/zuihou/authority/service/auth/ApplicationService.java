@@ -12,6 +12,7 @@ import com.github.zuihou.base.service.SuperService;
  * @author zuihou
  * @date 2019-12-15
  */
-public interface ApplicationService extends SuperService<Application> {
+public interface ApplicationService extends SuperService<Application>
+{
 
 }

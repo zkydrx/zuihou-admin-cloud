@@ -12,6 +12,7 @@ import com.github.zuihou.demo.entity.CCommonArea;
  * @author zuihou
  * @date 2019-08-20
  */
-public interface CCommonAreaService extends IService<CCommonArea> {
+public interface CCommonAreaService extends IService<CCommonArea>
+{
 
 }

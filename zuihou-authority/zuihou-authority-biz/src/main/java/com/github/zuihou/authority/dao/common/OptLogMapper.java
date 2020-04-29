@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
  * @date 2019-07-02
  */
 @Repository
-public interface OptLogMapper extends SuperMapper<OptLog> {
+public interface OptLogMapper extends SuperMapper<OptLog>
+{
     /**
      * 清理日志
      *

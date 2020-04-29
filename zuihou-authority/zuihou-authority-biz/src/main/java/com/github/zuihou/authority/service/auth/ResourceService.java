@@ -15,7 +15,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-07-03
  */
-public interface ResourceService extends SuperCacheService<Resource> {
+public interface ResourceService extends SuperCacheService<Resource>
+{
 
     /**
      * 查询 拥有的资源

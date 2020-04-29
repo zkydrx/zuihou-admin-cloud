@@ -44,17 +44,20 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_MONTH_FORMAT_SLASH;
 @Configuration
 @Slf4j
 @ConditionalOnProperty(name = "zuihou.file.type", havingValue = "ALI")
-public class AliOssAutoConfigure {
+public class AliOssAutoConfigure
+{
 
     @Service
-    public class AliServiceImpl extends AbstractFileStrategy {
+    public class AliServiceImpl extends AbstractFileStrategy
+    {
         @Override
-        protected void uploadFile(File file, MultipartFile multipartFile) throws Exception {
+        protected void uploadFile(File file, MultipartFile multipartFile) throws Exception
+        {
             FileServerProperties.Ali ali = fileProperties.getAli();
-            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(),
-                    ali.getAccessKeySecret());
+            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(), ali.getAccessKeySecret());
             String bucketName = ali.getBucketName();
-            if (!ossClient.doesBucketExist(bucketName)) {
+            if (!ossClient.doesBucketExist(bucketName))
+            {
                 ossClient.createBucket(bucketName);
             }
 
@@ -86,11 +89,11 @@ public class AliOssAutoConfigure {
         }
 
         @Override
-        protected void delete(List<FileDeleteDO> list, FileDeleteDO file) {
+        protected void delete(List<FileDeleteDO> list, FileDeleteDO file)
+        {
             FileServerProperties.Ali ali = fileProperties.getAli();
             String bucketName = ali.getBucketName();
-            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(),
-                    ali.getAccessKeySecret());
+            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(), ali.getAccessKeySecret());
             ossClient.deleteObject(bucketName, file.getRelativePath() + StrPool.SLASH + file.getFileName());
             ossClient.shutdown();
         }
@@ -98,14 +101,15 @@ public class AliOssAutoConfigure {
 
 
     @Service
-    public class AliChunkServiceImpl extends AbstractFileChunkStrategy {
+    public class AliChunkServiceImpl extends AbstractFileChunkStrategy
+    {
         @Override
-        protected void copyFile(File file) {
+        protected void copyFile(File file)
+        {
             FileServerProperties.Ali ali = fileProperties.getAli();
             String sourceBucketName = ali.getBucketName();
             String destinationBucketName = ali.getBucketName();
-            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(),
-                    ali.getAccessKeySecret());
+            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(), ali.getAccessKeySecret());
 
             String sourceObjectName = file.getRelativePath() + StrPool.SLASH + file.getFilename();
             String fileName = UUID.randomUUID().toString() + StrPool.DOT + file.getExt();
@@ -121,7 +125,8 @@ public class AliOssAutoConfigure {
 
             // 计算分片总数。
             int partCount = (int) (contentLength / partSize);
-            if (contentLength % partSize != 0) {
+            if (contentLength % partSize != 0)
+            {
                 partCount++;
             }
             log.info("total part count:{}", partCount);
@@ -136,14 +141,14 @@ public class AliOssAutoConfigure {
 
             // 分片拷贝。
             List<PartETag> partETags = new ArrayList<>();
-            for (int i = 0; i < partCount; i++) {
+            for (int i = 0; i < partCount; i++)
+            {
                 // 计算每个分片的大小。
                 long skipBytes = partSize * i;
                 long size = partSize < contentLength - skipBytes ? partSize : contentLength - skipBytes;
 
                 // 创建UploadPartCopyRequest。可以通过UploadPartCopyRequest指定限定条件。
-                UploadPartCopyRequest uploadPartCopyRequest =
-                        new UploadPartCopyRequest(sourceBucketName, sourceObjectName, destinationBucketName, destinationObjectName);
+                UploadPartCopyRequest uploadPartCopyRequest = new UploadPartCopyRequest(sourceBucketName, sourceObjectName, destinationBucketName, destinationObjectName);
                 uploadPartCopyRequest.setUploadId(uploadId);
                 uploadPartCopyRequest.setPartSize(size);
                 uploadPartCopyRequest.setBeginIndex(skipBytes);
@@ -155,15 +160,10 @@ public class AliOssAutoConfigure {
             }
 
             // 提交分片拷贝任务。
-            CompleteMultipartUploadRequest completeMultipartUploadRequest = new CompleteMultipartUploadRequest(
-                    destinationBucketName, destinationObjectName, uploadId, partETags);
+            CompleteMultipartUploadRequest completeMultipartUploadRequest = new CompleteMultipartUploadRequest(destinationBucketName, destinationObjectName, uploadId, partETags);
             ossClient.completeMultipartUpload(completeMultipartUploadRequest);
 
-            String url = new StringBuilder(ali.getUriPrefix())
-                    .append(file.getRelativePath())
-                    .append(StrPool.SLASH)
-                    .append(fileName)
-                    .toString();
+            String url = new StringBuilder(ali.getUriPrefix()).append(file.getRelativePath()).append(StrPool.SLASH).append(fileName).toString();
             file.setUrl(StringUtils.replace(url, "\\\\", StrPool.SLASH));
             file.setFilename(fileName);
 
@@ -172,11 +172,11 @@ public class AliOssAutoConfigure {
         }
 
         @Override
-        protected R<File> merge(List<java.io.File> files, String path, String fileName, FileChunksMergeDTO info) throws IOException {
+        protected R<File> merge(List<java.io.File> files, String path, String fileName, FileChunksMergeDTO info) throws IOException
+        {
             FileServerProperties.Ali ali = fileProperties.getAli();
             String bucketName = ali.getBucketName();
-            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(),
-                    ali.getAccessKeySecret());
+            OSS ossClient = new OSSClientBuilder().build(ali.getEndpoint(), ali.getAccessKeyId(), ali.getAccessKeySecret());
 
             //日期文件夹
             String relativePath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM"));
@@ -194,7 +194,8 @@ public class AliOssAutoConfigure {
 
             // partETags是PartETag的集合。PartETag由分片的ETag和分片号组成。
             List<PartETag> partETags = new ArrayList<PartETag>();
-            for (int i = 0; i < files.size(); i++) {
+            for (int i = 0; i < files.size(); i++)
+            {
                 java.io.File file = files.get(i);
                 FileInputStream in = FileUtils.openInputStream(file);
 
@@ -220,22 +221,17 @@ public class AliOssAutoConfigure {
             partETags.sort(Comparator.comparingInt(PartETag::getPartNumber));
 
             // 在执行该操作时，需要提供所有有效的partETags。OSS收到提交的partETags后，会逐一验证每个分片的有效性。当所有的数据分片验证通过后，OSS将把这些分片组合成一个完整的文件。
-            CompleteMultipartUploadRequest completeMultipartUploadRequest =
-                    new CompleteMultipartUploadRequest(bucketName, relativeFileName, uploadId, partETags);
+            CompleteMultipartUploadRequest completeMultipartUploadRequest = new CompleteMultipartUploadRequest(bucketName, relativeFileName, uploadId, partETags);
 
             CompleteMultipartUploadResult uploadResult = ossClient.completeMultipartUpload(completeMultipartUploadRequest);
 
-            String url = new StringBuilder(ali.getUriPrefix())
-                    .append(relativePath)
-                    .append(StrPool.SLASH)
-                    .append(fileName)
-                    .toString();
+            String url = new StringBuilder(ali.getUriPrefix()).append(relativePath).append(StrPool.SLASH).append(fileName).toString();
             File filePo = File.builder()
-                    .relativePath(relativePath)
-                    .group(uploadResult.getETag())
-                    .path(uploadResult.getRequestId())
-                    .url(StringUtils.replace(url, "\\\\", StrPool.SLASH))
-                    .build();
+                              .relativePath(relativePath)
+                              .group(uploadResult.getETag())
+                              .path(uploadResult.getRequestId())
+                              .url(StringUtils.replace(url, "\\\\", StrPool.SLASH))
+                              .build();
 
             // 关闭OSSClient。
             ossClient.shutdown();

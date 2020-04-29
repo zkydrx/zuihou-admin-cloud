@@ -34,7 +34,8 @@ import java.util.List;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class TestRemoteData {
+public class TestRemoteData
+{
 
     @Autowired
     private DozerUtils dozer;
@@ -46,35 +47,37 @@ public class TestRemoteData {
     private AreaServiceImpl areaService;
 
     @Before
-    public void setTenant() {
+    public void setTenant()
+    {
         BaseContextHandler.setTenant("0000");
     }
 
     @Test
-    public void testAreaGet() {
+    public void testAreaGet()
+    {
         Area area = areaMapper.selectById(1L);
         System.out.println(area);
     }
 
     @Test
-    public void testAreaList() {
+    public void testAreaList()
+    {
         List<Area> areas = areaMapper.selectList(null);
         System.out.println(areas);
     }
 
     @Test
-    public void testAreaPage() {
+    public void testAreaPage()
+    {
         IPage<Area> page = new Page(1, 20);
         areaMapper.selectPage(page, null);
         System.out.println(page.getRecords());
     }
 
     @Test
-    public void testAreaSave() {
-        Area area = Area.builder()
-                .code("aaaa")
-                .label("vvvvv")
-                .build();
+    public void testAreaSave()
+    {
+        Area area = Area.builder().code("aaaa").label("vvvvv").build();
         area.setLevel(new RemoteData<>("AREA_LEVEL"));
 
         int insert = areaMapper.insert(area);
@@ -82,12 +85,9 @@ public class TestRemoteData {
     }
 
     @Test
-    public void testAreaUpdate() {
-        Area area = Area.builder()
-                .id(668136559643459617L)
-                .code("bb")
-                .label("ddd")
-                .build();
+    public void testAreaUpdate()
+    {
+        Area area = Area.builder().id(668136559643459617L).code("bb").label("ddd").build();
         area.setLevel(new RemoteData<>("AREA_LEVEL"));
 
         int insert = areaMapper.updateById(area);
@@ -95,7 +95,8 @@ public class TestRemoteData {
     }
 
     @Test
-    public void testAreaUpdateWrp() {
+    public void testAreaUpdateWrp()
+    {
         LbuWrapper<Area> up = Wraps.lbU();
         up.set(Area::getLevel, new RemoteData<>(""));
         up.eq(Area::getId, 668136559643459617L);
@@ -104,21 +105,14 @@ public class TestRemoteData {
     }
 
     @Test
-    public void getOne() throws Exception {
-        Area area = Area.builder()
-                .id(668136559643459617L)
-                .code("bb")
-                .label("ddd")
-                .build();
+    public void getOne() throws Exception
+    {
+        Area area = Area.builder().id(668136559643459617L).code("bb").label("ddd").build();
         area.setLevel(new RemoteData<>("COLLEGE"));
 
         injectionComponent.injection(area);
 
-        Area area2 = Area.builder()
-                .id(668136559643459617L)
-                .code("bb")
-                .label("ddd")
-                .build();
+        Area area2 = Area.builder().id(668136559643459617L).code("bb").label("ddd").build();
         area2.setLevel(new RemoteData<>("COLLEGE"));
 
         injectionComponent.injection(area2);

@@ -8,7 +8,8 @@ import java.util.Date;
  *
  * @author xuxueli  2015-12-19 23:19:09
  */
-public class XxlJobLog {
+public class XxlJobLog
+{
 
     /**
      * 主键
@@ -80,115 +81,143 @@ public class XxlJobLog {
      */
     private String handleMsg;
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public int getJobGroup() {
+    public int getJobGroup()
+    {
         return jobGroup;
     }
 
-    public void setJobGroup(int jobGroup) {
+    public void setJobGroup(int jobGroup)
+    {
         this.jobGroup = jobGroup;
     }
 
-    public int getJobId() {
+    public int getJobId()
+    {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(int jobId)
+    {
         this.jobId = jobId;
     }
 
-    public String getExecutorAddress() {
+    public String getExecutorAddress()
+    {
         return executorAddress;
     }
 
-    public void setExecutorAddress(String executorAddress) {
+    public void setExecutorAddress(String executorAddress)
+    {
         this.executorAddress = executorAddress;
     }
 
-    public String getExecutorHandler() {
+    public String getExecutorHandler()
+    {
         return executorHandler;
     }
 
-    public void setExecutorHandler(String executorHandler) {
+    public void setExecutorHandler(String executorHandler)
+    {
         this.executorHandler = executorHandler;
     }
 
-    public String getExecutorParam() {
+    public String getExecutorParam()
+    {
         return executorParam;
     }
 
-    public void setExecutorParam(String executorParam) {
+    public void setExecutorParam(String executorParam)
+    {
         this.executorParam = executorParam;
     }
 
-    public String getExecutorShardingParam() {
+    public String getExecutorShardingParam()
+    {
         return executorShardingParam;
     }
 
-    public void setExecutorShardingParam(String executorShardingParam) {
+    public void setExecutorShardingParam(String executorShardingParam)
+    {
         this.executorShardingParam = executorShardingParam;
     }
 
-    public int getExecutorFailRetryCount() {
+    public int getExecutorFailRetryCount()
+    {
         return executorFailRetryCount;
     }
 
-    public void setExecutorFailRetryCount(int executorFailRetryCount) {
+    public void setExecutorFailRetryCount(int executorFailRetryCount)
+    {
         this.executorFailRetryCount = executorFailRetryCount;
     }
 
-    public Date getTriggerTime() {
+    public Date getTriggerTime()
+    {
         return triggerTime;
     }
 
-    public void setTriggerTime(Date triggerTime) {
+    public void setTriggerTime(Date triggerTime)
+    {
         this.triggerTime = triggerTime;
     }
 
-    public int getTriggerCode() {
+    public int getTriggerCode()
+    {
         return triggerCode;
     }
 
-    public void setTriggerCode(int triggerCode) {
+    public void setTriggerCode(int triggerCode)
+    {
         this.triggerCode = triggerCode;
     }
 
-    public String getTriggerMsg() {
+    public String getTriggerMsg()
+    {
         return triggerMsg;
     }
 
-    public void setTriggerMsg(String triggerMsg) {
+    public void setTriggerMsg(String triggerMsg)
+    {
         this.triggerMsg = triggerMsg;
     }
 
-    public Date getHandleTime() {
+    public Date getHandleTime()
+    {
         return handleTime;
     }
 
-    public void setHandleTime(Date handleTime) {
+    public void setHandleTime(Date handleTime)
+    {
         this.handleTime = handleTime;
     }
 
-    public int getHandleCode() {
+    public int getHandleCode()
+    {
         return handleCode;
     }
 
-    public void setHandleCode(int handleCode) {
+    public void setHandleCode(int handleCode)
+    {
         this.handleCode = handleCode;
     }
 
-    public String getHandleMsg() {
+    public String getHandleMsg()
+    {
         return handleMsg;
     }
 
-    public void setHandleMsg(String handleMsg) {
+    public void setHandleMsg(String handleMsg)
+    {
         this.handleMsg = handleMsg;
     }
 }

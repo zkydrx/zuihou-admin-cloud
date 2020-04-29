@@ -31,7 +31,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserExcelVO", description = "用户")
-public class UserExcelVO implements Serializable, IExcelModel, IExcelDataModel {
+public class UserExcelVO implements Serializable, IExcelModel, IExcelDataModel
+{
 
     private String errorMsg;
     private Integer rowNum;
@@ -158,7 +159,8 @@ public class UserExcelVO implements Serializable, IExcelModel, IExcelDataModel {
      * @return
      */
     @Override
-    public Integer getRowNum() {
+    public Integer getRowNum()
+    {
         return rowNum;
     }
 
@@ -168,7 +170,8 @@ public class UserExcelVO implements Serializable, IExcelModel, IExcelDataModel {
      * @param rowNum
      */
     @Override
-    public void setRowNum(Integer rowNum) {
+    public void setRowNum(Integer rowNum)
+    {
         this.rowNum = rowNum;
     }
 
@@ -178,7 +181,8 @@ public class UserExcelVO implements Serializable, IExcelModel, IExcelDataModel {
      * @return
      */
     @Override
-    public String getErrorMsg() {
+    public String getErrorMsg()
+    {
         return errorMsg;
     }
 
@@ -188,7 +192,8 @@ public class UserExcelVO implements Serializable, IExcelModel, IExcelDataModel {
      * @param errorMsg
      */
     @Override
-    public void setErrorMsg(String errorMsg) {
+    public void setErrorMsg(String errorMsg)
+    {
         this.errorMsg = errorMsg;
     }
 

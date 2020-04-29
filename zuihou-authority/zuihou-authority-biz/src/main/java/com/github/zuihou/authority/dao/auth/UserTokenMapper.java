@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @date 2020-04-02
  */
 @Repository
-public interface UserTokenMapper extends SuperMapper<UserToken> {
+public interface UserTokenMapper extends SuperMapper<UserToken>
+{
 
 }

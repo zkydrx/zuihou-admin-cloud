@@ -12,6 +12,7 @@ import com.github.zuihou.base.service.SuperService;
  * @author zuihou
  * @date 2019-07-02
  */
-public interface DictionaryService extends SuperService<Dictionary> {
+public interface DictionaryService extends SuperService<Dictionary>
+{
 
 }

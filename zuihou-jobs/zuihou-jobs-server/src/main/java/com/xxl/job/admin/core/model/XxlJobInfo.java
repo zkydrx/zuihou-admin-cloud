@@ -7,7 +7,8 @@ import java.util.Date;
  *
  * @author xuxueli  2016-1-12 18:25:49
  */
-public class XxlJobInfo {
+public class XxlJobInfo
+{
 
     /**
      * 主键ID	    (JobKey.name)
@@ -135,211 +136,263 @@ public class XxlJobInfo {
      */
     private String jobStatus;
 
-    public Date getStartExecuteTime() {
+    public Date getStartExecuteTime()
+    {
         return startExecuteTime;
     }
 
-    public void setStartExecuteTime(Date startExecuteTime) {
+    public void setStartExecuteTime(Date startExecuteTime)
+    {
         this.startExecuteTime = startExecuteTime;
     }
 
-    public Date getEndExecuteTime() {
+    public Date getEndExecuteTime()
+    {
         return endExecuteTime;
     }
 
-    public void setEndExecuteTime(Date endExecuteTime) {
+    public void setEndExecuteTime(Date endExecuteTime)
+    {
         this.endExecuteTime = endExecuteTime;
     }
 
-    public Integer getType() {
+    public Integer getType()
+    {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(Integer type)
+    {
         this.type = type;
     }
 
-    public Integer getIntervalSeconds() {
+    public Integer getIntervalSeconds()
+    {
         return intervalSeconds;
     }
 
-    public void setIntervalSeconds(Integer intervalSeconds) {
+    public void setIntervalSeconds(Integer intervalSeconds)
+    {
         this.intervalSeconds = intervalSeconds;
     }
 
-    public Integer getRepeatCount() {
+    public Integer getRepeatCount()
+    {
         return repeatCount;
     }
 
-    public void setRepeatCount(Integer repeatCount) {
+    public void setRepeatCount(Integer repeatCount)
+    {
         this.repeatCount = repeatCount;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public int getJobGroup() {
+    public int getJobGroup()
+    {
         return jobGroup;
     }
 
-    public void setJobGroup(int jobGroup) {
+    public void setJobGroup(int jobGroup)
+    {
         this.jobGroup = jobGroup;
     }
 
-    public String getJobCron() {
+    public String getJobCron()
+    {
         return jobCron;
     }
 
-    public void setJobCron(String jobCron) {
+    public void setJobCron(String jobCron)
+    {
         this.jobCron = jobCron;
     }
 
-    public String getJobDesc() {
+    public String getJobDesc()
+    {
         return jobDesc;
     }
 
-    public void setJobDesc(String jobDesc) {
+    public void setJobDesc(String jobDesc)
+    {
         this.jobDesc = jobDesc;
     }
 
-    public Date getAddTime() {
+    public Date getAddTime()
+    {
         return addTime;
     }
 
-    public void setAddTime(Date addTime) {
+    public void setAddTime(Date addTime)
+    {
         this.addTime = addTime;
     }
 
-    public Date getUpdateTime() {
+    public Date getUpdateTime()
+    {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Date updateTime)
+    {
         this.updateTime = updateTime;
     }
 
-    public String getAuthor() {
+    public String getAuthor()
+    {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(String author)
+    {
         this.author = author;
     }
 
-    public String getAlarmEmail() {
+    public String getAlarmEmail()
+    {
         return alarmEmail;
     }
 
-    public void setAlarmEmail(String alarmEmail) {
+    public void setAlarmEmail(String alarmEmail)
+    {
         this.alarmEmail = alarmEmail;
     }
 
-    public String getExecutorRouteStrategy() {
+    public String getExecutorRouteStrategy()
+    {
         return executorRouteStrategy;
     }
 
-    public void setExecutorRouteStrategy(String executorRouteStrategy) {
+    public void setExecutorRouteStrategy(String executorRouteStrategy)
+    {
         this.executorRouteStrategy = executorRouteStrategy;
     }
 
-    public String getExecutorHandler() {
+    public String getExecutorHandler()
+    {
         return executorHandler;
     }
 
-    public void setExecutorHandler(String executorHandler) {
+    public void setExecutorHandler(String executorHandler)
+    {
         this.executorHandler = executorHandler;
     }
 
-    public String getExecutorParam() {
+    public String getExecutorParam()
+    {
         return executorParam;
     }
 
-    public void setExecutorParam(String executorParam) {
+    public void setExecutorParam(String executorParam)
+    {
         this.executorParam = executorParam;
     }
 
-    public String getExecutorBlockStrategy() {
+    public String getExecutorBlockStrategy()
+    {
         return executorBlockStrategy;
     }
 
-    public void setExecutorBlockStrategy(String executorBlockStrategy) {
+    public void setExecutorBlockStrategy(String executorBlockStrategy)
+    {
         this.executorBlockStrategy = executorBlockStrategy;
     }
 
-    public int getExecutorTimeout() {
+    public int getExecutorTimeout()
+    {
         return executorTimeout;
     }
 
-    public void setExecutorTimeout(int executorTimeout) {
+    public void setExecutorTimeout(int executorTimeout)
+    {
         this.executorTimeout = executorTimeout;
     }
 
-    public int getExecutorFailRetryCount() {
+    public int getExecutorFailRetryCount()
+    {
         return executorFailRetryCount;
     }
 
-    public void setExecutorFailRetryCount(int executorFailRetryCount) {
+    public void setExecutorFailRetryCount(int executorFailRetryCount)
+    {
         this.executorFailRetryCount = executorFailRetryCount;
     }
 
-    public String getGlueType() {
+    public String getGlueType()
+    {
         return glueType;
     }
 
-    public void setGlueType(String glueType) {
+    public void setGlueType(String glueType)
+    {
         this.glueType = glueType;
     }
 
-    public String getGlueSource() {
+    public String getGlueSource()
+    {
         return glueSource;
     }
 
-    public void setGlueSource(String glueSource) {
+    public void setGlueSource(String glueSource)
+    {
         this.glueSource = glueSource;
     }
 
-    public String getGlueRemark() {
+    public String getGlueRemark()
+    {
         return glueRemark;
     }
 
-    public void setGlueRemark(String glueRemark) {
+    public void setGlueRemark(String glueRemark)
+    {
         this.glueRemark = glueRemark;
     }
 
-    public Date getGlueUpdatetime() {
+    public Date getGlueUpdatetime()
+    {
         return glueUpdatetime;
     }
 
-    public void setGlueUpdatetime(Date glueUpdatetime) {
+    public void setGlueUpdatetime(Date glueUpdatetime)
+    {
         this.glueUpdatetime = glueUpdatetime;
     }
 
-    public String getChildJobId() {
+    public String getChildJobId()
+    {
         return childJobId;
     }
 
-    public void setChildJobId(String childJobId) {
+    public void setChildJobId(String childJobId)
+    {
         this.childJobId = childJobId;
     }
 
-    public String getJobStatus() {
+    public String getJobStatus()
+    {
         return jobStatus;
     }
 
-    public void setJobStatus(String jobStatus) {
+    public void setJobStatus(String jobStatus)
+    {
         this.jobStatus = jobStatus;
     }
 
-    public String getJobGroupName() {
+    public String getJobGroupName()
+    {
         return jobGroupName;
     }
 
-    public void setJobGroupName(String jobGroupName) {
+    public void setJobGroupName(String jobGroupName)
+    {
         this.jobGroupName = jobGroupName;
     }
 }

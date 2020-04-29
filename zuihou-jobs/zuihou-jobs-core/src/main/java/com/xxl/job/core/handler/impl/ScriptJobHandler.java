@@ -13,14 +13,16 @@ import java.io.File;
 /**
  * Created by xuxueli on 17/4/27.
  */
-public class ScriptJobHandler extends IJobHandler {
+public class ScriptJobHandler extends IJobHandler
+{
 
     private int jobId;
     private long glueUpdatetime;
     private String gluesource;
     private GlueTypeEnum glueType;
 
-    public ScriptJobHandler(int jobId, long glueUpdatetime, String gluesource, GlueTypeEnum glueType) {
+    public ScriptJobHandler(int jobId, long glueUpdatetime, String gluesource, GlueTypeEnum glueType)
+    {
         this.jobId = jobId;
         this.glueUpdatetime = glueUpdatetime;
         this.gluesource = gluesource;
@@ -28,11 +30,15 @@ public class ScriptJobHandler extends IJobHandler {
 
         // clean old script file
         File glueSrcPath = new File(XxlJobFileAppender.getGlueSrcPath());
-        if (glueSrcPath.exists()) {
+        if (glueSrcPath.exists())
+        {
             File[] glueSrcFileList = glueSrcPath.listFiles();
-            if (glueSrcFileList != null && glueSrcFileList.length > 0) {
-                for (File glueSrcFileItem : glueSrcFileList) {
-                    if (glueSrcFileItem.getName().startsWith(String.valueOf(jobId) + "_")) {
+            if (glueSrcFileList != null && glueSrcFileList.length > 0)
+            {
+                for (File glueSrcFileItem : glueSrcFileList)
+                {
+                    if (glueSrcFileItem.getName().startsWith(String.valueOf(jobId) + "_"))
+                    {
                         glueSrcFileItem.delete();
                     }
                 }
@@ -41,14 +47,17 @@ public class ScriptJobHandler extends IJobHandler {
 
     }
 
-    public long getGlueUpdatetime() {
+    public long getGlueUpdatetime()
+    {
         return glueUpdatetime;
     }
 
     @Override
-    public ReturnT<String> execute2(String param) throws Exception {
+    public ReturnT<String> execute2(String param) throws Exception
+    {
 
-        if (!glueType.isScript()) {
+        if (!glueType.isScript())
+        {
             return new ReturnT<String>(IJobHandler.FAIL.getCode(), "glueType[" + glueType + "] invalid.");
         }
 
@@ -57,13 +66,14 @@ public class ScriptJobHandler extends IJobHandler {
 
         // make script file
         String scriptFileName = XxlJobFileAppender.getGlueSrcPath()
-                .concat(File.separator)
-                .concat(String.valueOf(jobId))
-                .concat("_")
-                .concat(String.valueOf(glueUpdatetime))
-                .concat(glueType.getSuffix());
+                                                  .concat(File.separator)
+                                                  .concat(String.valueOf(jobId))
+                                                  .concat("_")
+                                                  .concat(String.valueOf(glueUpdatetime))
+                                                  .concat(glueType.getSuffix());
         File scriptFile = new File(scriptFileName);
-        if (!scriptFile.exists()) {
+        if (!scriptFile.exists())
+        {
             ScriptUtil.markScriptFile(scriptFileName, gluesource);
         }
 
@@ -81,9 +91,12 @@ public class ScriptJobHandler extends IJobHandler {
         XxlJobLogger.log("----------- script file:" + scriptFileName + " -----------");
         int exitValue = ScriptUtil.execToFile(cmd, scriptFileName, logFileName, scriptParams);
 
-        if (exitValue == 0) {
+        if (exitValue == 0)
+        {
             return IJobHandler.SUCCESS;
-        } else {
+        }
+        else
+        {
             return new ReturnT<String>(IJobHandler.FAIL.getCode(), "script exit value(" + exitValue + ") is failed");
         }
 

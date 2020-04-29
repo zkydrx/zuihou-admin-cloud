@@ -37,17 +37,20 @@ import static com.github.zuihou.authority.enumeration.defaults.TenantStatusEnum.
 @RequestMapping("/tenant")
 @Api(value = "Tenant", tags = "企业")
 @SysLog(enabled = false)
-public class TenantController extends SuperCacheController<TenantService, Long, Tenant, Tenant, TenantSaveDTO, TenantUpdateDTO> {
+public class TenantController extends SuperCacheController<TenantService, Long, Tenant, Tenant, TenantSaveDTO, TenantUpdateDTO>
+{
 
 
     @ApiOperation(value = "查询所有企业", notes = "查询所有企业")
     @GetMapping("/all")
-    public R<List<Tenant>> list() {
+    public R<List<Tenant>> list()
+    {
         return success(baseService.list(Wraps.<Tenant>lbQ().eq(Tenant::getStatus, NORMAL)));
     }
 
     @Override
-    public R<Tenant> handlerSave(TenantSaveDTO model) {
+    public R<Tenant> handlerSave(TenantSaveDTO model)
+    {
         Tenant tenant = baseService.save(model);
         return success(tenant);
     }
@@ -55,12 +58,14 @@ public class TenantController extends SuperCacheController<TenantService, Long, 
     @ApiOperation(value = "检测租户是否存在", notes = "检测租户是否存在")
     @GetMapping("/check/{code}")
     @ApiOperationSupport(author = "zuihou")
-    public R<Boolean> check(@PathVariable("code") String code) {
+    public R<Boolean> check(@PathVariable("code") String code)
+    {
         return success(baseService.check(code));
     }
 
     @Override
-    public R<Boolean> handlerDelete(List<Long> ids) {
+    public R<Boolean> handlerDelete(List<Long> ids)
+    {
         // 这个操作相当的危险，请谨慎操作！！
         return success(baseService.delete(ids));
     }
@@ -68,8 +73,8 @@ public class TenantController extends SuperCacheController<TenantService, Long, 
     @ApiOperationSupport(author = "zuihou")
     @ApiOperation(value = "修改租户状态", notes = "修改租户状态")
     @PostMapping("/status")
-    public R<Boolean> updateStatus(@RequestParam("ids[]") List<Long> ids,
-                                   @RequestParam @NotNull(message = "状态不能为空") TenantStatusEnum status) {
+    public R<Boolean> updateStatus(@RequestParam("ids[]") List<Long> ids, @RequestParam @NotNull(message = "状态不能为空") TenantStatusEnum status)
+    {
         return success(baseService.update(Wraps.<Tenant>lbU().set(Tenant::getStatus, status).in(Tenant::getId, ids)));
     }
 }

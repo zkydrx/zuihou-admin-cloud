@@ -14,7 +14,8 @@ import lombok.ToString;
 @Data
 @ToString
 @ApiModel(value = "FileChunkCheck", description = "文件分片信息")
-public class FileChunkCheckDTO {
+public class FileChunkCheckDTO
+{
 
     @ApiModelProperty(value = "文件大小")
     private Long size;

@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = "com.github.zuihou.executor.jobhandler")
-public class XxlJobConfig {
+public class XxlJobConfig
+{
 
     @Value("${xxl.job.admin.addresses}")
     private String adminAddresses;
@@ -62,7 +63,8 @@ public class XxlJobConfig {
      * @return
      */
     @Bean(initMethod = "start", destroyMethod = "destroy")
-    public XxlJobSpringExecutor xxlJobExecutor() {
+    public XxlJobSpringExecutor xxlJobExecutor()
+    {
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
         xxlJobSpringExecutor.setAppName(appName);

@@ -13,7 +13,8 @@ import java.io.Serializable;
  */
 @Data
 @ToString
-public class Producttt implements Serializable {
+public class Producttt implements Serializable
+{
     private Long id;
     private String name;
 }

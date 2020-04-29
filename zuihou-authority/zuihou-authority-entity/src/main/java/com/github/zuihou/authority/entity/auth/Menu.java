@@ -31,7 +31,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("c_auth_menu")
 @ApiModel(value = "Menu", description = "菜单")
-public class Menu extends TreeEntity<Menu, Long> {
+public class Menu extends TreeEntity<Menu, Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -99,9 +100,22 @@ public class Menu extends TreeEntity<Menu, Long> {
     private String group;
 
     @Builder
-    public Menu(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                String label, String describe, Boolean isPublic, String path, String component,
-                Boolean isEnable, Integer sortValue, String icon, String group, Long parentId) {
+    public Menu(Long id,
+                Long createUser,
+                LocalDateTime createTime,
+                Long updateUser,
+                LocalDateTime updateTime,
+                String label,
+                String describe,
+                Boolean isPublic,
+                String path,
+                String component,
+                Boolean isEnable,
+                Integer sortValue,
+                String icon,
+                String group,
+                Long parentId)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

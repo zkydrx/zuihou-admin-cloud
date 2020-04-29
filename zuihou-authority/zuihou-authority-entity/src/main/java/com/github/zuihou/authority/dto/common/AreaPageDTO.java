@@ -27,7 +27,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "AreaPageDTO", description = "地区表")
-public class AreaPageDTO implements Serializable {
+public class AreaPageDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "名称")

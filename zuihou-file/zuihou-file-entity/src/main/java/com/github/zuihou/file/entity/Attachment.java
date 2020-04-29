@@ -29,7 +29,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("f_attachment")
 @ApiModel(value = "Attachment", description = "附件")
-public class Attachment extends Entity<Long> {
+public class Attachment extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -185,11 +186,30 @@ public class Attachment extends Entity<Long> {
 
 
     @Builder
-    public Attachment(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                      String bizId, String bizType, DataType dataType, String submittedFileName,
-                      String group, String path, String relativePath, String url,
-                      String fileMd5, String contextType, String filename, String ext, Long size, Long orgId, String icon,
-                      String createMonth, String createWeek, String createDay) {
+    public Attachment(Long id,
+                      LocalDateTime createTime,
+                      Long createUser,
+                      LocalDateTime updateTime,
+                      Long updateUser,
+                      String bizId,
+                      String bizType,
+                      DataType dataType,
+                      String submittedFileName,
+                      String group,
+                      String path,
+                      String relativePath,
+                      String url,
+                      String fileMd5,
+                      String contextType,
+                      String filename,
+                      String ext,
+                      Long size,
+                      Long orgId,
+                      String icon,
+                      String createMonth,
+                      String createWeek,
+                      String createDay)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

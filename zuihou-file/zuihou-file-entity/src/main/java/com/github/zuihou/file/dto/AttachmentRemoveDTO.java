@@ -17,7 +17,8 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "AttachmentRemove", description = "附件删除")
-public class AttachmentRemoveDTO implements Serializable {
+public class AttachmentRemoveDTO implements Serializable
+{
 
     @ApiModelProperty(value = "业务类型")
     private String bizType;

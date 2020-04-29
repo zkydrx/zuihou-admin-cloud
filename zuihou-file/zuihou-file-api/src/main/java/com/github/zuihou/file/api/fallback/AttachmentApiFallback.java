@@ -13,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2019/07/25
  */
 @Component
-public class AttachmentApiFallback implements AttachmentApi {
+public class AttachmentApiFallback implements AttachmentApi
+{
     @Override
-    public R<AttachmentDTO> upload(MultipartFile file, Boolean isSingle, Long id, String bizId, String bizType) {
+    public R<AttachmentDTO> upload(MultipartFile file, Boolean isSingle, Long id, String bizId, String bizType)
+    {
         return R.timeout();
     }
 }

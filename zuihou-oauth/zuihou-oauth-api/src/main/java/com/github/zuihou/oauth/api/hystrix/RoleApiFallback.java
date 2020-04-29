@@ -13,9 +13,11 @@ import java.util.List;
  * @date 2019/08/02
  */
 @Component
-public class RoleApiFallback implements RoleApi {
+public class RoleApiFallback implements RoleApi
+{
     @Override
-    public R<List<Long>> findUserIdByCode(String[] codes) {
+    public R<List<Long>> findUserIdByCode(String[] codes)
+    {
         return R.timeout();
     }
 }

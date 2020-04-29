@@ -28,7 +28,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "OptLogSaveDTO", description = "系统日志")
-public class OptLogSaveDTO implements Serializable {
+public class OptLogSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

@@ -57,7 +57,8 @@ import java.util.Map;
 @Api(value = "MsgsCenterInfo", tags = "消息中心")
 @Validated
 @PreAuth(replace = "msgs:")
-public class MsgsCenterInfoController {
+public class MsgsCenterInfoController
+{
 
     @Autowired
     private MsgsCenterInfoService msgsCenterInfoService;
@@ -85,19 +86,23 @@ public class MsgsCenterInfoController {
     @ApiOperation(value = "分页查询消息中心", notes = "分页查询消息中心")
     @PostMapping("/page")
     @SysLog(value = "'分页列表查询:第' + #params?.current + '页, 显示' + #params?.size + '行'", response = false)
-    public R<IPage<MsgsCenterInfoPageResultDTO>> page(@RequestBody @Validated PageParams<MsgsCenterInfoQueryDTO> data) {
+    public R<IPage<MsgsCenterInfoPageResultDTO>> page(@RequestBody @Validated PageParams<MsgsCenterInfoQueryDTO> data)
+    {
         IPage<MsgsCenterInfoPageResultDTO> page = data.getPage();
         query(data, page);
         return R.success(page);
     }
 
-    private IPage<MsgsCenterInfoPageResultDTO> query(PageParams<MsgsCenterInfoQueryDTO> data, IPage<MsgsCenterInfoPageResultDTO> page) {
+    private IPage<MsgsCenterInfoPageResultDTO> query(PageParams<MsgsCenterInfoQueryDTO> data, IPage<MsgsCenterInfoPageResultDTO> page)
+    {
 
         MsgsCenterInfoQueryDTO model = data.getModel();
-        if (model.getStartCreateTime() != null) {
+        if (model.getStartCreateTime() != null)
+        {
             model.setStartCreateTime(LocalDateTime.of(model.getStartCreateTime().toLocalDate(), LocalTime.MIN));
         }
-        if (model.getEndCreateTime() != null) {
+        if (model.getEndCreateTime() != null)
+        {
             model.setEndCreateTime(LocalDateTime.of(model.getEndCreateTime().toLocalDate(), LocalTime.MAX));
         }
         model.setUserId(BaseContextHandler.getUserId());
@@ -113,7 +118,8 @@ public class MsgsCenterInfoController {
      * @param page
      * @return
      */
-    private ExportParams getExportParams(PageParams<MsgsCenterInfoQueryDTO> params, IPage<MsgsCenterInfoPageResultDTO> page) {
+    private ExportParams getExportParams(PageParams<MsgsCenterInfoQueryDTO> params, IPage<MsgsCenterInfoPageResultDTO> page)
+    {
         query(params, page);
 
         String title = params.getMap().get("title");
@@ -135,7 +141,8 @@ public class MsgsCenterInfoController {
     @ApiOperation(value = "导出Excel")
     @RequestMapping(value = "/export", method = RequestMethod.POST, produces = "application/octet-stream")
     @SysLog("'导出Excel:'.concat(#params.map[" + NormalExcelConstants.FILE_NAME + "]?:'')")
-    public void exportExcel(@RequestBody @Validated PageParams<MsgsCenterInfoQueryDTO> params, HttpServletRequest request, HttpServletResponse response) {
+    public void exportExcel(@RequestBody @Validated PageParams<MsgsCenterInfoQueryDTO> params, HttpServletRequest request, HttpServletResponse response)
+    {
         IPage<MsgsCenterInfoPageResultDTO> page = params.getPage();
         ExportParams exportParams = getExportParams(params, page);
 
@@ -157,7 +164,8 @@ public class MsgsCenterInfoController {
     @ApiOperation(value = "预览Excel")
     @SysLog("'预览Excel:' + (#params.map[" + NormalExcelConstants.FILE_NAME + "]?:'')")
     @RequestMapping(value = "/preview", method = RequestMethod.POST)
-    public R<String> preview(@RequestBody @Validated PageParams<MsgsCenterInfoQueryDTO> params) {
+    public R<String> preview(@RequestBody @Validated PageParams<MsgsCenterInfoQueryDTO> params)
+    {
         IPage<MsgsCenterInfoPageResultDTO> page = params.getPage();
         ExportParams exportParams = getExportParams(params, page);
 
@@ -173,7 +181,8 @@ public class MsgsCenterInfoController {
      */
     @ApiOperation(value = "标记消息为已读", notes = "标记消息为已读")
     @GetMapping(value = "/mark")
-    public R<Boolean> mark(@RequestParam(value = "msgCenterIds[]") List<Long> msgCenterIds) {
+    public R<Boolean> mark(@RequestParam(value = "msgCenterIds[]") List<Long> msgCenterIds)
+    {
         return R.success(msgsCenterInfoService.mark(msgCenterIds, BaseContextHandler.getUserId()));
     }
 
@@ -186,7 +195,8 @@ public class MsgsCenterInfoController {
     @ApiOperation(value = "查询消息中心", notes = "查询消息中心")
     @GetMapping("/{id}")
     @SysLog("查询消息中心")
-    public R<MsgsCenterInfo> get(@PathVariable Long id) {
+    public R<MsgsCenterInfo> get(@PathVariable Long id)
+    {
         return R.success(msgsCenterInfoService.getById(id));
     }
 
@@ -200,19 +210,25 @@ public class MsgsCenterInfoController {
     @PostMapping
     @SysLog("新增消息中心")
     @PreAuth("hasPermit('{}add')")
-    public R<MsgsCenterInfo> save(@RequestBody @Validated MsgsCenterInfoSaveDTO data) {
-        if (CollectionUtil.isEmpty(data.getUserIdList()) && CollectionUtil.isNotEmpty(data.getRoleCodeList())) {
+    public R<MsgsCenterInfo> save(@RequestBody @Validated MsgsCenterInfoSaveDTO data)
+    {
+        if (CollectionUtil.isEmpty(data.getUserIdList()) && CollectionUtil.isNotEmpty(data.getRoleCodeList()))
+        {
             R<List<Long>> result = roleApi.findUserIdByCode(data.getRoleCodeList().stream().toArray(String[]::new));
-            if (result.getIsSuccess()) {
-                if (result.getData().isEmpty()) {
+            if (result.getIsSuccess())
+            {
+                if (result.getData().isEmpty())
+                {
                     return R.fail("已选角色下尚未分配任何用户");
                 }
                 data.setUserIdList(new HashSet<>(result.getData()));
             }
         }
-        if (MsgsCenterType.PUBLICITY.eq(data.getMsgsCenterInfoDTO().getMsgsCenterType())) {
+        if (MsgsCenterType.PUBLICITY.eq(data.getMsgsCenterInfoDTO().getMsgsCenterType()))
+        {
             R<List<Long>> result = userBizApi.findAllUserId();
-            if (result.getIsSuccess()) {
+            if (result.getIsSuccess())
+            {
                 data.setUserIdList(new HashSet<>(result.getData()));
             }
         }
@@ -229,7 +245,8 @@ public class MsgsCenterInfoController {
     @ApiOperation(value = "删除消息中心", notes = "根据id物理删除消息中心")
     @DeleteMapping
     @SysLog("删除消息中心")
-    public R<Boolean> delete(@RequestParam(value = "ids[]") List<Long> ids) {
+    public R<Boolean> delete(@RequestParam(value = "ids[]") List<Long> ids)
+    {
         return R.success(msgsCenterInfoService.delete(ids, BaseContextHandler.getUserId()));
     }
 

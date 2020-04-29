@@ -27,7 +27,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "CCommonAreaSaveDTO", description = "地区表")
-public class CCommonAreaSaveDTO implements Serializable {
+public class CCommonAreaSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

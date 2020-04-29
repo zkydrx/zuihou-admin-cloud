@@ -14,9 +14,9 @@ import java.util.List;
  * @author zuihou
  * @date 2019/07/02
  */
-@FeignClient(name = "${zuihou.feign.authority-server:zuihou-authority-server}", fallback = UserBizApiFallback.class
-        , path = "/user", qualifier = "userBizApi")
-public interface UserBizApi {
+@FeignClient(name = "${zuihou.feign.authority-server:zuihou-authority-server}", fallback = UserBizApiFallback.class, path = "/user", qualifier = "userBizApi")
+public interface UserBizApi
+{
 
     /**
      * 查询所有的用户id

@@ -26,7 +26,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "RoleSaveDTO", description = "角色")
-public class RoleQueryDTO implements Serializable {
+public class RoleQueryDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "ID")

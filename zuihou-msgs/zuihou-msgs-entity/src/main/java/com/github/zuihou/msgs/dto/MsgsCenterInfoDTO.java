@@ -26,7 +26,8 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "MsgsCenterInfoDTO", description = "消息中心")
-public class MsgsCenterInfoDTO implements Serializable {
+public class MsgsCenterInfoDTO implements Serializable
+{
 
 
     private static final long serialVersionUID = 2499447636270422316L;
@@ -99,13 +100,9 @@ public class MsgsCenterInfoDTO implements Serializable {
      * @param handlerUrl 跳转地址
      * @return
      */
-    public static MsgsCenterInfoDTO buildNotify(MsgsBizType bizType, String bizId, String title, String content, String handlerUrl) {
-        return MsgsCenterInfoDTO.builder()
-                .bizType(bizType).bizId(bizId)
-                .msgsCenterType(MsgsCenterType.NOTIFY)
-                .title(title).content(content)
-                .handlerUrl(handlerUrl)
-                .build();
+    public static MsgsCenterInfoDTO buildNotify(MsgsBizType bizType, String bizId, String title, String content, String handlerUrl)
+    {
+        return MsgsCenterInfoDTO.builder().bizType(bizType).bizId(bizId).msgsCenterType(MsgsCenterType.NOTIFY).title(title).content(content).handlerUrl(handlerUrl).build();
     }
 
     /**
@@ -118,14 +115,9 @@ public class MsgsCenterInfoDTO implements Serializable {
      * @param handlerUrl 跳转地址
      * @return
      */
-    public static MsgsCenterInfoDTO buildWait(MsgsBizType bizType, String bizId,
-                                              String title, String content, String handlerUrl) {
-        return MsgsCenterInfoDTO.builder()
-                .bizType(bizType).bizId(bizId)
-                .msgsCenterType(MsgsCenterType.WAIT)
-                .title(title).content(content)
-                .handlerUrl(handlerUrl)
-                .build();
+    public static MsgsCenterInfoDTO buildWait(MsgsBizType bizType, String bizId, String title, String content, String handlerUrl)
+    {
+        return MsgsCenterInfoDTO.builder().bizType(bizType).bizId(bizId).msgsCenterType(MsgsCenterType.WAIT).title(title).content(content).handlerUrl(handlerUrl).build();
     }
 
     /**
@@ -138,14 +130,9 @@ public class MsgsCenterInfoDTO implements Serializable {
      * @param handlerUrl 跳转地址
      * @return
      */
-    public static MsgsCenterInfoDTO buildWarn(MsgsBizType bizType, String bizId,
-                                              String title, String content, String handlerUrl) {
-        return MsgsCenterInfoDTO.builder()
-                .bizType(bizType).bizId(bizId)
-                .msgsCenterType(MsgsCenterType.WARN)
-                .title(title).content(content)
-                .handlerUrl(handlerUrl)
-                .build();
+    public static MsgsCenterInfoDTO buildWarn(MsgsBizType bizType, String bizId, String title, String content, String handlerUrl)
+    {
+        return MsgsCenterInfoDTO.builder().bizType(bizType).bizId(bizId).msgsCenterType(MsgsCenterType.WARN).title(title).content(content).handlerUrl(handlerUrl).build();
     }
 
     /**
@@ -158,13 +145,8 @@ public class MsgsCenterInfoDTO implements Serializable {
      * @param handlerUrl 跳转地址
      * @return
      */
-    public static MsgsCenterInfoDTO buildPublicity(MsgsBizType bizType, String bizId,
-                                                   String title, String content, String handlerUrl) {
-        return MsgsCenterInfoDTO.builder()
-                .bizType(bizType).bizId(bizId)
-                .msgsCenterType(MsgsCenterType.PUBLICITY)
-                .title(title).content(content)
-                .handlerUrl(handlerUrl)
-                .build();
+    public static MsgsCenterInfoDTO buildPublicity(MsgsBizType bizType, String bizId, String title, String content, String handlerUrl)
+    {
+        return MsgsCenterInfoDTO.builder().bizType(bizType).bizId(bizId).msgsCenterType(MsgsCenterType.PUBLICITY).title(title).content(content).handlerUrl(handlerUrl).build();
     }
 }

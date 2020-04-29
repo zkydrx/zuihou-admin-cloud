@@ -12,7 +12,8 @@ import java.io.IOException;
  * @author zuihou
  * @date 2019-10-18 17:22
  */
-public interface ValidateCodeService {
+public interface ValidateCodeService
+{
 
     /**
      * 生成验证码

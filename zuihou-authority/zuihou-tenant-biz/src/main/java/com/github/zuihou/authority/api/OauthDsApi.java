@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2020年04月05日18:18:26
  */
 @FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/ds", fallback = OauthDsApiFallback.class)
-public interface OauthDsApi {
+public interface OauthDsApi
+{
     /**
      * 初始化数据源
      *

@@ -12,24 +12,30 @@ import java.time.LocalTime;
  * @author zuihou
  * @date 2019/10/25
  */
-public class TimeUtils {
+public class TimeUtils
+{
 
-    public static LocalDateTime getPasswordErrorLockTime(String time) {
-        if (time == null || "".equals(time)) {
+    public static LocalDateTime getPasswordErrorLockTime(String time)
+    {
+        if (time == null || "".equals(time))
+        {
             return LocalDateTime.MAX;
         }
-        if ("0".equals(time)) {
+        if ("0".equals(time))
+        {
             return LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
         }
         char unit = Character.toLowerCase(time.charAt(time.length() - 1));
 
-        if (time.length() == 1) {
+        if (time.length() == 1)
+        {
             unit = 'd';
         }
         Long lastTime = Convert.toLong(time.substring(0, time.length() - 1));
 
         LocalDateTime passwordErrorLastTime = LocalDateTime.MAX;
-        switch (unit) {
+        switch (unit)
+        {
             //时
             case 'h':
                 passwordErrorLastTime = LocalDateTime.now().plusHours(lastTime);

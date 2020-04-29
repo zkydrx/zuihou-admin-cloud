@@ -12,9 +12,11 @@ import org.springframework.stereotype.Component;
  * @date 2019/07/16
  */
 @Component
-public class JobsTimingApiFallback implements JobsTimingApi {
+public class JobsTimingApiFallback implements JobsTimingApi
+{
     @Override
-    public R<String> addTimingTask(XxlJobInfo xxlJobInfo) {
+    public R<String> addTimingTask(XxlJobInfo xxlJobInfo)
+    {
         return R.timeout();
     }
 }

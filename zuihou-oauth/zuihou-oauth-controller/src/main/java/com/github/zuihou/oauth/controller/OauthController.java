@@ -33,7 +33,8 @@ import java.io.IOException;
 @RequestMapping("/anno")
 @AllArgsConstructor
 @Api(value = "用户授权认证", tags = "登录接口")
-public class OauthController {
+public class OauthController
+{
 
     @Autowired
     private ValidateCodeService validateCodeService;
@@ -53,8 +54,10 @@ public class OauthController {
      */
     @ApiOperation(value = "获取认证token", notes = "登录或者清空缓存时调用")
     @PostMapping(value = "/token")
-    public R<AuthInfo> login(@Validated @RequestBody LoginParamDTO login) throws BizException {
-        if (StrUtil.isEmpty(login.getTenant())) {
+    public R<AuthInfo> login(@Validated @RequestBody LoginParamDTO login) throws BizException
+    {
+        if (StrUtil.isEmpty(login.getTenant()))
+        {
             login.setTenant(BaseContextHandler.getTenant());
         }
         login.setTenant(JwtUtil.base64Decoder(login.getTenant()));
@@ -75,13 +78,15 @@ public class OauthController {
      */
     @ApiOperation(value = "验证验证码", notes = "验证验证码")
     @GetMapping(value = "/check")
-    public R<Boolean> check(@RequestParam(value = "key") String key, @RequestParam(value = "code") String code) throws BizException {
+    public R<Boolean> check(@RequestParam(value = "key") String key, @RequestParam(value = "code") String code) throws BizException
+    {
         return this.validateCodeService.check(key, code);
     }
 
     @ApiOperation(value = "验证码", notes = "验证码")
     @GetMapping(value = "/captcha", produces = "image/png")
-    public void captcha(@RequestParam(value = "key") String key, HttpServletResponse response) throws IOException {
+    public void captcha(@RequestParam(value = "key") String key, HttpServletResponse response) throws IOException
+    {
         this.validateCodeService.create(key, response);
     }
 
@@ -94,7 +99,8 @@ public class OauthController {
      */
     @ApiOperation(value = "验证token", notes = "验证token")
     @GetMapping(value = "/verify")
-    public R<AuthInfo> verify(@RequestParam(value = "token") String token) throws BizException {
+    public R<AuthInfo> verify(@RequestParam(value = "token") String token) throws BizException
+    {
         return R.success(tokenUtil.getAuthInfo(token));
     }
 
@@ -107,10 +113,12 @@ public class OauthController {
      */
     @ApiOperation(value = "超级管理员登录", notes = "超级管理员登录")
     @PostMapping(value = "/admin/login")
-    public R<AuthInfo> loginAdminTx(@Validated @RequestBody LoginParamDTO login) throws BizException {
+    public R<AuthInfo> loginAdminTx(@Validated @RequestBody LoginParamDTO login) throws BizException
+    {
         log.info("account={}", login.getAccount());
         R<Boolean> check = this.validateCodeService.check(login.getKey(), login.getCode());
-        if (check.getIsError()) {
+        if (check.getIsError())
+        {
             return R.fail(check.getMsg());
         }
         return authManager.adminLogin(login.getAccount(), login.getPassword());

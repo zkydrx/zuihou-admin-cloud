@@ -12,6 +12,7 @@ import com.github.zuihou.sms.entity.SmsSendStatus;
  * @author zuihou
  * @date 2019-08-01
  */
-public interface SmsSendStatusService extends SuperService<SmsSendStatus> {
+public interface SmsSendStatusService extends SuperService<SmsSendStatus>
+{
 
 }

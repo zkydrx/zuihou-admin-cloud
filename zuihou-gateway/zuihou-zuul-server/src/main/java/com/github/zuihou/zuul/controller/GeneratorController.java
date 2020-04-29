@@ -16,7 +16,8 @@ import java.net.URLEncoder;
  * @date 2019-06-21 18:22
  */
 @Controller
-public class GeneratorController {
+public class GeneratorController
+{
 
     /**
      * 解决swagger-bootstrap-ui的一个bug：
@@ -37,12 +38,15 @@ public class GeneratorController {
      */
     @ApiOperation(value = "获取指定服务的swagger", notes = "获取当前系统所有数据字典和枚举")
     @GetMapping("${server.servlet.context-path}/{service}/v2/{ext}")
-    public String apiDocs(@PathVariable String service, @PathVariable String ext, String group) throws Exception {
-        if (group == null) {
+    public String apiDocs(@PathVariable String service, @PathVariable String ext, String group) throws Exception
+    {
+        if (group == null)
+        {
             group = "default";
         }
         String newGroup = group;
-        if (group.contains(StrPool.DASH)) {
+        if (group.contains(StrPool.DASH))
+        {
             newGroup = StrUtil.subSuf(group, group.indexOf(StrPool.DASH) + 1);
         }
         return "redirect:/" + service + "/v2/" + ext + "?group=" + URLEncoder.encode(newGroup, "UTF-8");

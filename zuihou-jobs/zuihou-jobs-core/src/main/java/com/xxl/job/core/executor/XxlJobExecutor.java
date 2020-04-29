@@ -28,7 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * 执行器
  * Created by xuxueli on 2016/3/2 21:14.
  */
-public class XxlJobExecutor {
+public class XxlJobExecutor
+{
     private static final Logger logger = LoggerFactory.getLogger(XxlJobExecutor.class);
     // ---------------------- admin-client (rpc invoker) ----------------------
     private static List<AdminBiz> adminBizList;
@@ -50,26 +51,31 @@ public class XxlJobExecutor {
     private XxlRpcInvokerFactory xxlRpcInvokerFactory = null;
     private XxlRpcProviderFactory xxlRpcProviderFactory = null;
 
-    public static List<AdminBiz> getAdminBizList() {
+    public static List<AdminBiz> getAdminBizList()
+    {
         return adminBizList;
     }
 
-    public static IJobHandler registJobHandler(String name, IJobHandler jobHandler) {
+    public static IJobHandler registJobHandler(String name, IJobHandler jobHandler)
+    {
         logger.info(">>>>>>>>>>> xxl-job register jobhandler success, name:{}, jobHandler:{}", name, jobHandler);
         return jobHandlerRepository.put(name, jobHandler);
     }
 
-    public static IJobHandler loadJobHandler(String name) {
+    public static IJobHandler loadJobHandler(String name)
+    {
         return jobHandlerRepository.get(name);
     }
 
-    public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason) {
+    public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason)
+    {
         JobThread newJobThread = new JobThread(jobId, handler);
         newJobThread.start();
         logger.info(">>>>>>>>>>> xxl-job regist JobThread success, jobId:{}, handler:{}", new Object[]{jobId, handler});
 
         JobThread oldJobThread = jobThreadRepository.put(jobId, newJobThread);    // putIfAbsent | oh my god, map's put method return the old value!!!
-        if (oldJobThread != null) {
+        if (oldJobThread != null)
+        {
             oldJobThread.toStop(removeOldReason);
             oldJobThread.interrupt();
         }
@@ -77,53 +83,65 @@ public class XxlJobExecutor {
         return newJobThread;
     }
 
-    public static void removeJobThread(int jobId, String removeOldReason) {
+    public static void removeJobThread(int jobId, String removeOldReason)
+    {
         JobThread oldJobThread = jobThreadRepository.remove(jobId);
-        if (oldJobThread != null) {
+        if (oldJobThread != null)
+        {
             oldJobThread.toStop(removeOldReason);
             oldJobThread.interrupt();
         }
     }
 
-    public static JobThread loadJobThread(int jobId) {
+    public static JobThread loadJobThread(int jobId)
+    {
         JobThread jobThread = jobThreadRepository.get(jobId);
         return jobThread;
     }
 
-    public void setAdminAddresses(String adminAddresses) {
+    public void setAdminAddresses(String adminAddresses)
+    {
         this.adminAddresses = adminAddresses;
     }
 
-    public void setAppName(String appName) {
+    public void setAppName(String appName)
+    {
         this.appName = appName;
     }
 
-    public void setIp(String ip) {
+    public void setIp(String ip)
+    {
         this.ip = ip;
     }
 
-    public void setPort(int port) {
+    public void setPort(int port)
+    {
         this.port = port;
     }
 
-    public void setRegistryLazy(long registryLazy) {
+    public void setRegistryLazy(long registryLazy)
+    {
         this.registryLazy = registryLazy;
     }
 
-    public void setAccessToken(String accessToken) {
+    public void setAccessToken(String accessToken)
+    {
         this.accessToken = accessToken;
     }
 
-    public void setLogPath(String logPath) {
+    public void setLogPath(String logPath)
+    {
         this.logPath = logPath;
     }
 
-    public void setLogRetentionDays(int logRetentionDays) {
+    public void setLogRetentionDays(int logRetentionDays)
+    {
         this.logRetentionDays = logRetentionDays;
     }
 
     // ---------------------- start + stop ----------------------
-    public void start() throws Exception {
+    public void start() throws Exception
+    {
 
         // init logpath
         XxlJobFileAppender.initLogPath(logPath);
@@ -144,10 +162,13 @@ public class XxlJobExecutor {
         initRpcProvider(ip, port, appName, accessToken, registryLazy);
     }
 
-    public void destroy() {
+    public void destroy()
+    {
         // destory jobThreadRepository
-        if (jobThreadRepository.size() > 0) {
-            for (Map.Entry<Integer, JobThread> item : jobThreadRepository.entrySet()) {
+        if (jobThreadRepository.size() > 0)
+        {
+            for (Map.Entry<Integer, JobThread> item : jobThreadRepository.entrySet())
+            {
                 removeJobThread(item.getKey(), "web container destroy and kill the job.");
             }
             jobThreadRepository.clear();
@@ -164,23 +185,37 @@ public class XxlJobExecutor {
         stopRpcProvider();
     }
 
-    private void initAdminBizList(String adminAddresses, String accessToken) throws Exception {
-        if (adminAddresses != null && adminAddresses.trim().length() > 0) {
-            for (String address : adminAddresses.trim().split(",")) {
-                if (address != null && address.trim().length() > 0) {
+    private void initAdminBizList(String adminAddresses, String accessToken) throws Exception
+    {
+        if (adminAddresses != null && adminAddresses.trim().length() > 0)
+        {
+            for (String address : adminAddresses.trim().split(","))
+            {
+                if (address != null && address.trim().length() > 0)
+                {
 
                     String addressUrl = address.concat(AdminBiz.MAPPING);
-                    if (addressUrl.startsWith("http://")) {
+                    if (addressUrl.startsWith("http://"))
+                    {
                         addressUrl = addressUrl.replace("http://", "");
                     }
-                    if (addressUrl.startsWith("https://")) {
+                    if (addressUrl.startsWith("https://"))
+                    {
                         addressUrl = addressUrl.replace("https://", "");
                     }
 
-                    AdminBiz adminBiz = (AdminBiz) new XxlRpcReferenceBean(NetEnum.JETTY, Serializer.SerializeEnum.HESSIAN.getSerializer(), CallType.SYNC,
-                            AdminBiz.class, null, 10000, addressUrl, accessToken, null).getObject();
+                    AdminBiz adminBiz = (AdminBiz) new XxlRpcReferenceBean(NetEnum.JETTY,
+                                                                           Serializer.SerializeEnum.HESSIAN.getSerializer(),
+                                                                           CallType.SYNC,
+                                                                           AdminBiz.class,
+                                                                           null,
+                                                                           10000,
+                                                                           addressUrl,
+                                                                           accessToken,
+                                                                           null).getObject();
 
-                    if (adminBizList == null) {
+                    if (adminBizList == null)
+                    {
                         adminBizList = new ArrayList<AdminBiz>();
                     }
                     adminBizList.add(adminBiz);
@@ -189,7 +224,8 @@ public class XxlJobExecutor {
         }
     }
 
-    private void initRpcProvider(String ip, int port, String appName, String accessToken, long registryLazy) throws Exception {
+    private void initRpcProvider(String ip, int port, String appName, String accessToken, long registryLazy) throws Exception
+    {
         // init invoker factory
         xxlRpcInvokerFactory = new XxlRpcInvokerFactory();
 
@@ -201,7 +237,13 @@ public class XxlJobExecutor {
         serviceRegistryParam.put("registryLazy", String.valueOf(registryLazy));
 
         xxlRpcProviderFactory = new XxlRpcProviderFactory();
-        xxlRpcProviderFactory.initConfig(NetEnum.JETTY, Serializer.SerializeEnum.HESSIAN.getSerializer(), ip, port, accessToken, ExecutorServiceRegistry.class, serviceRegistryParam);
+        xxlRpcProviderFactory.initConfig(NetEnum.JETTY,
+                                         Serializer.SerializeEnum.HESSIAN.getSerializer(),
+                                         ip,
+                                         port,
+                                         accessToken,
+                                         ExecutorServiceRegistry.class,
+                                         serviceRegistryParam);
 
         // add services
         xxlRpcProviderFactory.addService(ExecutorBiz.class.getName(), null, new ExecutorBizImpl());
@@ -211,47 +253,60 @@ public class XxlJobExecutor {
 
     }
 
-    private void stopRpcProvider() {
+    private void stopRpcProvider()
+    {
         // stop invoker factory
-        try {
+        try
+        {
             xxlRpcInvokerFactory.stop();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             logger.error(e.getMessage(), e);
         }
         // stop provider factory
-        try {
+        try
+        {
             xxlRpcProviderFactory.stop();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             logger.error(e.getMessage(), e);
         }
     }
 
-    public static class ExecutorServiceRegistry extends ServiceRegistry {
+    public static class ExecutorServiceRegistry extends ServiceRegistry
+    {
 
         @Override
-        public void start(Map<String, String> param) {
+        public void start(Map<String, String> param)
+        {
             // start registry
             ExecutorRegistryThread.getInstance().start(param.get("appName"), param.get("address"), param.get("registryLazy"));
         }
 
         @Override
-        public void stop() {
+        public void stop()
+        {
             // stop registry
             ExecutorRegistryThread.getInstance().toStop();
         }
 
         @Override
-        public boolean registry(String key, String value) {
+        public boolean registry(String key, String value)
+        {
             return false;
         }
 
         @Override
-        public boolean remove(String key, String value) {
+        public boolean remove(String key, String value)
+        {
             return false;
         }
 
         @Override
-        public TreeSet<String> discovery(String key) {
+        public TreeSet<String> discovery(String key)
+        {
             return null;
         }
 

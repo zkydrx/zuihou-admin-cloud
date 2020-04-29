@@ -21,7 +21,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-06-24
  */
-public interface AttachmentService extends SuperService<Attachment> {
+public interface AttachmentService extends SuperService<Attachment>
+{
     /**
      * 上传附件
      *

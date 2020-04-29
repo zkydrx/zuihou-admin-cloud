@@ -32,7 +32,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("c_auth_resource")
 @ApiModel(value = "Resource", description = "资源")
-public class Resource extends Entity<Long> {
+public class Resource extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -77,8 +78,8 @@ public class Resource extends Entity<Long> {
 
 
     @Builder
-    public Resource(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                    String code, String name, Long menuId, String describe) {
+    public Resource(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime, String code, String name, Long menuId, String describe)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

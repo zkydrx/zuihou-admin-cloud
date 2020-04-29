@@ -34,7 +34,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("sms_template")
 @ApiModel(value = "SmsTemplate", description = "短信模板")
-public class SmsTemplate extends Entity<Long> {
+public class SmsTemplate extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -146,9 +147,23 @@ public class SmsTemplate extends Entity<Long> {
 
 
     @Builder
-    public SmsTemplate(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                       ProviderType providerType, String appId, String appSecret, String url, String customCode,
-                       String name, String content, String templateParams, String templateCode, String signName, String templateDescribe) {
+    public SmsTemplate(Long id,
+                       Long createUser,
+                       LocalDateTime createTime,
+                       Long updateUser,
+                       LocalDateTime updateTime,
+                       ProviderType providerType,
+                       String appId,
+                       String appSecret,
+                       String url,
+                       String customCode,
+                       String name,
+                       String content,
+                       String templateParams,
+                       String templateCode,
+                       String signName,
+                       String templateDescribe)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

@@ -17,26 +17,31 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  * @date 2020年03月09日18:01:33
  */
 @Component
-public class TraceFilter extends ZuulFilter {
+public class TraceFilter extends ZuulFilter
+{
 
     @Override
-    public String filterType() {
+    public String filterType()
+    {
         return FilterConstants.PRE_TYPE;
     }
 
     @Override
-    public int filterOrder() {
+    public int filterOrder()
+    {
         return FORM_BODY_WRAPPER_FILTER_ORDER - 1;
     }
 
     @Override
-    public boolean shouldFilter() {
+    public boolean shouldFilter()
+    {
         //根据配置控制是否开启过滤器
         return true;
     }
 
     @Override
-    public Object run() {
+    public Object run()
+    {
         //链路追踪id
         String traceId = IdUtil.fastSimpleUUID();
         MDC.put(BaseContextConstants.LOG_TRACE_ID, traceId);

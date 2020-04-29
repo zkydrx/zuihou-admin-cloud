@@ -19,7 +19,8 @@ import org.springframework.stereotype.Repository;
  * @date 2019-07-22
  */
 @Repository
-public interface StationMapper extends SuperMapper<Station> {
+public interface StationMapper extends SuperMapper<Station>
+{
     /**
      * 分页查询岗位信息（含角色）
      *

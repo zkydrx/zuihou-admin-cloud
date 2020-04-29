@@ -22,7 +22,8 @@ import java.util.Set;
  * @author zuihou
  * @date 2019-07-03
  */
-public interface UserService extends SuperCacheService<User> {
+public interface UserService extends SuperCacheService<User>
+{
 
     /**
      * 根据用户id 查询数据范围
@@ -71,7 +72,7 @@ public interface UserService extends SuperCacheService<User> {
      *
      * @param account
      */
-//    void updateLoginTime(String account);
+    //    void updateLoginTime(String account);
 
     /**
      * 保存

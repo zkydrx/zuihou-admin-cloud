@@ -12,7 +12,8 @@ import java.util.List;
  *
  * @author xuxueli 2017-12-29 17:56:48
  */
-public class FileUtil {
+public class FileUtil
+{
     private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     /**
@@ -21,12 +22,17 @@ public class FileUtil {
      * @param root
      * @return
      */
-    public static boolean deleteRecursively(File root) {
-        if (root != null && root.exists()) {
-            if (root.isDirectory()) {
+    public static boolean deleteRecursively(File root)
+    {
+        if (root != null && root.exists())
+        {
+            if (root.isDirectory())
+            {
                 File[] children = root.listFiles();
-                if (children != null) {
-                    for (File child : children) {
+                if (children != null)
+                {
+                    for (File child : children)
+                    {
                         deleteRecursively(child);
                     }
                 }
@@ -36,46 +42,63 @@ public class FileUtil {
         return false;
     }
 
-    public static void deleteFile(String fileName) {
+    public static void deleteFile(String fileName)
+    {
         // file
         File file = new File(fileName);
-        if (file.exists()) {
+        if (file.exists())
+        {
             file.delete();
         }
     }
 
-    public static void appendFileLine(String fileName, String content) {
+    public static void appendFileLine(String fileName, String content)
+    {
 
         // file
         File file = new File(fileName);
-        if (!file.exists()) {
-            try {
+        if (!file.exists())
+        {
+            try
+            {
                 file.createNewFile();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 logger.error(e.getMessage(), e);
                 return;
             }
         }
 
         // content
-        if (content == null) {
+        if (content == null)
+        {
             content = "";
         }
         content += "\r\n";
 
         // append file content
         FileOutputStream fos = null;
-        try {
+        try
+        {
             fos = new FileOutputStream(file, true);
             fos.write(content.getBytes("utf-8"));
             fos.flush();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             logger.error(e.getMessage(), e);
-        } finally {
-            if (fos != null) {
-                try {
+        }
+        finally
+        {
+            if (fos != null)
+            {
+                try
+                {
                     fos.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     logger.error(e.getMessage(), e);
                 }
             }
@@ -83,13 +106,15 @@ public class FileUtil {
 
     }
 
-    public static List<String> loadFileLines(String fileName) {
+    public static List<String> loadFileLines(String fileName)
+    {
 
         List<String> result = new ArrayList<>();
 
         // valid log file
         File file = new File(fileName);
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             return result;
         }
 
@@ -97,22 +122,33 @@ public class FileUtil {
         StringBuffer logContentBuffer = new StringBuffer();
         int toLineNum = 0;
         LineNumberReader reader = null;
-        try {
+        try
+        {
             //reader = new LineNumberReader(new FileReader(logFile));
             reader = new LineNumberReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
             String line = null;
-            while ((line = reader.readLine()) != null) {
-                if (line != null && line.trim().length() > 0) {
+            while ((line = reader.readLine()) != null)
+            {
+                if (line != null && line.trim().length() > 0)
+                {
                     result.add(line);
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             logger.error(e.getMessage(), e);
-        } finally {
-            if (reader != null) {
-                try {
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                try
+                {
                     reader.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     logger.error(e.getMessage(), e);
                 }
             }

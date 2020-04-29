@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/optLog")
 @Api(value = "OptLog", tags = "系统日志")
-public class OptLogController {
+public class OptLogController
+{
 
     @Autowired
     private OptLogService optLogService;
@@ -43,7 +44,8 @@ public class OptLogController {
      */
     @PostMapping
     @ApiOperation(value = "保存系统日志", notes = "保存系统日志不为空的字段")
-    public R<OptLog> save(@RequestBody OptLogDTO data) {
+    public R<OptLog> save(@RequestBody OptLogDTO data)
+    {
         optLogService.save(data);
         return R.success(BeanPlusUtil.toBean(data, OptLog.class));
     }

@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/verification")
 @Api(value = "VerificationCode", tags = "验证码")
-public class VerificationCodeController {
+public class VerificationCodeController
+{
 
     @Autowired
     private CacheRepository cacheRepository;
@@ -49,7 +50,8 @@ public class VerificationCodeController {
      */
     @ApiOperation(value = "发送验证码", notes = "发送验证码")
     @PostMapping(value = "/send")
-    public R<Boolean> send(@Validated @RequestBody VerificationCodeDTO data) {
+    public R<Boolean> send(@Validated @RequestBody VerificationCodeDTO data)
+    {
         String code = RandomUtil.randomNumbers(6);
 
         SmsTask smsTask = SmsTask.builder().build();
@@ -73,7 +75,8 @@ public class VerificationCodeController {
      */
     @ApiOperation(value = "验证验证码", notes = "验证验证码")
     @PostMapping
-    public R<Boolean> verification(@Validated(SuperEntity.Update.class) @RequestBody VerificationCodeDTO data) {
+    public R<Boolean> verification(@Validated(SuperEntity.Update.class) @RequestBody VerificationCodeDTO data)
+    {
         String key = CacheKey.buildTenantKey(CacheKey.REGISTER_USER, data.getType().name(), data.getMobile());
         String code = cacheRepository.get(key);
         return R.success(data.getCode().equals(code));

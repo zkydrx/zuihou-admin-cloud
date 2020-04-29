@@ -14,19 +14,23 @@ import org.springframework.stereotype.Component;
  * @date 2019/07/25
  */
 @Component
-public class SmsApiFallback implements SmsApi {
+public class SmsApiFallback implements SmsApi
+{
     @Override
-    public R<SmsTask> send(SmsSendTaskDTO smsTaskDTO) {
+    public R<SmsTask> send(SmsSendTaskDTO smsTaskDTO)
+    {
         return R.timeout();
     }
 
     @Override
-    public R<Boolean> sendCode(VerificationCodeDTO data) {
+    public R<Boolean> sendCode(VerificationCodeDTO data)
+    {
         return R.timeout();
     }
 
     @Override
-    public R<Boolean> verification(VerificationCodeDTO data) {
+    public R<Boolean> verification(VerificationCodeDTO data)
+    {
         return R.timeout();
     }
 }

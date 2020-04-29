@@ -21,19 +21,18 @@ import java.net.UnknownHostException;
 @EnableFeignClients({"com.github.zuihou"})
 @EnableZuulProxy
 @Slf4j
-public class ZuulServerApplication {
-    public static void main(String[] args) throws UnknownHostException {
+public class ZuulServerApplication
+{
+    public static void main(String[] args) throws UnknownHostException
+    {
         ConfigurableApplicationContext application = SpringApplication.run(ZuulServerApplication.class, args);
         Environment env = application.getEnvironment();
-        log.info("\n----------------------------------------------------------\n\t" +
-                        "应用 '{}' 运行成功! 访问连接:\n\t" +
-                        "Swagger文档: \t\thttp://{}:{}{}{}/doc.html\n\t" +
-                        "----------------------------------------------------------",
-                env.getProperty("spring.application.name"),
-                InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"),
-                env.getProperty("server.servlet.context-path", ""),
-                env.getProperty("spring.mvc.servlet.path", "")
-        );
+        log.info("\n----------------------------------------------------------\n\t" + "应用 '{}' 运行成功! 访问连接:\n\t" + "Swagger文档: \t\thttp://{}:{}{}{}/doc.html\n\t" +
+                         "----------------------------------------------------------",
+                 env.getProperty("spring.application.name"),
+                 InetAddress.getLocalHost().getHostAddress(),
+                 env.getProperty("server.port"),
+                 env.getProperty("server.servlet.context-path", ""),
+                 env.getProperty("spring.mvc.servlet.path", ""));
     }
 }

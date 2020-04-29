@@ -17,7 +17,8 @@ import javax.annotation.Resource;
  * @author xuxueli 2017-04-28
  */
 @Configuration
-public class XxlJobAdminConfig implements InitializingBean {
+public class XxlJobAdminConfig implements InitializingBean
+{
     private static XxlJobAdminConfig adminConfig = null;
     @Resource
     public XxlJobLogDao xxlJobLogDao;
@@ -54,72 +55,89 @@ public class XxlJobAdminConfig implements InitializingBean {
     @Value("${xxl.job.accessToken}")
     private String accessToken;
 
-    public static XxlJobAdminConfig getAdminConfig() {
+    public static XxlJobAdminConfig getAdminConfig()
+    {
         return adminConfig;
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception
+    {
         adminConfig = this;
     }
 
-    public String getMailHost() {
+    public String getMailHost()
+    {
         return mailHost;
     }
 
-    public String getMailPort() {
+    public String getMailPort()
+    {
         return mailPort;
     }
 
-    public boolean isMailSSL() {
+    public boolean isMailSSL()
+    {
         return mailSSL;
     }
 
-    public String getMailUsername() {
+    public String getMailUsername()
+    {
         return mailUsername;
     }
 
-    public String getMailPassword() {
+    public String getMailPassword()
+    {
         return mailPassword;
     }
 
-    public String getMailSendNick() {
+    public String getMailSendNick()
+    {
         return mailSendNick;
     }
 
-    public String getLoginUsername() {
+    public String getLoginUsername()
+    {
         return loginUsername;
     }
 
-    public String getLoginPassword() {
+    public String getLoginPassword()
+    {
         return loginPassword;
     }
 
-    public String getI18n() {
+    public String getI18n()
+    {
         return i18n;
     }
 
-    public String getAccessToken() {
+    public String getAccessToken()
+    {
         return accessToken;
     }
 
-    public XxlJobLogDao getXxlJobLogDao() {
+    public XxlJobLogDao getXxlJobLogDao()
+    {
         return xxlJobLogDao;
     }
 
-    public XxlJobInfoDao getXxlJobInfoDao() {
+    public XxlJobInfoDao getXxlJobInfoDao()
+    {
         return xxlJobInfoDao;
     }
 
-    public XxlJobRegistryDao getXxlJobRegistryDao() {
+    public XxlJobRegistryDao getXxlJobRegistryDao()
+    {
         return xxlJobRegistryDao;
     }
 
-    public XxlJobGroupDao getXxlJobGroupDao() {
+    public XxlJobGroupDao getXxlJobGroupDao()
+    {
         return xxlJobGroupDao;
     }
 
-    public AdminBiz getAdminBiz() {
+    public AdminBiz getAdminBiz()
+    {
         return adminBiz;
     }
 

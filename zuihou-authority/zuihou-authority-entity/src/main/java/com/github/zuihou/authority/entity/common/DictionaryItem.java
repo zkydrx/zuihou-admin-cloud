@@ -33,7 +33,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("c_common_dictionary_item")
 @ApiModel(value = "DictionaryItem", description = "字典项")
-public class DictionaryItem extends Entity<Long> {
+public class DictionaryItem extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -102,9 +103,19 @@ public class DictionaryItem extends Entity<Long> {
 
 
     @Builder
-    public DictionaryItem(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                          Long dictionaryId, String dictionaryType, String code, String name, Boolean status,
-                          String describe, Integer sortValue) {
+    public DictionaryItem(Long id,
+                          Long createUser,
+                          LocalDateTime createTime,
+                          Long updateUser,
+                          LocalDateTime updateTime,
+                          Long dictionaryId,
+                          String dictionaryType,
+                          String code,
+                          String name,
+                          Boolean status,
+                          String describe,
+                          Integer sortValue)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

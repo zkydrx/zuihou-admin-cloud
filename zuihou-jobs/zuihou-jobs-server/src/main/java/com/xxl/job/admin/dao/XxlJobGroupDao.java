@@ -12,7 +12,8 @@ import java.util.List;
  */
 @Repository
 @SqlParser(filter = true)
-public interface XxlJobGroupDao {
+public interface XxlJobGroupDao
+{
 
     List<XxlJobGroup> findAll();
 

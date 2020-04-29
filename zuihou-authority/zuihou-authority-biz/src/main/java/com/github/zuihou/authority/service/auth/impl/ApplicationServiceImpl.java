@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class ApplicationServiceImpl extends SuperServiceImpl<ApplicationMapper, Application> implements ApplicationService {
+public class ApplicationServiceImpl extends SuperServiceImpl<ApplicationMapper, Application> implements ApplicationService
+{
 
 }

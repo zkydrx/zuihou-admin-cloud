@@ -15,7 +15,8 @@ import java.util.List;
  * @author zuihou
  * @date 2019-10-24
  */
-public interface TenantService extends SuperCacheService<Tenant> {
+public interface TenantService extends SuperCacheService<Tenant>
+{
     /**
      * 检测 租户编码是否存在
      *

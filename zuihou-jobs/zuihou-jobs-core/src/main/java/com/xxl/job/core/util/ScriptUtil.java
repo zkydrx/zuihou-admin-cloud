@@ -16,7 +16,8 @@ import java.io.IOException;
  * <p>
  * Created by xuxueli on 17/2/25.
  */
-public class ScriptUtil {
+public class ScriptUtil
+{
 
     /**
      * make script file
@@ -25,17 +26,24 @@ public class ScriptUtil {
      * @param content
      * @throws IOException
      */
-    public static void markScriptFile(String scriptFileName, String content) throws IOException {
+    public static void markScriptFile(String scriptFileName, String content) throws IOException
+    {
         // make file,   filePath/gluesource/666-123456789.py
         FileOutputStream fileOutputStream = null;
-        try {
+        try
+        {
             fileOutputStream = new FileOutputStream(scriptFileName);
             fileOutputStream.write(content.getBytes("UTF-8"));
             fileOutputStream.close();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw e;
-        } finally {
-            if (fileOutputStream != null) {
+        }
+        finally
+        {
+            if (fileOutputStream != null)
+            {
                 fileOutputStream.close();
             }
         }
@@ -56,20 +64,23 @@ public class ScriptUtil {
      * @return
      * @throws IOException
      */
-    public static int execToFile(String command, String scriptFile, String logFile, String... params) throws IOException {
+    public static int execToFile(String command, String scriptFile, String logFile, String... params) throws IOException
+    {
         // 标准输出：print （null if watchdog timeout）
         // 错误输出：logging + 异常 （still exists if watchdog timeout）
         // 标准输入
 
         FileOutputStream fileOutputStream = null;   //
-        try {
+        try
+        {
             fileOutputStream = new FileOutputStream(logFile, true);
             PumpStreamHandler streamHandler = new PumpStreamHandler(fileOutputStream, fileOutputStream, null);
 
             // command
             CommandLine commandline = new CommandLine(command);
             commandline.addArgument(scriptFile);
-            if (params != null && params.length > 0) {
+            if (params != null && params.length > 0)
+            {
                 commandline.addArguments(params);
             }
 
@@ -79,14 +90,22 @@ public class ScriptUtil {
             exec.setStreamHandler(streamHandler);
             int exitValue = exec.execute(commandline);  // exit code: 0=success, 1=error
             return exitValue;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             XxlJobLogger.log(e);
             return -1;
-        } finally {
-            if (fileOutputStream != null) {
-                try {
+        }
+        finally
+        {
+            if (fileOutputStream != null)
+            {
+                try
+                {
                     fileOutputStream.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     XxlJobLogger.log(e);
                 }
 

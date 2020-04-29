@@ -6,7 +6,8 @@ package com.github.zuihou.common.constant;
  * @author zuihou
  * @date 2019/08/06
  */
-public interface BizConstant {
+public interface BizConstant
+{
     /**
      * 超级租户编码
      */

@@ -19,7 +19,8 @@ import java.io.File;
 @Getter
 @ConfigurationProperties(prefix = "zuihou.file")
 @RefreshScope
-public class FileServerProperties {
+public class FileServerProperties
+{
     /**
      * 为以下3个值，指定不同的自动化配置
      * qiniu：七牛oss
@@ -45,38 +46,47 @@ public class FileServerProperties {
 
     private Ali ali;
 
-    public String getDownByUrl(Object... param) {
+    public String getDownByUrl(Object... param)
+    {
         return String.format(downByUrl, param);
     }
 
-    public String getDownByBizId(Object... param) {
+    public String getDownByBizId(Object... param)
+    {
         return String.format(downByBizId, param);
     }
 
-    public String getDownById(Object... param) {
+    public String getDownById(Object... param)
+    {
         return String.format(downById, param);
     }
 
-    public String getInnerUriPrefix() {
+    public String getInnerUriPrefix()
+    {
         return innerUriPrefix;
     }
 
-    public String getUriPrefix() {
-        if (!uriPrefix.endsWith(StrPool.SLASH)) {
+    public String getUriPrefix()
+    {
+        if (!uriPrefix.endsWith(StrPool.SLASH))
+        {
             uriPrefix += StrPool.SLASH;
         }
         return uriPrefix;
     }
 
-    public String getStoragePath() {
-        if (!storagePath.endsWith(File.separator)) {
+    public String getStoragePath()
+    {
+        if (!storagePath.endsWith(File.separator))
+        {
             storagePath += File.separator;
         }
         return storagePath;
     }
 
     @Data
-    public static class Ali {
+    public static class Ali
+    {
         private String uriPrefix;
         private String endpoint;
         private String accessKeyId;

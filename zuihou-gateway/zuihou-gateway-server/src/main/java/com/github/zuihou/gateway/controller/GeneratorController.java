@@ -13,7 +13,8 @@ import org.springframework.web.reactive.result.view.Rendering;
  * @date 2019-06-21 18:22
  */
 @Controller
-public class GeneratorController {
+public class GeneratorController
+{
 
     @Value("${server.servlet.context-path:}")
     private String contextPath;
@@ -25,7 +26,8 @@ public class GeneratorController {
      * @throws Exception
      */
     @GetMapping("/gate/doc.html")
-    public Rendering doc() throws Exception {
+    public Rendering doc() throws Exception
+    {
         String uri = String.format("%s/doc.html", contextPath);
         return Rendering.redirectTo(uri).build();
     }

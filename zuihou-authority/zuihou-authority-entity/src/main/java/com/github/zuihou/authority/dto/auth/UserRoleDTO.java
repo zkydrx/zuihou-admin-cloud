@@ -24,7 +24,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserRoleDTO", description = "用户角色DTO")
-public class UserRoleDTO implements Serializable {
+public class UserRoleDTO implements Serializable
+{
     @ApiModelProperty(value = "用户id")
     private List<Long> idList;
     @ApiModelProperty(value = "用户信息")

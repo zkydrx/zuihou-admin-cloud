@@ -33,7 +33,8 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.*;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "UserSaveDTO", description = "用户")
-public class UserSaveDTO implements Serializable {
+public class UserSaveDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

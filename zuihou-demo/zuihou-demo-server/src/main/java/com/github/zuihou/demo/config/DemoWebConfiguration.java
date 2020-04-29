@@ -12,10 +12,12 @@ import org.springframework.context.annotation.Configuration;
  * @createTime 2017-12-15 14:42
  */
 @Configuration
-public class DemoWebConfiguration extends BaseConfig {
+public class DemoWebConfiguration extends BaseConfig
+{
     @Bean
     @ConditionalOnExpression("${zuihou.log.enabled:true} && 'DB'.equals('${zuihou.log.type:LOGGER}')")
-    public SysLogListener sysLogListener(LogApi logApi) {
+    public SysLogListener sysLogListener(LogApi logApi)
+    {
         return new SysLogListener((log) -> logApi.save(log));
     }
 }

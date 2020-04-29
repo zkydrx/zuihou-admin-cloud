@@ -39,7 +39,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 @Api(value = "User", tags = "用户")
-public class UserController {
+public class UserController
+{
     @Autowired
     private UserService userService;
 
@@ -54,7 +55,8 @@ public class UserController {
      */
     @ApiOperation(value = "查询用户详细", notes = "查询用户详细")
     @PostMapping(value = "/anno/id/{id}")
-    public R<SysUser> getById(@PathVariable Long id, @RequestBody UserQuery query) {
+    public R<SysUser> getById(@PathVariable Long id, @RequestBody UserQuery query)
+    {
         return R.success(userService.getSysUserById(id, query));
     }
 
@@ -66,7 +68,8 @@ public class UserController {
      */
     @ApiOperation(value = "查询用户权限范围", notes = "根据用户id，查询用户权限范围")
     @GetMapping(value = "/ds/{id}")
-    public Map<String, Object> getDataScopeById(@PathVariable("id") Long id) {
+    public Map<String, Object> getDataScopeById(@PathVariable("id") Long id)
+    {
         return userService.getDataScopeById(id);
     }
 
@@ -80,9 +83,11 @@ public class UserController {
     @SysLog("清除缓存并重新加载数据")
     @ApiOperation(value = "清除缓存并重新加载数据", notes = "清除缓存并重新加载数据")
     @PostMapping(value = "/reload")
-    public R<LoginDTO> reload(@RequestParam Long userId) throws BizException {
+    public R<LoginDTO> reload(@RequestParam Long userId) throws BizException
+    {
         User user = userService.getByIdCache(userId);
-        if (user == null) {
+        if (user == null)
+        {
             return R.fail("用户不存在");
         }
 
@@ -107,7 +112,8 @@ public class UserController {
      */
     @ApiOperation(value = "根据id查询用户", notes = "根据id查询用户")
     @GetMapping("/findUserByIds")
-    public Map<Serializable, Object> findUserByIds(@RequestParam(value = "ids") Set<Serializable> ids) {
+    public Map<Serializable, Object> findUserByIds(@RequestParam(value = "ids") Set<Serializable> ids)
+    {
         return userService.findUserByIds(ids);
     }
 
@@ -126,7 +132,8 @@ public class UserController {
      */
     @ApiOperation(value = "根据id查询用户名称", notes = "根据id查询用户名称")
     @GetMapping("/findUserNameByIds")
-    public Map<Serializable, Object> findUserNameByIds(@RequestParam(value = "ids") Set<Serializable> ids) {
+    public Map<Serializable, Object> findUserNameByIds(@RequestParam(value = "ids") Set<Serializable> ids)
+    {
         return userService.findUserNameByIds(ids);
     }
 

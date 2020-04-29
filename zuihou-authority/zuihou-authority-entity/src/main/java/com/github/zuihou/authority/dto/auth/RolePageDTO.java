@@ -27,7 +27,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "RoleSaveDTO", description = "角色")
-public class RolePageDTO implements Serializable {
+public class RolePageDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

@@ -34,7 +34,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("msgs_center_info")
 @ApiModel(value = "MsgsCenterInfo", description = "消息中心表")
-public class MsgsCenterInfo extends Entity<Long> {
+public class MsgsCenterInfo extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -119,9 +120,21 @@ public class MsgsCenterInfo extends Entity<Long> {
 
 
     @Builder
-    public MsgsCenterInfo(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                          String bizId, MsgsBizType bizType, MsgsCenterType msgsCenterType, String title, String content,
-                          String author, String handlerUrl, String handlerParams, Boolean isSingleHandle) {
+    public MsgsCenterInfo(Long id,
+                          LocalDateTime createTime,
+                          Long createUser,
+                          LocalDateTime updateTime,
+                          Long updateUser,
+                          String bizId,
+                          MsgsBizType bizType,
+                          MsgsCenterType msgsCenterType,
+                          String title,
+                          String content,
+                          String author,
+                          String handlerUrl,
+                          String handlerParams,
+                          Boolean isSingleHandle)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

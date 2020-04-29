@@ -47,7 +47,8 @@ import static com.github.zuihou.exception.code.ExceptionCode.JWT_OFFLINE;
 @Component
 @Slf4j
 @EnableConfigurationProperties({IgnoreTokenProperties.class})
-public class AccessFilter implements GlobalFilter, Ordered {
+public class AccessFilter implements GlobalFilter, Ordered
+{
     @Value("${spring.profiles.active:dev}")
     protected String profiles;
     @Autowired
@@ -58,12 +59,14 @@ public class AccessFilter implements GlobalFilter, Ordered {
     @Autowired
     private CacheChannel channel;
 
-    protected boolean isDev() {
+    protected boolean isDev()
+    {
         return !StrPool.PROD.equalsIgnoreCase(profiles);
     }
 
     @Override
-    public int getOrder() {
+    public int getOrder()
+    {
         return -1000;
     }
 
@@ -73,20 +76,24 @@ public class AccessFilter implements GlobalFilter, Ordered {
      *
      * @return
      */
-    protected boolean isIgnoreToken(String path) {
+    protected boolean isIgnoreToken(String path)
+    {
         return ignoreTokenProperties.isIgnoreToken(path);
     }
 
-    protected String getHeader(String headerName, ServerHttpRequest request) {
+    protected String getHeader(String headerName, ServerHttpRequest request)
+    {
         HttpHeaders headers = request.getHeaders();
         String token = StrUtil.EMPTY;
-        if (headers == null || headers.isEmpty()) {
+        if (headers == null || headers.isEmpty())
+        {
             return token;
         }
 
         token = headers.getFirst(headerName);
 
-        if (StringUtils.isNotBlank(token)) {
+        if (StringUtils.isNotBlank(token))
+        {
             return token;
         }
 
@@ -95,7 +102,8 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
+    {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
@@ -103,16 +111,19 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
         //2, 解析token
         AuthInfo authInfo = null;
-        try {
+        try
+        {
             //1, 请求头中的租户信息
             String base64Tenant = getHeader(JWT_KEY_TENANT, request);
-            if (StrUtil.isNotEmpty(base64Tenant)) {
+            if (StrUtil.isNotEmpty(base64Tenant))
+            {
                 String tenant = JwtUtil.base64Decoder(base64Tenant);
                 BaseContextHandler.setTenant(tenant);
             }
 
             // 不进行拦截的地址
-            if (isIgnoreToken(request.getPath().toString())) {
+            if (isIgnoreToken(request.getPath().toString()))
+            {
                 log.debug("access filter not execute");
                 return chain.filter(exchange);
             }
@@ -122,33 +133,42 @@ public class AccessFilter implements GlobalFilter, Ordered {
             String token = getHeader(BEARER_HEADER_KEY, request);
 
             // 测试环境 token=test 时，写死一个用户信息，便于测试
-            if (isDev() && StrPool.TEST.equalsIgnoreCase(token)) {
-                authInfo = new AuthInfo().setAccount("zuihou").setUserId(1L)
-                        .setTokenType(BEARER_HEADER_KEY).setName("平台管理员");
+            if (isDev() && StrPool.TEST.equalsIgnoreCase(token))
+            {
+                authInfo = new AuthInfo().setAccount("zuihou").setUserId(1L).setTokenType(BEARER_HEADER_KEY).setName("平台管理员");
             }
 
-            if (authInfo == null) {
+            if (authInfo == null)
+            {
                 authInfo = tokenUtil.getAuthInfo(token);
             }
 
             String newToken = JwtUtil.getToken(token);
             String tokenKey = CacheKey.buildKey(newToken);
             CacheObject tokenCache = channel.get(CacheKey.TOKEN_USER_ID, tokenKey);
-            if (tokenCache.getValue() == null) {
+            if (tokenCache.getValue() == null)
+            {
                 // 为空就认为是没登录或者被T会有bug，该 bug 取决于登录成功后，异步调用UserTokenService.save 方法的延迟
-            } else if (StrUtil.equals(BizConstant.LOGIN_STATUS, (String) tokenCache.getValue())) {
+            }
+            else if (StrUtil.equals(BizConstant.LOGIN_STATUS, (String) tokenCache.getValue()))
+            {
                 return errorResponse(response, JWT_OFFLINE.getMsg(), JWT_OFFLINE.getCode(), 200);
             }
-        } catch (BizException e) {
+        }
+        catch (BizException e)
+        {
             return errorResponse(response, e.getMessage(), e.getCode(), 200);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return errorResponse(response, "验证token出错", R.FAIL_CODE, 200);
         }
 
         ServerHttpRequest.Builder mutate = request.mutate();
 
         //3, 将信息放入header
-        if (authInfo != null) {
+        if (authInfo != null)
+        {
             addHeader(mutate, BaseContextConstants.JWT_KEY_ACCOUNT, authInfo.getAccount());
             addHeader(mutate, BaseContextConstants.JWT_KEY_USER_ID, authInfo.getUserId());
             addHeader(mutate, BaseContextConstants.JWT_KEY_NAME, authInfo.getName());
@@ -162,8 +182,10 @@ public class AccessFilter implements GlobalFilter, Ordered {
         return chain.filter(exchange.mutate().request(build).build());
     }
 
-    private void addHeader(ServerHttpRequest.Builder mutate, String name, Object value) {
-        if (ObjectUtil.isEmpty(value)) {
+    private void addHeader(ServerHttpRequest.Builder mutate, String name, Object value)
+    {
+        if (ObjectUtil.isEmpty(value))
+        {
             return;
         }
         String valueStr = value.toString();
@@ -171,7 +193,8 @@ public class AccessFilter implements GlobalFilter, Ordered {
         mutate.header(name, valueEncode);
     }
 
-    protected Mono<Void> errorResponse(ServerHttpResponse response, String errMsg, int errCode, int httpStatusCode) {
+    protected Mono<Void> errorResponse(ServerHttpResponse response, String errMsg, int errCode, int httpStatusCode)
+    {
         R tokenError = R.fail(errCode, errMsg);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         DataBuffer dataBuffer = response.bufferFactory().wrap(tokenError.toString().getBytes());

@@ -17,7 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @SqlParser(filter = true)
-public interface TenantMapper extends SuperMapper<Tenant> {
+public interface TenantMapper extends SuperMapper<Tenant>
+{
 
     /**
      * 根据租户编码查询

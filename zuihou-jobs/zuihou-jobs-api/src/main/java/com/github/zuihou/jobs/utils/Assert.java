@@ -6,7 +6,8 @@ package com.github.zuihou.jobs.utils;
  * @author zuihou
  * @date 2019/07/05
  */
-public class Assert {
+public class Assert
+{
 
 
     /**
@@ -17,7 +18,8 @@ public class Assert {
      *                okay)
      * @param object  Object to check or <code>null</code>
      */
-    public static void assertNotNull(String message, Object object) {
+    public static void assertNotNull(String message, Object object)
+    {
         assertTrue(message, object != null);
     }
 
@@ -30,8 +32,10 @@ public class Assert {
      *                  okay)
      * @param condition condition to be checked
      */
-    public static void assertTrue(String message, boolean condition) {
-        if (!condition) {
+    public static void assertTrue(String message, boolean condition)
+    {
+        if (!condition)
+        {
             fail(message);
         }
     }
@@ -44,8 +48,10 @@ public class Assert {
      *                okay)
      * @see AssertionError
      */
-    public static void fail(String message) {
-        if (message == null) {
+    public static void fail(String message)
+    {
+        if (message == null)
+        {
             throw new AssertionError();
         }
         throw new AssertionError(message);

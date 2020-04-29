@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "ApplicationAppTypeEnum", description = "类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum ApplicationAppTypeEnum implements BaseEnum {
+public enum ApplicationAppTypeEnum implements BaseEnum
+{
 
     /**
      * SERVER="服务应用"
@@ -46,25 +47,32 @@ public enum ApplicationAppTypeEnum implements BaseEnum {
     private String desc;
 
 
-    public static ApplicationAppTypeEnum match(String val, ApplicationAppTypeEnum def) {
-        for (ApplicationAppTypeEnum enm : ApplicationAppTypeEnum.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static ApplicationAppTypeEnum match(String val, ApplicationAppTypeEnum def)
+    {
+        for (ApplicationAppTypeEnum enm : ApplicationAppTypeEnum.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static ApplicationAppTypeEnum get(String val) {
+    public static ApplicationAppTypeEnum get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(ApplicationAppTypeEnum val) {
-        if (val == null) {
+    public boolean eq(ApplicationAppTypeEnum val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -72,7 +80,8 @@ public enum ApplicationAppTypeEnum implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "SERVER,APP,PC,WAP", example = "SERVER")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

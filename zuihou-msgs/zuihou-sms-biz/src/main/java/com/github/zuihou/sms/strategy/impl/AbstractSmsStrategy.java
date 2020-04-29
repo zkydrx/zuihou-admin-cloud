@@ -26,7 +26,8 @@ import java.util.stream.Collectors;
  * @date 2018/12/20
  */
 @Slf4j
-public abstract class AbstractSmsStrategy implements SmsStrategy {
+public abstract class AbstractSmsStrategy implements SmsStrategy
+{
 
     @Autowired
     private SmsTaskMapper smsTaskMapper;
@@ -35,7 +36,8 @@ public abstract class AbstractSmsStrategy implements SmsStrategy {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public R<String> sendSms(SmsTask task, SmsTemplate template) {
+    public R<String> sendSms(SmsTask task, SmsTemplate template)
+    {
         String appId = template.getAppId();
         String appSecret = template.getAppSecret();
         String endPoint = template.getUrl();
@@ -49,28 +51,44 @@ public abstract class AbstractSmsStrategy implements SmsStrategy {
         log.info("appId={}, appSecret={}, endPoint={},signName={}, templateCode={}", appId, appSecret, endPoint, signName, templateCode);
         log.info("templateParam={}", templateParam);
 
-        try {
+        try
+        {
             //解析接受者手机号
             Set<String> phoneList = PhoneUtils.getPhone(task.getReceiver());
 
             List<SmsSendStatus> list = phoneList.stream().map((phone) -> {
                 //发送
                 SmsResult result = send(SmsDO.builder()
-                        .taskId(task.getId()).phone(phone).appId(appId).appSecret(appSecret)
-                        .signName(signName).templateCode(templateCode).endPoint(endPoint).templateParams(templateParam)
-                        .build());
+                                             .taskId(task.getId())
+                                             .phone(phone)
+                                             .appId(appId)
+                                             .appSecret(appSecret)
+                                             .signName(signName)
+                                             .templateCode(templateCode)
+                                             .endPoint(endPoint)
+                                             .templateParams(templateParam)
+                                             .build());
 
                 log.info("phone={}, result={}", phone, result);
                 return SmsSendStatus.builder()
-                        .taskId(task.getId()).receiver(phone).sendStatus(result.getSendStatus())
-                        .bizId(result.getBizId()).ext(result.getExt())
-                        .code(result.getCode()).message(result.getMessage()).fee(result.getFee()).build();
+                                    .taskId(task.getId())
+                                    .receiver(phone)
+                                    .sendStatus(result.getSendStatus())
+                                    .bizId(result.getBizId())
+                                    .ext(result.getExt())
+                                    .code(result.getCode())
+                                    .message(result.getMessage())
+                                    .fee(result.getFee())
+                                    .build();
             }).collect(Collectors.toList());
 
-            if (!list.isEmpty()) {
+            if (!list.isEmpty())
+            {
                 smsSendStatusService.saveBatch(list);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             log.warn("短信发送任务发送失败", e);
             updateStatus(task.getId(), TaskStatus.FAIL);
             return R.success(String.valueOf(task.getId()));
@@ -80,7 +98,8 @@ public abstract class AbstractSmsStrategy implements SmsStrategy {
         return R.success(String.valueOf(task.getId()));
     }
 
-    public void updateStatus(Long taskId, TaskStatus success) {
+    public void updateStatus(Long taskId, TaskStatus success)
+    {
         SmsTask updateTask = new SmsTask();
         updateTask.setId(taskId);
         updateTask.setStatus(success);

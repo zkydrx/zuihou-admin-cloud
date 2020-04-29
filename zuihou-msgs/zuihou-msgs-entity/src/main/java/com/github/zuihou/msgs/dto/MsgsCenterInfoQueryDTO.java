@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 @ApiModel(value = "MsgsCenterInfoQueryDTO", description = "消息分页参数")
-public class MsgsCenterInfoQueryDTO implements Serializable {
+public class MsgsCenterInfoQueryDTO implements Serializable
+{
     private static final long serialVersionUID = -2054606159972155030L;
     @ApiModelProperty(value = "接收人ID")
     private Long userId;

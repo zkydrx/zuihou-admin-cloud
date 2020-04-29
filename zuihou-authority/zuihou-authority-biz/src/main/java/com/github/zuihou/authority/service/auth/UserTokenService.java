@@ -12,7 +12,8 @@ import com.github.zuihou.base.service.SuperService;
  * @author zuihou
  * @date 2020-04-02
  */
-public interface UserTokenService extends SuperService<UserToken> {
+public interface UserTokenService extends SuperService<UserToken>
+{
     /**
      * 重置用户登录
      *

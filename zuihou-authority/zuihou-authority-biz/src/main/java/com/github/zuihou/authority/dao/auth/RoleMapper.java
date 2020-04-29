@@ -17,7 +17,8 @@ import java.util.List;
  * @date 2019-07-03
  */
 @Repository
-public interface RoleMapper extends SuperMapper<Role> {
+public interface RoleMapper extends SuperMapper<Role>
+{
     /**
      * 查询用户拥有的角色
      *

@@ -50,7 +50,8 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, Attachment> implements AttachmentService {
+public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, Attachment> implements AttachmentService
+{
     @Autowired
     private DatabaseProperties databaseProperties;
     @Resource
@@ -61,23 +62,25 @@ public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, At
     private FileBiz fileBiz;
 
     @Override
-    public IPage<Attachment> page(IPage<Attachment> page, FilePageReqDTO data) {
+    public IPage<Attachment> page(IPage<Attachment> page, FilePageReqDTO data)
+    {
         Attachment attachment = BeanPlusUtil.toBean(data, Attachment.class);
 
         // ${ew.customSqlSegment} 语法一定要手动eq like 等 不能用lbQ!
-        LbqWrapper<Attachment> wrapper = Wraps.<Attachment>lbQ()
-                .like(Attachment::getSubmittedFileName, attachment.getSubmittedFileName())
-                .like(Attachment::getBizType, attachment.getBizType())
-                .like(Attachment::getBizId, attachment.getBizId())
-                .eq(Attachment::getDataType, attachment.getDataType())
-                .orderByDesc(Attachment::getId);
+        LbqWrapper<Attachment> wrapper = Wraps.<Attachment>lbQ().like(Attachment::getSubmittedFileName, attachment.getSubmittedFileName())
+                                                                .like(Attachment::getBizType, attachment.getBizType())
+                                                                .like(Attachment::getBizId, attachment.getBizId())
+                                                                .eq(Attachment::getDataType, attachment.getDataType())
+                                                                .orderByDesc(Attachment::getId);
         return baseMapper.page(page, wrapper, new DataScope());
     }
 
     @Override
-    public AttachmentDTO upload(MultipartFile multipartFile, String tenant, Long id, String bizType, String bizId, Boolean isSingle) {
+    public AttachmentDTO upload(MultipartFile multipartFile, String tenant, Long id, String bizType, String bizId, Boolean isSingle)
+    {
         //根据业务类型来判断是否生成业务id
-        if (StringUtils.isNotEmpty(bizType) && StringUtils.isEmpty(bizId)) {
+        if (StringUtils.isNotEmpty(bizType) && StringUtils.isEmpty(bizId))
+        {
             DatabaseProperties.Id idPro = databaseProperties.getId();
             bizId = IdUtil.getSnowflake(idPro.getWorkerId(), idPro.getDataCenterId()).nextIdStr();
         }
@@ -89,15 +92,19 @@ public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, At
         attachment.setBizType(bizType);
         setDate(attachment);
 
-        if (isSingle) {
+        if (isSingle)
+        {
             super.remove(Wraps.<Attachment>lbQ().eq(Attachment::getBizId, bizId).eq(Attachment::getBizType, bizType));
         }
 
-        if (id != null && id > 0) {
+        if (id != null && id > 0)
+        {
             //当前端传递了文件id时，修改这条记录
             attachment.setId(id);
             super.updateById(attachment);
-        } else {
+        }
+        else
+        {
             super.save(attachment);
         }
 
@@ -108,7 +115,8 @@ public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, At
         return dto;
     }
 
-    private void setDate(Attachment file) {
+    private void setDate(Attachment file)
+    {
         LocalDateTime now = LocalDateTime.now();
         file.setCreateMonth(DateUtils.formatAsYearMonthEn(now));
         file.setCreateWeek(DateUtils.formatAsYearWeekEn(now));
@@ -116,83 +124,89 @@ public class AttachmentServiceImpl extends SuperServiceImpl<AttachmentMapper, At
     }
 
     @Override
-    public boolean remove(List<Long> ids) {
-        if (CollectionUtil.isEmpty(ids)) {
+    public boolean remove(List<Long> ids)
+    {
+        if (CollectionUtil.isEmpty(ids))
+        {
             return false;
         }
 
         List<Attachment> list = super.list(Wrappers.<Attachment>lambdaQuery().in(Attachment::getId, ids));
-        if (list.isEmpty()) {
+        if (list.isEmpty())
+        {
             return false;
         }
         boolean bool = super.removeByIds(ids);
 
-        boolean boolDel = fileStrategy.delete(list.stream().map((fi) -> FileDeleteDO.builder()
-                .relativePath(fi.getRelativePath())
-                .fileName(fi.getFilename())
-                .group(fi.getGroup())
-                .path(fi.getPath())
-                .file(false)
-                .build())
-                .collect(Collectors.toList()));
+        boolean boolDel = fileStrategy.delete(list.stream()
+                                                  .map((fi) -> FileDeleteDO.builder()
+                                                                           .relativePath(fi.getRelativePath())
+                                                                           .fileName(fi.getFilename())
+                                                                           .group(fi.getGroup())
+                                                                           .path(fi.getPath())
+                                                                           .file(false)
+                                                                           .build())
+                                                  .collect(Collectors.toList()));
         return bool && boolDel;
     }
 
     @Override
-    public boolean removeByBizIdAndBizType(String bizId, String bizType) {
-        List<Attachment> list = super.list(
-                Wraps.<Attachment>lbQ()
-                        .eq(Attachment::getBizId, bizId)
-                        .eq(Attachment::getBizType, bizType));
-        if (list.isEmpty()) {
+    public boolean removeByBizIdAndBizType(String bizId, String bizType)
+    {
+        List<Attachment> list = super.list(Wraps.<Attachment>lbQ().eq(Attachment::getBizId, bizId).eq(Attachment::getBizType, bizType));
+        if (list.isEmpty())
+        {
             return false;
         }
         return remove(list.stream().mapToLong(Attachment::getId).boxed().collect(Collectors.toList()));
     }
 
     @Override
-    public List<AttachmentResultDTO> find(String[] bizTypes, String[] bizIds) {
+    public List<AttachmentResultDTO> find(String[] bizTypes, String[] bizIds)
+    {
         return baseMapper.find(bizTypes, bizIds);
     }
 
     @Override
-    public void download(HttpServletRequest request, HttpServletResponse response, Long[] ids) throws Exception {
+    public void download(HttpServletRequest request, HttpServletResponse response, Long[] ids) throws Exception
+    {
         List<Attachment> list = (List<Attachment>) super.listByIds(Arrays.asList(ids));
         down(request, response, list);
     }
 
     @Override
-    public void downloadByBiz(HttpServletRequest request, HttpServletResponse response, String[] bizTypes, String[] bizIds) throws Exception {
-        List<Attachment> list = super.list(
-                Wraps.<Attachment>lbQ()
-                        .in(Attachment::getBizType, bizTypes)
-                        .in(Attachment::getBizId, bizIds));
+    public void downloadByBiz(HttpServletRequest request, HttpServletResponse response, String[] bizTypes, String[] bizIds) throws Exception
+    {
+        List<Attachment> list = super.list(Wraps.<Attachment>lbQ().in(Attachment::getBizType, bizTypes).in(Attachment::getBizId, bizIds));
 
         down(request, response, list);
     }
 
     @Override
-    public void downloadByUrl(HttpServletRequest request, HttpServletResponse response, String url, String filename) throws Exception {
-        if (StringUtils.isEmpty(filename)) {
+    public void downloadByUrl(HttpServletRequest request, HttpServletResponse response, String url, String filename) throws Exception
+    {
+        if (StringUtils.isEmpty(filename))
+        {
             filename = "未知文件名.txt";
         }
-        List<Attachment> list = Arrays.asList(Attachment.builder()
-                .url(url).submittedFileName(filename).size(0L).dataType(DataType.DOC).build());
+        List<Attachment> list = Arrays.asList(Attachment.builder().url(url).submittedFileName(filename).size(0L).dataType(DataType.DOC).build());
         down(request, response, list);
     }
 
-    private void down(HttpServletRequest request, HttpServletResponse response, List<Attachment> list) throws Exception {
-        if (list.isEmpty()) {
+    private void down(HttpServletRequest request, HttpServletResponse response, List<Attachment> list) throws Exception
+    {
+        if (list.isEmpty())
+        {
             throw BizException.wrap("您下载的文件不存在");
         }
-        List<FileDO> listDO = list.stream().map((file) ->
-                FileDO.builder()
-                        .url(file.getUrl())
-                        .submittedFileName(file.getSubmittedFileName())
-                        .size(file.getSize())
-                        .dataType(file.getDataType())
-                        .build())
-                .collect(Collectors.toList());
+        List<FileDO> listDO = list.stream()
+                                  .map((file) -> FileDO.builder()
+                                                       .url(file.getUrl())
+                                                       .submittedFileName(file.getSubmittedFileName())
+                                                       .size(file.getSize())
+                                                       .dataType(file.getDataType())
+                                                       .build())
+                                  .collect(Collectors.toList());
         fileBiz.down(listDO, request, response);
     }
 

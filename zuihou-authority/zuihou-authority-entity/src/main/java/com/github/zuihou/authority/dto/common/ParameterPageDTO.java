@@ -27,7 +27,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "ParameterPageDTO", description = "参数配置")
-public class ParameterPageDTO implements Serializable {
+public class ParameterPageDTO implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 

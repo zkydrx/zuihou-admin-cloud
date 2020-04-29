@@ -31,7 +31,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/resource")
 @Api(value = "Resource", tags = "资源")
-public class ResourceController {
+public class ResourceController
+{
     @Autowired
     private ResourceService resourceService;
 
@@ -46,12 +47,15 @@ public class ResourceController {
      */
     @ApiOperation(value = "查询用户可用的所有资源", notes = "查询用户可用的所有资源")
     @GetMapping("/visible")
-    public R<List<String>> visible(ResourceQueryDTO resource, @ApiIgnore @LoginUser SysUser sysUser) {
-        if (resource == null) {
+    public R<List<String>> visible(ResourceQueryDTO resource, @ApiIgnore @LoginUser SysUser sysUser)
+    {
+        if (resource == null)
+        {
             resource = new ResourceQueryDTO();
         }
 
-        if (resource.getUserId() == null) {
+        if (resource.getUserId() == null)
+        {
             resource.setUserId(sysUser.getId());
         }
         List<Resource> list = resourceService.findVisibleResource(resource);

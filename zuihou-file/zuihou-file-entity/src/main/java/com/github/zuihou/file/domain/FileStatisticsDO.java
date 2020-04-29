@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FileStatisticsDO {
+public class FileStatisticsDO
+{
     /**
      * 文件类型 IMAGE、DOC等
      */

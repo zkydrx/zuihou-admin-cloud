@@ -6,7 +6,8 @@ package com.github.zuihou.common.constant;
  * @author zuihou
  * @date 2020年04月05日15:44:03
  */
-public interface BizMqQueue {
+public interface BizMqQueue
+{
 
     /**
      * 租户数据源 广播

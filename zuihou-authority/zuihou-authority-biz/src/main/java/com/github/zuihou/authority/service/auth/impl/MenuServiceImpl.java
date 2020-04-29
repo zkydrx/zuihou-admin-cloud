@@ -34,13 +34,15 @@ import static com.github.zuihou.utils.StrPool.DEF_PARENT_ID;
  */
 @Slf4j
 @Service
-public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> implements MenuService {
+public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> implements MenuService
+{
 
     @Autowired
     private ResourceService resourceService;
 
     @Override
-    protected String getRegion() {
+    protected String getRegion()
+    {
         return MENU;
     }
 
@@ -61,7 +63,8 @@ public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> imp
      * @return
      */
     @Override
-    public List<Menu> findVisibleMenu(String group, Long userId) {
+    public List<Menu> findVisibleMenu(String group, Long userId)
+    {
         String key = key(userId);
         List<Menu> visibleMenu = new ArrayList<>();
         CacheObject cacheObject = cacheChannel.get(CacheKey.USER_MENU, key, (k) -> {
@@ -69,11 +72,13 @@ public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> imp
             return visibleMenu.stream().mapToLong(Menu::getId).boxed().collect(Collectors.toList());
         });
 
-        if (cacheObject.getValue() == null) {
+        if (cacheObject.getValue() == null)
+        {
             return Collections.emptyList();
         }
 
-        if (!visibleMenu.isEmpty()) {
+        if (!visibleMenu.isEmpty())
+        {
             // TODO 异步性能 更加
             visibleMenu.forEach((menu) -> {
                 String menuKey = key(menu.getId());
@@ -85,14 +90,15 @@ public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> imp
 
         List<Long> list = (List<Long>) cacheObject.getValue();
 
-        List<Menu> menuList = list.stream().map(this::getByIdCache)
-                .filter(Objects::nonNull).collect(Collectors.toList());
+        List<Menu> menuList = list.stream().map(this::getByIdCache).filter(Objects::nonNull).collect(Collectors.toList());
 
         return menuListFilterGroup(group, menuList);
     }
 
-    private List<Menu> menuListFilterGroup(String group, List<Menu> visibleMenu) {
-        if (StrUtil.isEmpty(group)) {
+    private List<Menu> menuListFilterGroup(String group, List<Menu> visibleMenu)
+    {
+        if (StrUtil.isEmpty(group))
+        {
             return visibleMenu;
         }
         return visibleMenu.stream().filter((menu) -> group.equals(menu.getGroup())).collect(Collectors.toList());
@@ -101,12 +107,15 @@ public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> imp
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean removeByIdWithCache(List<Long> ids) {
-        if (ids.isEmpty()) {
+    public boolean removeByIdWithCache(List<Long> ids)
+    {
+        if (ids.isEmpty())
+        {
             return true;
         }
         boolean result = this.removeByIds(ids);
-        if (result) {
+        if (result)
+        {
             resourceService.removeByMenuIdWithCache(ids);
         }
         return result;
@@ -114,9 +123,11 @@ public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> imp
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateWithCache(Menu menu) {
+    public boolean updateWithCache(Menu menu)
+    {
         boolean result = this.updateById(menu);
-        if (result) {
+        if (result)
+        {
             cacheChannel.clear(CacheKey.USER_MENU);
         }
         return result;
@@ -124,13 +135,15 @@ public class MenuServiceImpl extends SuperCacheServiceImpl<MenuMapper, Menu> imp
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean saveWithCache(Menu menu) {
+    public boolean saveWithCache(Menu menu)
+    {
         menu.setIsEnable(Convert.toBool(menu.getIsEnable(), true));
         menu.setIsPublic(Convert.toBool(menu.getIsPublic(), false));
         menu.setParentId(Convert.toLong(menu.getParentId(), DEF_PARENT_ID));
         save(menu);
 
-        if (menu.getIsPublic()) {
+        if (menu.getIsPublic())
+        {
             cacheChannel.evict(CacheKey.USER_MENU);
         }
         return true;

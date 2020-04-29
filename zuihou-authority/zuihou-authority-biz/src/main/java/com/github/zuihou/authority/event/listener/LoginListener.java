@@ -21,7 +21,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class LoginListener {
+public class LoginListener
+{
     @Autowired
     private LoginLogService loginLogService;
     @Autowired
@@ -31,21 +32,26 @@ public class LoginListener {
 
     @Async
     @EventListener({LoginEvent.class})
-    public void saveSysLog(LoginEvent event) {
+    public void saveSysLog(LoginEvent event)
+    {
         LoginStatusDTO loginStatus = (LoginStatusDTO) event.getSource();
 
-        if (StrUtil.isEmpty(loginStatus.getTenant())) {
+        if (StrUtil.isEmpty(loginStatus.getTenant()))
+        {
             log.warn("忽略记录登录日志:{}", loginStatus);
             return;
         }
 
         BaseContextHandler.setTenant(loginStatus.getTenant());
-        if (LoginStatusDTO.Type.SUCCESS == loginStatus.getType()) {
+        if (LoginStatusDTO.Type.SUCCESS == loginStatus.getType())
+        {
             // 重置错误次数 和 最后登录时间
             this.userService.resetPassErrorNum(loginStatus.getId());
 
             userTokenService.save(loginStatus.getUserToken());
-        } else if (LoginStatusDTO.Type.PWD_ERROR == loginStatus.getType()) {
+        }
+        else if (LoginStatusDTO.Type.PWD_ERROR == loginStatus.getType())
+        {
             // 密码错误
             this.userService.incrPasswordErrorNumById(loginStatus.getId());
         }

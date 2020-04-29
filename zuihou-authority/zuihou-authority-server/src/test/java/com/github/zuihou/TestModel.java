@@ -20,14 +20,14 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.STATION_
  *
  * @author zuihou
  * @date 2019/07/25
- */
-public class TestModel {
+ */ public class TestModel
+{
     private LocalDateTime date;
     private Date d2;
 
     @ApiModelProperty(value = "组织ID")
     @TableField("org_id")
-//    @InjectionField(feign = OrgApi.class, method = ORG_ID_METHOD)
+    //    @InjectionField(feign = OrgApi.class, method = ORG_ID_METHOD)
     private RemoteData<Long, Org> org;
 
 

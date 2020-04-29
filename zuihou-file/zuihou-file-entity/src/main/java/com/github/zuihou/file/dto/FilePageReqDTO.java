@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value = "FilePageReq", description = "文件分页列表请求参数")
-public class FilePageReqDTO implements Serializable {
+public class FilePageReqDTO implements Serializable
+{
     @ApiModelProperty(value = "文件夹id")
     private Long folderId;
     @ApiModelProperty(value = "原始文件名")

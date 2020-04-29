@@ -41,7 +41,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/role")
 @Api(value = "Role", tags = "角色")
 @PreAuth(replace = "role:")
-public class RoleController extends SuperCacheController<RoleService, Long, Role, RolePageDTO, RoleSaveDTO, RoleUpdateDTO> {
+public class RoleController extends SuperCacheController<RoleService, Long, Role, RolePageDTO, RoleSaveDTO, RoleUpdateDTO>
+{
 
     @Autowired
     private RoleAuthorityService roleAuthorityService;
@@ -60,10 +61,12 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "查询角色", notes = "查询角色")
     @GetMapping("/details/{id}")
     @SysLog("查询角色")
-    public R<RoleQueryDTO> getDetails(@PathVariable Long id) {
+    public R<RoleQueryDTO> getDetails(@PathVariable Long id)
+    {
         Role role = baseService.getByIdCache(id);
         RoleQueryDTO query = BeanPlusUtil.toBean(role, RoleQueryDTO.class);
-        if (query.getDsType() != null && DataScopeType.CUSTOMIZE.eq(query.getDsType())) {
+        if (query.getDsType() != null && DataScopeType.CUSTOMIZE.eq(query.getDsType()))
+        {
             List<Long> orgList = roleOrgService.listOrgByRoleId(role.getId());
             query.setOrgList(orgList);
         }
@@ -73,25 +76,29 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "检测角色编码", notes = "检测角色编码")
     @GetMapping("/check/{code}")
     @SysLog("新增角色")
-    public R<Boolean> check(@PathVariable String code) {
+    public R<Boolean> check(@PathVariable String code)
+    {
         return success(baseService.check(code));
     }
 
 
     @Override
-    public R<Role> handlerSave(RoleSaveDTO data) {
+    public R<Role> handlerSave(RoleSaveDTO data)
+    {
         baseService.saveRole(data, getUserId());
         return success(BeanPlusUtil.toBean(data, Role.class));
     }
 
     @Override
-    public R<Role> handlerUpdate(RoleUpdateDTO data) {
+    public R<Role> handlerUpdate(RoleUpdateDTO data)
+    {
         baseService.updateRole(data, getUserId());
         return success(BeanPlusUtil.toBean(data, Role.class));
     }
 
     @Override
-    public R<Boolean> handlerDelete(List<Long> ids) {
+    public R<Boolean> handlerDelete(List<Long> ids)
+    {
         return success(baseService.removeByIdWithCache(ids));
     }
 
@@ -104,7 +111,8 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "给用户分配角色", notes = "给用户分配角色")
     @PostMapping("/user")
     @SysLog("给角色分配用户")
-    public R<Boolean> saveUserRole(@RequestBody UserRoleSaveDTO userRole) {
+    public R<Boolean> saveUserRole(@RequestBody UserRoleSaveDTO userRole)
+    {
         return success(roleAuthorityService.saveUserRole(userRole));
     }
 
@@ -117,7 +125,8 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "查询角色的用户", notes = "查询角色的用户")
     @GetMapping("/user/{roleId}")
     @SysLog("查询角色的用户")
-    public R<List<Long>> findUserIdByRoleId(@PathVariable Long roleId) {
+    public R<List<Long>> findUserIdByRoleId(@PathVariable Long roleId)
+    {
         List<UserRole> list = userRoleService.list(Wraps.<UserRole>lbQ().eq(UserRole::getRoleId, roleId));
         return success(list.stream().mapToLong(UserRole::getUserId).boxed().collect(Collectors.toList()));
     }
@@ -131,13 +140,20 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "查询角色拥有的资源id集合", notes = "查询角色拥有的资源id集合")
     @GetMapping("/authority/{roleId}")
     @SysLog("查询角色拥有的资源")
-    public R<RoleAuthoritySaveDTO> findAuthorityIdByRoleId(@PathVariable Long roleId) {
+    public R<RoleAuthoritySaveDTO> findAuthorityIdByRoleId(@PathVariable Long roleId)
+    {
         List<RoleAuthority> list = roleAuthorityService.list(Wraps.<RoleAuthority>lbQ().eq(RoleAuthority::getRoleId, roleId));
-        List<Long> menuIdList = list.stream().filter(item -> AuthorizeType.MENU.eq(item.getAuthorityType())).mapToLong(RoleAuthority::getAuthorityId).boxed().collect(Collectors.toList());
-        List<Long> resourceIdList = list.stream().filter(item -> AuthorizeType.RESOURCE.eq(item.getAuthorityType())).mapToLong(RoleAuthority::getAuthorityId).boxed().collect(Collectors.toList());
-        RoleAuthoritySaveDTO roleAuthority = RoleAuthoritySaveDTO.builder()
-                .menuIdList(menuIdList).resourceIdList(resourceIdList)
-                .build();
+        List<Long> menuIdList = list.stream()
+                                    .filter(item -> AuthorizeType.MENU.eq(item.getAuthorityType()))
+                                    .mapToLong(RoleAuthority::getAuthorityId)
+                                    .boxed()
+                                    .collect(Collectors.toList());
+        List<Long> resourceIdList = list.stream()
+                                        .filter(item -> AuthorizeType.RESOURCE.eq(item.getAuthorityType()))
+                                        .mapToLong(RoleAuthority::getAuthorityId)
+                                        .boxed()
+                                        .collect(Collectors.toList());
+        RoleAuthoritySaveDTO roleAuthority = RoleAuthoritySaveDTO.builder().menuIdList(menuIdList).resourceIdList(resourceIdList).build();
         return success(roleAuthority);
     }
 
@@ -151,7 +167,8 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "给角色配置权限", notes = "给角色配置权限")
     @PostMapping("/authority")
     @SysLog("给角色配置权限")
-    public R<Boolean> saveRoleAuthority(@RequestBody RoleAuthoritySaveDTO roleAuthoritySaveDTO) {
+    public R<Boolean> saveRoleAuthority(@RequestBody RoleAuthoritySaveDTO roleAuthoritySaveDTO)
+    {
         return success(roleAuthorityService.saveRoleAuthority(roleAuthoritySaveDTO));
     }
 
@@ -165,7 +182,8 @@ public class RoleController extends SuperCacheController<RoleService, Long, Role
     @ApiOperation(value = "根据角色编码查询用户ID", notes = "根据角色编码查询用户ID")
     @GetMapping("/codes")
     @SysLog("根据角色编码查询用户ID")
-    public R<List<Long>> findUserIdByCode(@RequestParam(value = "codes") String[] codes) {
+    public R<List<Long>> findUserIdByCode(@RequestParam(value = "codes") String[] codes)
+    {
         return success(baseService.findUserIdByCode(codes));
     }
 

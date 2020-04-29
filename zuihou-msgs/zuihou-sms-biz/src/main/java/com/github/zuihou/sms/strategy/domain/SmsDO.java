@@ -13,7 +13,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class SmsDO {
+public class SmsDO
+{
     /**
      * 任务id
      */

@@ -28,7 +28,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/jobgroup")
-public class JobGroupController {
+public class JobGroupController
+{
 
     @Resource
     public XxlJobInfoDao xxlJobInfoDao;
@@ -36,7 +37,8 @@ public class JobGroupController {
     public XxlJobGroupDao xxlJobGroupDao;
 
     @RequestMapping
-    public String index(Model model) {
+    public String index(Model model)
+    {
 
         // job group (executor)
         List<XxlJobGroup> list = xxlJobGroupDao.findAll();
@@ -47,25 +49,33 @@ public class JobGroupController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public ReturnT<String> save(XxlJobGroup xxlJobGroup) {
+    public ReturnT<String> save(XxlJobGroup xxlJobGroup)
+    {
 
         // valid
-        if (xxlJobGroup.getAppName() == null || StringUtils.isBlank(xxlJobGroup.getAppName())) {
+        if (xxlJobGroup.getAppName() == null || StringUtils.isBlank(xxlJobGroup.getAppName()))
+        {
             return new ReturnT<String>(500, (I18nUtil.getString("system_please_input") + "AppName"));
         }
-        if (xxlJobGroup.getAppName().length() < 4 || xxlJobGroup.getAppName().length() > 64) {
+        if (xxlJobGroup.getAppName().length() < 4 || xxlJobGroup.getAppName().length() > 64)
+        {
             return new ReturnT<String>(500, I18nUtil.getString("jobgroup_field_appName_length"));
         }
-        if (xxlJobGroup.getTitle() == null || StringUtils.isBlank(xxlJobGroup.getTitle())) {
+        if (xxlJobGroup.getTitle() == null || StringUtils.isBlank(xxlJobGroup.getTitle()))
+        {
             return new ReturnT<String>(500, (I18nUtil.getString("system_please_input") + I18nUtil.getString("jobgroup_field_title")));
         }
-        if (xxlJobGroup.getAddressType() != 0) {
-            if (StringUtils.isBlank(xxlJobGroup.getAddressList())) {
+        if (xxlJobGroup.getAddressType() != 0)
+        {
+            if (StringUtils.isBlank(xxlJobGroup.getAddressList()))
+            {
                 return new ReturnT<String>(500, I18nUtil.getString("jobgroup_field_addressType_limit"));
             }
             String[] addresss = xxlJobGroup.getAddressList().split(",");
-            for (String item : addresss) {
-                if (StringUtils.isBlank(item)) {
+            for (String item : addresss)
+            {
+                if (StringUtils.isBlank(item))
+                {
                     return new ReturnT<String>(500, I18nUtil.getString("jobgroup_field_registryList_unvalid"));
                 }
             }
@@ -77,34 +87,45 @@ public class JobGroupController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public ReturnT<String> update(XxlJobGroup xxlJobGroup) {
+    public ReturnT<String> update(XxlJobGroup xxlJobGroup)
+    {
         // valid
-        if (xxlJobGroup.getAppName() == null || StringUtils.isBlank(xxlJobGroup.getAppName())) {
+        if (xxlJobGroup.getAppName() == null || StringUtils.isBlank(xxlJobGroup.getAppName()))
+        {
             return new ReturnT<String>(500, (I18nUtil.getString("system_please_input") + "AppName"));
         }
-        if (xxlJobGroup.getAppName().length() < 4 || xxlJobGroup.getAppName().length() > 64) {
+        if (xxlJobGroup.getAppName().length() < 4 || xxlJobGroup.getAppName().length() > 64)
+        {
             return new ReturnT<String>(500, I18nUtil.getString("jobgroup_field_appName_length"));
         }
-        if (xxlJobGroup.getTitle() == null || StringUtils.isBlank(xxlJobGroup.getTitle())) {
+        if (xxlJobGroup.getTitle() == null || StringUtils.isBlank(xxlJobGroup.getTitle()))
+        {
             return new ReturnT<String>(500, (I18nUtil.getString("system_please_input") + I18nUtil.getString("jobgroup_field_title")));
         }
-        if (xxlJobGroup.getAddressType() == 0) {
+        if (xxlJobGroup.getAddressType() == 0)
+        {
             // 0=自动注册
             List<String> registryList = findRegistryByAppName(xxlJobGroup.getAppName());
             String addressListStr = null;
-            if (CollectionUtils.isNotEmpty(registryList)) {
+            if (CollectionUtils.isNotEmpty(registryList))
+            {
                 Collections.sort(registryList);
                 addressListStr = StringUtils.join(registryList, ",");
             }
             xxlJobGroup.setAddressList(addressListStr);
-        } else {
+        }
+        else
+        {
             // 1=手动录入
-            if (StringUtils.isBlank(xxlJobGroup.getAddressList())) {
+            if (StringUtils.isBlank(xxlJobGroup.getAddressList()))
+            {
                 return new ReturnT<String>(500, I18nUtil.getString("jobgroup_field_addressType_limit"));
             }
             String[] addresss = xxlJobGroup.getAddressList().split(",");
-            for (String item : addresss) {
-                if (StringUtils.isBlank(item)) {
+            for (String item : addresss)
+            {
+                if (StringUtils.isBlank(item))
+                {
                     return new ReturnT<String>(500, I18nUtil.getString("jobgroup_field_registryList_unvalid"));
                 }
             }
@@ -114,19 +135,25 @@ public class JobGroupController {
         return (ret > 0) ? ReturnT.SUCCESS : ReturnT.FAIL;
     }
 
-    private List<String> findRegistryByAppName(String appNameParam) {
+    private List<String> findRegistryByAppName(String appNameParam)
+    {
         HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
         List<XxlJobRegistry> list = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT);
-        if (list != null) {
-            for (XxlJobRegistry item : list) {
-                if (RegistryConfig.RegistType.EXECUTOR.name().equals(item.getRegistryGroup())) {
+        if (list != null)
+        {
+            for (XxlJobRegistry item : list)
+            {
+                if (RegistryConfig.RegistType.EXECUTOR.name().equals(item.getRegistryGroup()))
+                {
                     String appName = item.getRegistryKey();
                     List<String> registryList = appAddressMap.get(appName);
-                    if (registryList == null) {
+                    if (registryList == null)
+                    {
                         registryList = new ArrayList<String>();
                     }
 
-                    if (!registryList.contains(item.getRegistryValue())) {
+                    if (!registryList.contains(item.getRegistryValue()))
+                    {
                         registryList.add(item.getRegistryValue());
                     }
                     appAddressMap.put(appName, registryList);
@@ -138,16 +165,19 @@ public class JobGroupController {
 
     @RequestMapping("/remove")
     @ResponseBody
-    public ReturnT<String> remove(Integer id, Integer type) {
+    public ReturnT<String> remove(Integer id, Integer type)
+    {
 
         // valid
         int count = xxlJobInfoDao.pageListCount(0, 10, id, null, null, type);
-        if (count > 0) {
+        if (count > 0)
+        {
             return new ReturnT<String>(500, I18nUtil.getString("jobgroup_del_limit_0"));
         }
 
         List<XxlJobGroup> allList = xxlJobGroupDao.findAll();
-        if (allList.size() == 1) {
+        if (allList.size() == 1)
+        {
             return new ReturnT<String>(500, I18nUtil.getString("jobgroup_del_limit_1"));
         }
 

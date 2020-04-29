@@ -27,7 +27,8 @@ import static com.github.zuihou.context.BaseContextConstants.BASIC_HEADER_KEY;
  */
 @Service
 @Slf4j
-public class AuthManager {
+public class AuthManager
+{
 
     @Autowired
     protected TokenUtil tokenUtil;
@@ -41,19 +42,22 @@ public class AuthManager {
      * @param password 密码
      * @return
      */
-    public R<AuthInfo> adminLogin(String account, String password) {
+    public R<AuthInfo> adminLogin(String account, String password)
+    {
         String basicHeader = ServletUtil.getHeader(WebUtils.request(), BASIC_HEADER_KEY, StrPool.UTF_8);
         String[] client = JwtUtil.getClient(basicHeader);
 
-        GlobalUser user = this.globalUserService.getOne(Wrappers.<GlobalUser>lambdaQuery()
-                .eq(GlobalUser::getAccount, account).eq(GlobalUser::getTenantCode, BizConstant.SUPER_TENANT));
+        GlobalUser user = this.globalUserService.getOne(Wrappers.<GlobalUser>lambdaQuery().eq(GlobalUser::getAccount, account)
+                                                                                          .eq(GlobalUser::getTenantCode, BizConstant.SUPER_TENANT));
         // 密码错误
-        if (user == null) {
+        if (user == null)
+        {
             throw new BizException(ExceptionCode.JWT_USER_INVALID.getCode(), ExceptionCode.JWT_USER_INVALID.getMsg());
         }
 
         String passwordMd5 = SecureUtil.md5(password);
-        if (!user.getPassword().equalsIgnoreCase(passwordMd5)) {
+        if (!user.getPassword().equalsIgnoreCase(passwordMd5))
+        {
             return R.fail("用户名或密码错误!");
         }
         JwtUserInfo userInfo = new JwtUserInfo(user.getId(), user.getAccount(), user.getName());

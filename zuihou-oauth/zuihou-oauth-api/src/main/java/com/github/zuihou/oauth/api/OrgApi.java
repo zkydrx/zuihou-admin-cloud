@@ -15,9 +15,9 @@ import java.util.Set;
  * @author zuihou
  * @date 2019/08/02
  */
-@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/org",
-        qualifier = "orgApi", fallback = OrgApiFallback.class)
-public interface OrgApi {
+@FeignClient(name = "${zuihou.feign.oauth-server:zuihou-oauth-server}", path = "/org", qualifier = "orgApi", fallback = OrgApiFallback.class)
+public interface OrgApi
+{
 
     /**
      * 根据 id 查询组织，并转换成Map结构

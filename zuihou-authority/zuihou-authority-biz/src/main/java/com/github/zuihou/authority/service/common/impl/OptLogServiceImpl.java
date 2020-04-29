@@ -22,15 +22,18 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Service
-public class OptLogServiceImpl extends SuperServiceImpl<OptLogMapper, OptLog> implements OptLogService {
+public class OptLogServiceImpl extends SuperServiceImpl<OptLogMapper, OptLog> implements OptLogService
+{
 
     @Override
-    public boolean save(OptLogDTO entity) {
+    public boolean save(OptLogDTO entity)
+    {
         return super.save(BeanPlusUtil.toBean(entity, OptLog.class));
     }
 
     @Override
-    public boolean clearLog(LocalDateTime clearBeforeTime, Integer clearBeforeNum) {
+    public boolean clearLog(LocalDateTime clearBeforeTime, Integer clearBeforeNum)
+    {
         return baseMapper.clearLog(clearBeforeTime, clearBeforeNum);
     }
 }

@@ -13,30 +13,40 @@ import java.util.List;
  * 故障转移
  * Created by xuxueli on 17/3/10.
  */
-public class ExecutorRouteFailover extends ExecutorRouter {
+public class ExecutorRouteFailover extends ExecutorRouter
+{
 
     @Override
-    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
+    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList)
+    {
 
         StringBuffer beatResultSB = new StringBuffer();
-        for (String address : addressList) {
+        for (String address : addressList)
+        {
             // beat
             ReturnT<String> beatResult = null;
-            try {
+            try
+            {
                 ExecutorBiz executorBiz = XxlJobDynamicScheduler.getExecutorBiz(address);
                 beatResult = executorBiz.beat();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 logger.error(e.getMessage(), e);
                 beatResult = new ReturnT<String>(ReturnT.FAIL_CODE, "" + e);
             }
             beatResultSB.append((beatResultSB.length() > 0) ? "<br><br>" : "")
-                    .append(I18nUtil.getString("jobconf_beat") + "：")
-                    .append("<br>address：").append(address)
-                    .append("<br>code：").append(beatResult.getCode())
-                    .append("<br>msg：").append(beatResult.getMsg());
+                        .append(I18nUtil.getString("jobconf_beat") + "：")
+                        .append("<br>address：")
+                        .append(address)
+                        .append("<br>code：")
+                        .append(beatResult.getCode())
+                        .append("<br>msg：")
+                        .append(beatResult.getMsg());
 
             // beat success
-            if (beatResult.getCode() == ReturnT.SUCCESS_CODE) {
+            if (beatResult.getCode() == ReturnT.SUCCESS_CODE)
+            {
 
                 beatResult.setMsg(beatResultSB.toString());
                 beatResult.setContent(address);

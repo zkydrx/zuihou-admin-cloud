@@ -22,7 +22,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "LoginDTO", description = "登录信息")
-public class LoginDTO implements Serializable {
+public class LoginDTO implements Serializable
+{
     private static final long serialVersionUID = -3124612657759050173L;
     @ApiModelProperty(value = "用户信息")
     private UserDTO user;

@@ -15,7 +15,8 @@ import java.util.List;
  */
 @Repository
 @SqlParser(filter = true)
-public interface XxlJobInfoDao {
+public interface XxlJobInfoDao
+{
 
     public List<XxlJobInfo> pageList(@Param("offset") Integer offset,
                                      @Param("pagesize") Integer pagesize,
@@ -24,8 +25,7 @@ public interface XxlJobInfoDao {
                                      @Param("executorHandler") String executorHandler,
                                      @Param("type") Integer type);
 
-    public int pageListCount(@Param("offset") Integer offset,
-                             @Param("pagesize") Integer pagesize,
+    public int pageListCount(@Param("offset") Integer offset, @Param("pagesize") Integer pagesize,
                              @Param("jobGroup") Integer jobGroup,
                              @Param("jobDesc") String jobDesc,
                              @Param("executorHandler") String executorHandler,

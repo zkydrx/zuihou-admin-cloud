@@ -11,7 +11,8 @@ import com.github.zuihou.jwt.model.AuthInfo;
  * @author zuihou
  * @date 2020年03月31日10:21:21
  */
-public interface TokenGranter {
+public interface TokenGranter
+{
 
     /**
      * 获取用户信息

@@ -33,7 +33,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("sms_send_status")
 @ApiModel(value = "SmsSendStatus", description = "短信发送状态")
-public class SmsSendStatus extends Entity<Long> {
+public class SmsSendStatus extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -137,9 +138,23 @@ public class SmsSendStatus extends Entity<Long> {
 
 
     @Builder
-    public SmsSendStatus(Long id, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
-                         Long taskId, SendStatus sendStatus, String receiver, String bizId, String ext,
-                         String code, String message, Integer fee, String createMonth, String createWeek, String createDate) {
+    public SmsSendStatus(Long id,
+                         Long createUser,
+                         LocalDateTime createTime,
+                         Long updateUser,
+                         LocalDateTime updateTime,
+                         Long taskId,
+                         SendStatus sendStatus,
+                         String receiver,
+                         String bizId,
+                         String ext,
+                         String code,
+                         String message,
+                         Integer fee,
+                         String createMonth,
+                         String createWeek,
+                         String createDate)
+    {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;

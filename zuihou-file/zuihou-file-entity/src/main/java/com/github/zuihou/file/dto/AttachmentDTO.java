@@ -24,7 +24,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "AttachmentDTO", description = "附件表")
-public class AttachmentDTO extends Attachment implements Serializable {
+public class AttachmentDTO extends Attachment implements Serializable
+{
 
     /**
      * 在DTO中新增并自定义字段，需要覆盖验证的字段，请新建DTO。Entity中的验证规则可以自行修改，但下次生成代码时，记得同步代码！！
@@ -37,7 +38,8 @@ public class AttachmentDTO extends Attachment implements Serializable {
     @ApiModelProperty(value = "文件下载地址 根据业务id下载")
     private String downloadUrlByBizId;
 
-    public static AttachmentDTO build() {
+    public static AttachmentDTO build()
+    {
         return new AttachmentDTO();
     }
 }

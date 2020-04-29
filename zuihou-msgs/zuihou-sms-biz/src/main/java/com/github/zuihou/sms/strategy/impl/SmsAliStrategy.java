@@ -22,7 +22,8 @@ import org.springframework.stereotype.Component;
  */
 @Component("ALI")
 @Slf4j
-public class SmsAliStrategy extends AbstractSmsStrategy {
+public class SmsAliStrategy extends AbstractSmsStrategy
+{
 
     /**
      * 产品名称:云通信短信API产品,开发者无需替换
@@ -34,15 +35,17 @@ public class SmsAliStrategy extends AbstractSmsStrategy {
     private static final String DOMAIN = "dysmsapi.aliyuncs.com";
 
     @Override
-    protected SmsResult send(SmsDO smsDO) {
+    protected SmsResult send(SmsDO smsDO)
+    {
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
-        try {
+        try
+        {
             //初始化acsClient,暂不支持region化
             IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", smsDO.getAppId(), smsDO.getAppSecret());
-//            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", PRODUCT, DOMAIN);
+            //            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", PRODUCT, DOMAIN);
             DefaultProfile.addEndpoint("cn-hangzhou", PRODUCT, DOMAIN);
             IAcsClient acsClient = new DefaultAcsClient(profile);
 
@@ -65,9 +68,10 @@ public class SmsAliStrategy extends AbstractSmsStrategy {
             SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
 
             log.info("阿里短信发送结果={}", JSONObject.toJSONString(sendSmsResponse));
-            return SmsResult.build(ProviderType.ALI, sendSmsResponse.getCode(), sendSmsResponse.getBizId(),
-                    sendSmsResponse.getRequestId(), sendSmsResponse.getMessage(), 0);
-        } catch (ClientException e) {
+            return SmsResult.build(ProviderType.ALI, sendSmsResponse.getCode(), sendSmsResponse.getBizId(), sendSmsResponse.getRequestId(), sendSmsResponse.getMessage(), 0);
+        }
+        catch (ClientException e)
+        {
             log.warn("阿里短信发送失败:" + smsDO.getPhone(), e);
             return SmsResult.fail(e.getMessage());
         }

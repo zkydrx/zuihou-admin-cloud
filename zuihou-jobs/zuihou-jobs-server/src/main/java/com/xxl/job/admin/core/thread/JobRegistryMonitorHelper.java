@@ -20,26 +20,34 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xuxueli 2016-10-02 19:10:24
  */
-public class JobRegistryMonitorHelper {
+public class JobRegistryMonitorHelper
+{
     private static Logger logger = LoggerFactory.getLogger(JobRegistryMonitorHelper.class);
 
     private static JobRegistryMonitorHelper instance = new JobRegistryMonitorHelper();
     private Thread registryThread;
     private volatile boolean toStop = false;
 
-    public static JobRegistryMonitorHelper getInstance() {
+    public static JobRegistryMonitorHelper getInstance()
+    {
         return instance;
     }
 
-    public void start() {
-        registryThread = new Thread(new Runnable() {
+    public void start()
+    {
+        registryThread = new Thread(new Runnable()
+        {
             @Override
-            public void run() {
-                while (!toStop) {
-                    try {
+            public void run()
+            {
+                while (!toStop)
+                {
+                    try
+                    {
                         // auto registry group
                         List<XxlJobGroup> groupList = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().findByAddressType(0);
-                        if (CollectionUtils.isNotEmpty(groupList)) {
+                        if (CollectionUtils.isNotEmpty(groupList))
+                        {
 
                             // remove dead address (admin/executor)
                             XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().removeDead(RegistryConfig.DEAD_TIMEOUT);
@@ -47,16 +55,21 @@ public class JobRegistryMonitorHelper {
                             // fresh online address (admin/executor)
                             HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
                             List<XxlJobRegistry> list = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT);
-                            if (list != null) {
-                                for (XxlJobRegistry item : list) {
-                                    if (RegistryConfig.RegistType.EXECUTOR.name().equals(item.getRegistryGroup())) {
+                            if (list != null)
+                            {
+                                for (XxlJobRegistry item : list)
+                                {
+                                    if (RegistryConfig.RegistType.EXECUTOR.name().equals(item.getRegistryGroup()))
+                                    {
                                         String appName = item.getRegistryKey();
                                         List<String> registryList = appAddressMap.get(appName);
-                                        if (registryList == null) {
+                                        if (registryList == null)
+                                        {
                                             registryList = new ArrayList<String>();
                                         }
 
-                                        if (!registryList.contains(item.getRegistryValue())) {
+                                        if (!registryList.contains(item.getRegistryValue()))
+                                        {
                                             registryList.add(item.getRegistryValue());
                                         }
                                         appAddressMap.put(appName, registryList);
@@ -65,10 +78,12 @@ public class JobRegistryMonitorHelper {
                             }
 
                             // fresh group address
-                            for (XxlJobGroup group : groupList) {
+                            for (XxlJobGroup group : groupList)
+                            {
                                 List<String> registryList = appAddressMap.get(group.getAppName());
                                 String addressListStr = null;
-                                if (CollectionUtils.isNotEmpty(registryList)) {
+                                if (CollectionUtils.isNotEmpty(registryList))
+                                {
                                     Collections.sort(registryList);
                                     addressListStr = StringUtils.join(registryList, ",");
                                 }
@@ -76,12 +91,17 @@ public class JobRegistryMonitorHelper {
                                 XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().update(group);
                             }
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         logger.error("job registry instance error:{}", e);
                     }
-                    try {
+                    try
+                    {
                         TimeUnit.SECONDS.sleep(RegistryConfig.BEAT_TIMEOUT);
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e)
+                    {
                         logger.error("job registry instance error:{}", e);
                     }
                 }
@@ -91,13 +111,17 @@ public class JobRegistryMonitorHelper {
         registryThread.start();
     }
 
-    public void toStop() {
+    public void toStop()
+    {
         toStop = true;
         // interrupt and wait
         registryThread.interrupt();
-        try {
+        try
+        {
             registryThread.join();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             logger.error(e.getMessage(), e);
         }
     }

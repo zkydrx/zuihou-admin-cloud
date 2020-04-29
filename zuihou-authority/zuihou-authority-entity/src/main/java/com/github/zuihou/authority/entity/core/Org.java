@@ -31,7 +31,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("c_core_org")
 @ApiModel(value = "Org", description = "组织")
-public class Org extends TreeEntity<Org, Long> {
+public class Org extends TreeEntity<Org, Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -75,9 +76,19 @@ public class Org extends TreeEntity<Org, Long> {
 
 
     @Builder
-    public Org(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-               String label, String abbreviation, Long parentId, String treePath, Integer sortValue,
-               Boolean status, String describe) {
+    public Org(Long id,
+               LocalDateTime createTime,
+               Long createUser,
+               LocalDateTime updateTime,
+               Long updateUser,
+               String label,
+               String abbreviation,
+               Long parentId,
+               String treePath,
+               Integer sortValue,
+               Boolean status,
+               String describe)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class FileAttrDO {
+public class FileAttrDO
+{
     /**
      * 路径
      */

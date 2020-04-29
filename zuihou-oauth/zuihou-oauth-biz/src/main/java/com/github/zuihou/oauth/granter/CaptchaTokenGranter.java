@@ -22,16 +22,19 @@ import static com.github.zuihou.oauth.granter.CaptchaTokenGranter.GRANT_TYPE;
  */
 @Component(GRANT_TYPE)
 @Slf4j
-public class CaptchaTokenGranter extends AbstractTokenGranter implements TokenGranter {
+public class CaptchaTokenGranter extends AbstractTokenGranter implements TokenGranter
+{
 
     public static final String GRANT_TYPE = "captcha";
     @Autowired
     private ValidateCodeService validateCodeService;
 
     @Override
-    public R<AuthInfo> grant(LoginParamDTO loginParam) {
+    public R<AuthInfo> grant(LoginParamDTO loginParam)
+    {
         R<Boolean> check = validateCodeService.check(loginParam.getKey(), loginParam.getCode());
-        if (check.getIsError()) {
+        if (check.getIsError())
+        {
             String msg = check.getMsg();
             BaseContextHandler.setTenant(loginParam.getTenant());
             SpringUtils.publishEvent(new LoginEvent(LoginStatusDTO.fail(loginParam.getAccount(), msg)));

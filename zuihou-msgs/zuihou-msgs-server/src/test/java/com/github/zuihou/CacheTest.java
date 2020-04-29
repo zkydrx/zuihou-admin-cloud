@@ -20,36 +20,25 @@ import java.util.function.Function;
 
 @Component
 @Slf4j
-class CacTest {
+class CacTest
+{
     @Cacheable(value = CacheKey.REGISTER_USER, key = "#name")
-    public User getMenu(String name) {
+    public User getMenu(String name)
+    {
         log.info("name={}", name);
-        return User.builder()
-                .account(name).name("张三李四!@#$%^&*()_123")
-                .id(6079967614237410571L)
-                .sex(Sex.M)
-                .createTime(LocalDateTime.now())
-                .build();
+        return User.builder().account(name).name("张三李四!@#$%^&*()_123").id(6079967614237410571L).sex(Sex.M).createTime(LocalDateTime.now()).build();
     }
 
     @Cacheable(value = "zuihou", keyGenerator = "keyGenerator")
-    public User zuihou() {
-        return User.builder()
-                .account("zuihou").name("张三李四!@#$%^&*()_123")
-                .id(6079967614237410571L)
-                .sex(Sex.M)
-                .createTime(LocalDateTime.now())
-                .build();
+    public User zuihou()
+    {
+        return User.builder().account("zuihou").name("张三李四!@#$%^&*()_123").id(6079967614237410571L).sex(Sex.M).createTime(LocalDateTime.now()).build();
     }
 
     @Cacheable(value = "test", key = "1")
-    public User test() {
-        return User.builder()
-                .account("zuihou").name("张三李四!@#$%^&*()_123")
-                .id(6079967614237410571L)
-                .sex(Sex.M)
-                .createTime(LocalDateTime.now())
-                .build();
+    public User test()
+    {
+        return User.builder().account("zuihou").name("张三李四!@#$%^&*()_123").id(6079967614237410571L).sex(Sex.M).createTime(LocalDateTime.now()).build();
     }
 }
 
@@ -63,14 +52,16 @@ class CacTest {
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class CacheTest {
+public class CacheTest
+{
     @Autowired
     CacTest cacheTest;
     @Autowired
     CacheRepository cacheRepository;
 
     @Test
-    public void testCacheable() throws Exception {
+    public void testCacheable() throws Exception
+    {
 
         log.info("user={}", cacheTest.getMenu("aaa"));
         log.info("user={}", cacheTest.getMenu("aaa"));
@@ -92,7 +83,8 @@ public class CacheTest {
     }
 
     @Test
-    public void testGetOrDef() {
+    public void testGetOrDef()
+    {
         Function<String, String> function = (key) -> {
             log.info("延迟加载了几次");
             return "延迟" + key;
@@ -104,13 +96,9 @@ public class CacheTest {
     }
 
     @Test
-    public void testCache() {
-        User user = User.builder()
-                .account("zuihou").name("张三李四!@#$%^&*()_123")
-                .id(6079967614237410571L)
-                .sex(Sex.M)
-                .createTime(LocalDateTime.now())
-                .build();
+    public void testCache()
+    {
+        User user = User.builder().account("zuihou").name("张三李四!@#$%^&*()_123").id(6079967614237410571L).sex(Sex.M).createTime(LocalDateTime.now()).build();
 
 
         cacheRepository.set("wz", "厉害hello ");

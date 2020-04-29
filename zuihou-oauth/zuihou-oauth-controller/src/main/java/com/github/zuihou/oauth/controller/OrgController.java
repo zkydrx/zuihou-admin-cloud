@@ -27,7 +27,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("/org")
 @Api(value = "Org", tags = "组织")
-public class OrgController {
+public class OrgController
+{
 
     @Autowired
     private OrgService orgService;
@@ -46,7 +47,8 @@ public class OrgController {
      * @return
      */
     @GetMapping("/findOrgByIds")
-    public Map<Serializable, Object> findOrgByIds(@RequestParam("ids") Set<Serializable> ids) {
+    public Map<Serializable, Object> findOrgByIds(@RequestParam("ids") Set<Serializable> ids)
+    {
         return orgService.findOrgByIds(ids);
     }
 
@@ -64,7 +66,8 @@ public class OrgController {
      * @return
      */
     @GetMapping("/findOrgNameByIds")
-    public Map<Serializable, Object> findOrgNameByIds(@RequestParam("ids") Set<Serializable> ids) {
+    public Map<Serializable, Object> findOrgNameByIds(@RequestParam("ids") Set<Serializable> ids)
+    {
         return orgService.findOrgNameByIds(ids);
     }
 

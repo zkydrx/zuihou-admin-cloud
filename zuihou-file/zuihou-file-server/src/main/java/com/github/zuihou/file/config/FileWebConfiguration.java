@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Configuration;
  * @createTime 2017-12-15 14:42
  */
 @Configuration
-public class FileWebConfiguration extends BaseConfig {
+public class FileWebConfiguration extends BaseConfig
+{
     /**
      * zuihou.log.enabled = true 并且 zuihou.log.type=DB时实例该类
      *
@@ -21,7 +22,8 @@ public class FileWebConfiguration extends BaseConfig {
      */
     @Bean
     @ConditionalOnExpression("${zuihou.log.enabled:true} && 'DB'.equals('${zuihou.log.type:LOGGER}')")
-    public SysLogListener sysLogListener(LogApi logApi) {
+    public SysLogListener sysLogListener(LogApi logApi)
+    {
         return new SysLogListener((log) -> logApi.save(log));
     }
 }

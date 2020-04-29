@@ -33,31 +33,34 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class LoginLogServiceImpl extends SuperServiceImpl<LoginLogMapper, LoginLog> implements LoginLogService {
+public class LoginLogServiceImpl extends SuperServiceImpl<LoginLogMapper, LoginLog> implements LoginLogService
+{
     @Autowired
     private UserService userService;
     @Autowired
     private CacheChannel cache;
 
-    private final static String[] BROWSER = new String[]{
-            "Chrome", "Firefox", "Microsoft Edge", "Safari", "Opera"
-    };
-    private final static String[] OPERATING_SYSTEM = new String[]{
-            "Android", "Linux", "Mac OS X", "Ubuntu", "Windows 10", "Windows 8", "Windows 7", "Windows XP", "Windows Vista"
-    };
+    private final static String[] BROWSER = new String[]{"Chrome", "Firefox", "Microsoft Edge", "Safari", "Opera"};
+    private final static String[] OPERATING_SYSTEM = new String[]{"Android", "Linux", "Mac OS X", "Ubuntu", "Windows 10", "Windows 8", "Windows 7", "Windows XP", "Windows Vista"};
 
-    private static String simplifyOperatingSystem(String operatingSystem) {
-        for (String b : OPERATING_SYSTEM) {
-            if (StrUtil.containsIgnoreCase(operatingSystem, b)) {
+    private static String simplifyOperatingSystem(String operatingSystem)
+    {
+        for (String b : OPERATING_SYSTEM)
+        {
+            if (StrUtil.containsIgnoreCase(operatingSystem, b))
+            {
                 return b;
             }
         }
         return operatingSystem;
     }
 
-    private static String simplifyBrowser(String browser) {
-        for (String b : BROWSER) {
-            if (StrUtil.containsIgnoreCase(browser, b)) {
+    private static String simplifyBrowser(String browser)
+    {
+        for (String b : BROWSER)
+        {
+            if (StrUtil.containsIgnoreCase(browser, b))
+            {
                 return b;
             }
         }
@@ -65,11 +68,15 @@ public class LoginLogServiceImpl extends SuperServiceImpl<LoginLogMapper, LoginL
     }
 
     @Override
-    public LoginLog save(Long userId, String account, String ua, String ip, String location, String description) {
+    public LoginLog save(Long userId, String account, String ua, String ip, String location, String description)
+    {
         User user;
-        if (userId != null) {
+        if (userId != null)
+        {
             user = this.userService.getByIdCache(userId);
-        } else {
+        }
+        else
+        {
             user = this.userService.getByAccount(account);
         }
 
@@ -77,16 +84,18 @@ public class LoginLogServiceImpl extends SuperServiceImpl<LoginLogMapper, LoginL
         Browser browser = userAgent.getBrowser();
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         LoginLog loginLog = LoginLog.builder()
-                .location(location)
-                .loginDate(LocalDate.now())
-                .description(description)
-                .requestIp(ip).ua(ua)
-                .browser(simplifyBrowser(browser.getName())).browserVersion(userAgent.getBrowserVersion().getVersion())
-                .operatingSystem(simplifyOperatingSystem(operatingSystem.getName()))
-                .build();
-        if (user != null) {
-            loginLog.setAccount(user.getAccount()).setUserId(user.getId()).setUserName(user.getName())
-                    .setCreateUser(user.getId());
+                                    .location(location)
+                                    .loginDate(LocalDate.now())
+                                    .description(description)
+                                    .requestIp(ip)
+                                    .ua(ua)
+                                    .browser(simplifyBrowser(browser.getName()))
+                                    .browserVersion(userAgent.getBrowserVersion().getVersion())
+                                    .operatingSystem(simplifyOperatingSystem(operatingSystem.getName()))
+                                    .build();
+        if (user != null)
+        {
+            loginLog.setAccount(user.getAccount()).setUserId(user.getId()).setUserName(user.getName()).setCreateUser(user.getId());
         }
 
         super.save(loginLog);
@@ -98,53 +107,63 @@ public class LoginLogServiceImpl extends SuperServiceImpl<LoginLogMapper, LoginL
         this.cache.evict(CacheKey.LOGIN_LOG_TEN_DAY, CacheKey.buildTenantKey(tenDays, null));
         this.cache.evict(CacheKey.LOGIN_LOG_BROWSER, CacheKey.buildTenantKey());
         this.cache.evict(CacheKey.LOGIN_LOG_SYSTEM, CacheKey.buildTenantKey());
-        if (user != null) {
+        if (user != null)
+        {
             this.cache.evict(CacheKey.LOGIN_LOG_TEN_DAY, CacheKey.buildTenantKey(tenDays, user.getAccount()));
         }
         return loginLog;
     }
 
     @Override
-    public Long findTotalVisitCount() {
+    public Long findTotalVisitCount()
+    {
         CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_TOTAL, CacheKey.buildTenantKey(), (key) -> this.baseMapper.findTotalVisitCount());
         return (Long) cacheObject.getValue();
     }
 
     @Override
-    public Long findTodayVisitCount() {
+    public Long findTodayVisitCount()
+    {
         LocalDate now = LocalDate.now();
         CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_TODAY, CacheKey.buildTenantKey(now), (key) -> this.baseMapper.findTodayVisitCount(now));
         return (Long) cacheObject.getValue();
     }
 
     @Override
-    public Long findTodayIp() {
+    public Long findTodayIp()
+    {
         LocalDate now = LocalDate.now();
         CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_TODAY_IP, CacheKey.buildTenantKey(now), (key) -> this.baseMapper.findTodayIp(now));
         return (Long) cacheObject.getValue();
     }
 
     @Override
-    public List<Map<String, Object>> findLastTenDaysVisitCount(String account) {
+    public List<Map<String, Object>> findLastTenDaysVisitCount(String account)
+    {
         LocalDate tenDays = LocalDate.now().plusDays(-9);
-        CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_TEN_DAY, CacheKey.buildTenantKey(tenDays, account), (key) -> this.baseMapper.findLastTenDaysVisitCount(tenDays, account));
+        CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_TEN_DAY,
+                                                 CacheKey.buildTenantKey(tenDays, account),
+                                                 (key) -> this.baseMapper.findLastTenDaysVisitCount(tenDays, account));
         return (List<Map<String, Object>>) cacheObject.getValue();
     }
 
     @Override
-    public List<Map<String, Object>> findByBrowser() {
+    public List<Map<String, Object>> findByBrowser()
+    {
         CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_BROWSER, CacheKey.buildTenantKey(), (key) -> this.baseMapper.findByBrowser());
         return (List<Map<String, Object>>) cacheObject.getValue();
     }
 
     @Override
-    public List<Map<String, Object>> findByOperatingSystem() {
+    public List<Map<String, Object>> findByOperatingSystem()
+    {
         CacheObject cacheObject = this.cache.get(CacheKey.LOGIN_LOG_SYSTEM, CacheKey.buildTenantKey(), (key) -> this.baseMapper.findByOperatingSystem());
         return (List<Map<String, Object>>) cacheObject.getValue();
     }
 
     @Override
-    public boolean clearLog(LocalDateTime clearBeforeTime, Integer clearBeforeNum) {
+    public boolean clearLog(LocalDateTime clearBeforeTime, Integer clearBeforeNum)
+    {
         return baseMapper.clearLog(clearBeforeTime, clearBeforeNum);
     }
 }

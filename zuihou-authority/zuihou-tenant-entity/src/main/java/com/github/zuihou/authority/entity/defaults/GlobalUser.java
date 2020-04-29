@@ -33,7 +33,8 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @Accessors(chain = true)
 @TableName("d_global_user")
 @ApiModel(value = "GlobalUser", description = "全局账号")
-public class GlobalUser extends Entity<Long> {
+public class GlobalUser extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -95,8 +96,19 @@ public class GlobalUser extends Entity<Long> {
     private String password;
 
     @Builder
-    public GlobalUser(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                      String tenantCode, String account, Boolean readonly, String mobile, String name, String email, String password) {
+    public GlobalUser(Long id,
+                      LocalDateTime createTime,
+                      Long createUser,
+                      LocalDateTime updateTime,
+                      Long updateUser,
+                      String tenantCode,
+                      String account,
+                      Boolean readonly,
+                      String mobile,
+                      String name,
+                      String email,
+                      String password)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

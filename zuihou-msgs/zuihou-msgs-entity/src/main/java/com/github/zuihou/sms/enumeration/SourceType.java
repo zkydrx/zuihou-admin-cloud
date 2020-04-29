@@ -24,7 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "SourceType", description = "来源类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum SourceType implements BaseEnum {
+public enum SourceType implements BaseEnum
+{
 
     /**
      * APP="应用"
@@ -40,25 +41,32 @@ public enum SourceType implements BaseEnum {
     private String desc;
 
 
-    public static SourceType match(String val, SourceType def) {
-        for (SourceType enm : SourceType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static SourceType match(String val, SourceType def)
+    {
+        for (SourceType enm : SourceType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static SourceType get(String val) {
+    public static SourceType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(SourceType val) {
-        if (val == null) {
+    public boolean eq(SourceType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -66,7 +74,8 @@ public enum SourceType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "APP,SERVICE", example = "APP")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

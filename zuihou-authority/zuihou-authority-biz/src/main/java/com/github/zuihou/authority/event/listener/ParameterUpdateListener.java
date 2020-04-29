@@ -19,18 +19,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class ParameterUpdateListener {
+public class ParameterUpdateListener
+{
 
     @Autowired
     private UserTokenService userTokenService;
 
     @Async
     @EventListener({ParameterUpdateEvent.class})
-    public void saveSysLog(ParameterUpdateEvent event) {
+    public void saveSysLog(ParameterUpdateEvent event)
+    {
         ParameterUpdate source = (ParameterUpdate) event.getSource();
 
         BaseContextHandler.setTenant(source.getTenant());
-        if (ParameterKey.LOGIN_POLICY.equals(source.getKey())) {
+        if (ParameterKey.LOGIN_POLICY.equals(source.getKey()))
+        {
             userTokenService.reset();
         }
     }

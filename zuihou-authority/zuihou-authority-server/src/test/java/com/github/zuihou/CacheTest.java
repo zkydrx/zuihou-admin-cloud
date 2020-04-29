@@ -11,25 +11,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class CacheTest {
+public class CacheTest
+{
 
 
     @Test
-    public void test() {
+    public void test()
+    {
         LoadingCache<String, Map<String, Object>> caches = Caffeine.newBuilder()
-                .maximumSize(10)
-                .refreshAfterWrite(10000, TimeUnit.MINUTES)
-                .build(new CacheLoader<String, Map<String, Object>>() {
-                           @Nullable
-                           @Override
-                           public Map<String, Object> load(@NonNull String s) throws Exception {
+                                                                   .maximumSize(10)
+                                                                   .refreshAfterWrite(10000, TimeUnit.MINUTES)
+                                                                   .build(new CacheLoader<String, Map<String, Object>>()
+                                                                   {
+                                                                       @Nullable
+                                                                       @Override
+                                                                       public Map<String, Object> load(@NonNull String s) throws Exception
+                                                                       {
 
-                               Map<String, Object> map = new HashMap<>();
-                               map.put("aaa", "aaa");
-                               return map;
-                           }
-                       }
-                );
+                                                                           Map<String, Object> map = new HashMap<>();
+                                                                           map.put("aaa", "aaa");
+                                                                           return map;
+                                                                       }
+                                                                   });
 
 
         Map<String, Object> aaa = caches.get("aaa");

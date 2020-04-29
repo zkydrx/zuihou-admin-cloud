@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @date 2019/08/12
  */
 @FeignClient(name = "${zuihou.feign.demo-server:zuihou-demo-server}", path = "/seata")
-public interface DemoTestApi {
+public interface DemoTestApi
+{
     /**
      * 新增时发生异常
      *

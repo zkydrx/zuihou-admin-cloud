@@ -15,14 +15,17 @@ import java.util.Set;
  * @date 2020年02月09日11:24:23
  */
 @Component
-public class OrgApiFallback implements OrgApi {
+public class OrgApiFallback implements OrgApi
+{
     @Override
-    public Map<Serializable, Object> findOrgByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findOrgByIds(Set<Serializable> ids)
+    {
         return Collections.emptyMap();
     }
 
     @Override
-    public Map<Serializable, Object> findOrgNameByIds(Set<Serializable> ids) {
+    public Map<Serializable, Object> findOrgNameByIds(Set<Serializable> ids)
+    {
         return Collections.emptyMap();
     }
 }

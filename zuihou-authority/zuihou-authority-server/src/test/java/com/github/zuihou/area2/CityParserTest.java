@@ -20,7 +20,8 @@ import java.util.List;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class CityParserTest {
+public class CityParserTest
+{
     private static final String url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html";
     @Resource
     ICityParser cityParser;
@@ -30,13 +31,15 @@ public class CityParserTest {
     private AreaService areaService;
 
     @Before
-    public void setTenant() {
+    public void setTenant()
+    {
         BaseContextHandler.setTenant("0000");
     }
 
 
     @Test
-    public void init() {
+    public void init()
+    {
         TimeInterval timer = DateUtil.timer();
         // -------这是执行过程--------------
         cityParserDecorator();
@@ -46,17 +49,18 @@ public class CityParserTest {
         StaticLog.info("本次程序执行 花费毫秒数: {} ,   花费分钟数:{} . ", interval, intervalMinute);
     }
 
-//    public static void main(String[] args) {
-//        TimeInterval timer = DateUtil.timer();
-//        // -------这是执行过程--------------
-//        cityParserDecorator();
-//        // ---------------------------------
-//        long interval = timer.interval();// 花费毫秒数
-//        long intervalMinute = timer.intervalMinute();// 花费分钟数
-//        StaticLog.info("本次程序执行 花费毫秒数: {} ,   花费分钟数:{} . ", interval, intervalMinute);
-//    }
+    //    public static void main(String[] args) {
+    //        TimeInterval timer = DateUtil.timer();
+    //        // -------这是执行过程--------------
+    //        cityParserDecorator();
+    //        // ---------------------------------
+    //        long interval = timer.interval();// 花费毫秒数
+    //        long intervalMinute = timer.intervalMinute();// 花费分钟数
+    //        StaticLog.info("本次程序执行 花费毫秒数: {} ,   花费分钟数:{} . ", interval, intervalMinute);
+    //    }
 
-    private List<Area> cityParserDecorator() {
+    private List<Area> cityParserDecorator()
+    {
 
         List<Area> list = cityParser.parseProvinces(url);
 

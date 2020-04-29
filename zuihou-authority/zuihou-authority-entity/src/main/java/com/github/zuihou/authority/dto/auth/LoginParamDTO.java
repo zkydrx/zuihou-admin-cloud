@@ -21,7 +21,8 @@ import javax.validation.constraints.NotEmpty;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @ApiModel(value = "LoginParamDTO", description = "登录参数")
-public class LoginParamDTO {
+public class LoginParamDTO
+{
     @ApiModelProperty(value = "验证码KEY")
     private String key;
     @ApiModelProperty(value = "验证码")

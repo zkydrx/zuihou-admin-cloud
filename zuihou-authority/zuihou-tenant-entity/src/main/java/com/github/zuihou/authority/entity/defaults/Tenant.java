@@ -34,7 +34,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Accessors(chain = true)
 @TableName("d_tenant")
 @ApiModel(value = "Tenant", description = "企业")
-public class Tenant extends Entity<Long> {
+public class Tenant extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -115,9 +116,21 @@ public class Tenant extends Entity<Long> {
     private String describe;
 
     @Builder
-    public Tenant(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                  String code, String name, TenantTypeEnum type, TenantStatusEnum status, String duty,
-                  LocalDateTime expirationTime, Boolean readonly, String logo, String describe) {
+    public Tenant(Long id,
+                  LocalDateTime createTime,
+                  Long createUser,
+                  LocalDateTime updateTime,
+                  Long updateUser,
+                  String code,
+                  String name,
+                  TenantTypeEnum type,
+                  TenantStatusEnum status,
+                  String duty,
+                  LocalDateTime expirationTime,
+                  Boolean readonly,
+                  String logo,
+                  String describe)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

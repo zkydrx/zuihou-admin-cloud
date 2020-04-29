@@ -37,7 +37,8 @@ import static com.github.zuihou.common.constant.InjectionFieldConstants.ORG_ID_M
 @Accessors(chain = true)
 @TableName("c_core_station")
 @ApiModel(value = "Station", description = "岗位")
-public class Station extends Entity<Long> {
+public class Station extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -82,8 +83,16 @@ public class Station extends Entity<Long> {
 
 
     @Builder
-    public Station(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                   String name, RemoteData<Long, Org> orgId, Boolean status, String describe) {
+    public Station(Long id,
+                   LocalDateTime createTime,
+                   Long createUser,
+                   LocalDateTime updateTime,
+                   Long updateUser,
+                   String name,
+                   RemoteData<Long, Org> orgId,
+                   Boolean status,
+                   String describe)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

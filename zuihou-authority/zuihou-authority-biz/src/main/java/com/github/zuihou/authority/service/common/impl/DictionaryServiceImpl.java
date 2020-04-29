@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class DictionaryServiceImpl extends SuperServiceImpl<DictionaryMapper, Dictionary> implements DictionaryService {
+public class DictionaryServiceImpl extends SuperServiceImpl<DictionaryMapper, Dictionary> implements DictionaryService
+{
 
 }

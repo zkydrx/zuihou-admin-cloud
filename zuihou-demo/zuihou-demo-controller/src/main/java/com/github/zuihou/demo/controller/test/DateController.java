@@ -22,23 +22,27 @@ import java.util.Date;
 @RestController
 @RequestMapping("/date")
 @Api(value = "Date", tags = "时间类型验证器")
-public class DateController {
+public class DateController
+{
 
     @PostMapping("/post1")
-    public R<DateDTO> bodyPos1(@RequestBody DateDTO data) {
+    public R<DateDTO> bodyPos1(@RequestBody DateDTO data)
+    {
         log.info("post1={}", data);
         return R.success(data);
     }
 
     @PostMapping("/post2")
-    public R<Menu> bodyPos2(@RequestBody Menu data) {
+    public R<Menu> bodyPos2(@RequestBody Menu data)
+    {
         log.info("post2={}", data);
         return R.success(data);
     }
 
 
     @GetMapping("/get1")
-    public R<DateDTO> get(DateDTO data) {
+    public R<DateDTO> get(DateDTO data)
+    {
         log.info("get1={}", data);
         return R.success(data);
     }
@@ -47,7 +51,8 @@ public class DateController {
     public R<DateDTO> get2(@RequestParam(required = false, value = "date") Date date,
                            @RequestParam(required = false, value = "dt") LocalDateTime dt,
                            @RequestParam(required = false, value = "d") LocalDate d,
-                           @RequestParam(required = false, value = "t") LocalTime t) {
+                           @RequestParam(required = false, value = "t") LocalTime t)
+    {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setD(LocalDate.now());
         dateDTO.setDate(new Date());

@@ -23,7 +23,8 @@ import javax.validation.constraints.NotEmpty;
 @RequestMapping("/valid2")
 @Api(value = "Valid", tags = "验证2")
 @Validated
-public class ParamValidateController {
+public class ParamValidateController
+{
     /**
      * 不能
      *
@@ -32,8 +33,8 @@ public class ParamValidateController {
      */
     @GetMapping("/requestParam/get1")
     @Validated
-    public String paramGet1(@NotEmpty(message = "不能为空")
-                            @RequestParam(value = "code", required = false) String code) {
+    public String paramGet1(@NotEmpty(message = "不能为空") @RequestParam(value = "code", required = false) String code)
+    {
         return "不能验证";
     }
 
@@ -44,18 +45,16 @@ public class ParamValidateController {
      * @return
      */
     @GetMapping("/requestParam/get2")
-    public String paramGet2(@NotEmpty(message = "不能为空")
-                            @RequestParam(value = "code", required = false) String code) {
+    public String paramGet2(@NotEmpty(message = "不能为空") @RequestParam(value = "code", required = false) String code)
+    {
         return "不能验证";
     }
 
 
     @GetMapping("/requestParam/get3")
-    public String paramGet3(@Validated @NotEmpty(message = "code 不能为空")
-                            @RequestParam(value = "code", required = false) String code,
-                            @NotEmpty(message = "name 不能空")
-                            @RequestParam(value = "name", required = false) String name
-    ) {
+    public String paramGet3(@Validated @NotEmpty(message = "code 不能为空") @RequestParam(value = "code", required = false) String code,
+                            @NotEmpty(message = "name 不能空") @RequestParam(value = "name", required = false) String name)
+    {
         return "不能验证";
     }
 
@@ -67,8 +66,8 @@ public class ParamValidateController {
      */
     @GetMapping("/requestParam/get4")
     @Valid
-    public String paramGet4(@NotEmpty(message = "不能为空")
-                            @RequestParam(value = "code", required = false) String code) {
+    public String paramGet4(@NotEmpty(message = "不能为空") @RequestParam(value = "code", required = false) String code)
+    {
         return "不能验证";
     }
 
@@ -79,18 +78,16 @@ public class ParamValidateController {
      * @return
      */
     @GetMapping("/requestParam/get5")
-    public String paramGet5(@Valid @NotEmpty(message = "不能为空")
-                            @RequestParam(value = "code", required = false) String code) {
+    public String paramGet5(@Valid @NotEmpty(message = "不能为空") @RequestParam(value = "code", required = false) String code)
+    {
         return "不能验证";
     }
 
 
     @GetMapping("/requestParam/get6")
-    public String paramGet6(@Valid @NotEmpty(message = "code 不能为空")
-                            @RequestParam(value = "code", required = false) String code,
-                            @NotEmpty(message = "name 不能空")
-                            @RequestParam(value = "name", required = false) String name
-    ) {
+    public String paramGet6(@Valid @NotEmpty(message = "code 不能为空") @RequestParam(value = "code", required = false) String code,
+                            @NotEmpty(message = "name 不能空") @RequestParam(value = "name", required = false) String name)
+    {
         return "不能验证";
     }
 

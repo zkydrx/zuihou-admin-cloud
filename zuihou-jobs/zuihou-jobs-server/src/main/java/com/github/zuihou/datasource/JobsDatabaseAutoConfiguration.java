@@ -48,16 +48,12 @@ import java.util.List;
  */
 @Configuration
 @Slf4j
-@MapperScan(
-        basePackages = {
-                "com.xxl.job.admin.dao",
-                "com.github.zuihou",
-        },
-        annotationClass = Repository.class,
-        sqlSessionFactoryRef = JobsDatabaseAutoConfiguration.DATABASE_PREFIX + "SqlSessionFactory")
+@MapperScan(basePackages = {"com.xxl.job.admin.dao", "com.github.zuihou",}, annotationClass = Repository.class, sqlSessionFactoryRef =
+        JobsDatabaseAutoConfiguration.DATABASE_PREFIX + "SqlSessionFactory")
 @EnableConfigurationProperties({MybatisPlusProperties.class})
 @ConditionalOnExpression("!'DATASOURCE'.equals('${zuihou.database.multiTenantType}')")
-public class JobsDatabaseAutoConfiguration extends BaseDatabaseConfiguration {
+public class JobsDatabaseAutoConfiguration extends BaseDatabaseConfiguration
+{
     /**
      * 每个数据源配置不同即可
      */
@@ -72,19 +68,31 @@ public class JobsDatabaseAutoConfiguration extends BaseDatabaseConfiguration {
                                          ObjectProvider<DatabaseIdProvider> databaseIdProvider,
                                          ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider,
                                          ObjectProvider<List<MybatisPlusPropertiesCustomizer>> mybatisPlusPropertiesCustomizerProvider,
-                                         ApplicationContext applicationContext) {
-        super(properties, databaseProperties, interceptorsProvider, typeHandlersProvider,
-                languageDriversProvider, resourceLoader, databaseIdProvider,
-                configurationCustomizersProvider, mybatisPlusPropertiesCustomizerProvider, applicationContext);
+                                         ApplicationContext applicationContext)
+    {
+        super(properties,
+              databaseProperties,
+              interceptorsProvider,
+              typeHandlersProvider,
+              languageDriversProvider,
+              resourceLoader,
+              databaseIdProvider,
+              configurationCustomizersProvider,
+              mybatisPlusPropertiesCustomizerProvider,
+              applicationContext);
         log.debug("检测到 zuihou.database.multiTenantType!=DATASOURCE，加载了 AuthorityDatabaseAutoConfiguration");
     }
 
     @Bean(DATABASE_PREFIX + "SqlSessionTemplate")
-    public SqlSessionTemplate getSqlSessionTemplate(@Qualifier(DATABASE_PREFIX + "SqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate getSqlSessionTemplate(@Qualifier(DATABASE_PREFIX + "SqlSessionFactory") SqlSessionFactory sqlSessionFactory)
+    {
         ExecutorType executorType = this.properties.getExecutorType();
-        if (executorType != null) {
+        if (executorType != null)
+        {
             return new SqlSessionTemplate(sqlSessionFactory, executorType);
-        } else {
+        }
+        else
+        {
             return new SqlSessionTemplate(sqlSessionFactory);
         }
     }
@@ -97,15 +105,20 @@ public class JobsDatabaseAutoConfiguration extends BaseDatabaseConfiguration {
     @Primary
     @Bean(name = DATABASE_PREFIX + "DruidDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.druid")
-    public DataSource druidDataSource() {
+    public DataSource druidDataSource()
+    {
         return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = DATABASE_PREFIX + "DataSource")
-    public DataSource dataSource(@Qualifier(DATABASE_PREFIX + "DruidDataSource") DataSource dataSource) {
-        if (ArrayUtil.contains(DEV_PROFILES, this.profiles)) {
+    public DataSource dataSource(@Qualifier(DATABASE_PREFIX + "DruidDataSource") DataSource dataSource)
+    {
+        if (ArrayUtil.contains(DEV_PROFILES, this.profiles))
+        {
             return new P6DataSource(dataSource);
-        } else {
+        }
+        else
+        {
             return dataSource;
         }
     }
@@ -117,7 +130,8 @@ public class JobsDatabaseAutoConfiguration extends BaseDatabaseConfiguration {
      * @throws Exception
      */
     @Bean(DATABASE_PREFIX + "SqlSessionFactory")
-    public SqlSessionFactory getSqlSessionFactory(@Qualifier(DATABASE_PREFIX + "DataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory getSqlSessionFactory(@Qualifier(DATABASE_PREFIX + "DataSource") DataSource dataSource) throws Exception
+    {
         return super.sqlSessionFactory(dataSource);
     }
 

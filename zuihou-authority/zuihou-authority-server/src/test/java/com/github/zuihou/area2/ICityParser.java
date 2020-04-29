@@ -5,7 +5,8 @@ import com.github.zuihou.authority.entity.common.Area;
 import java.util.List;
 
 
-public interface ICityParser {
+public interface ICityParser
+{
 
     String PATH = "/Users/tangyh/githubspace/zuihou-admin-cloud";
 

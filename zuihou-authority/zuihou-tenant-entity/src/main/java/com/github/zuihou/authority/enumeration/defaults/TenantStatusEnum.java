@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "TenantStatusEnum", description = "状态-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum TenantStatusEnum implements BaseEnum {
+public enum TenantStatusEnum implements BaseEnum
+{
 
     /**
      * NORMAL="正常"
@@ -47,25 +48,32 @@ public enum TenantStatusEnum implements BaseEnum {
     private String desc;
 
 
-    public static TenantStatusEnum match(String val, TenantStatusEnum def) {
-        for (TenantStatusEnum enm : TenantStatusEnum.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static TenantStatusEnum match(String val, TenantStatusEnum def)
+    {
+        for (TenantStatusEnum enm : TenantStatusEnum.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static TenantStatusEnum get(String val) {
+    public static TenantStatusEnum get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(TenantStatusEnum val) {
-        if (val == null) {
+    public boolean eq(TenantStatusEnum val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -73,7 +81,8 @@ public enum TenantStatusEnum implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "NORMAL,FORBIDDEN,WAITING,REFUSE", example = "NORMAL")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 

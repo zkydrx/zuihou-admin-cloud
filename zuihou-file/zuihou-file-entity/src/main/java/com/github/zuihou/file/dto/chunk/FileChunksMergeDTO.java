@@ -14,7 +14,8 @@ import lombok.ToString;
 @Data
 @ToString
 @ApiModel(value = "FileChunksMerge", description = "文件合并实体")
-public class FileChunksMergeDTO {
+public class FileChunksMergeDTO
+{
 
     @ApiModelProperty(value = "文件唯一名 md5.js 生成的, 与后端生成的一致")
     private String name;

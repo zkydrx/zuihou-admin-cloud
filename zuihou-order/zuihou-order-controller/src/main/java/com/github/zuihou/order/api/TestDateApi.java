@@ -20,7 +20,8 @@ import java.util.Date;
  * @date 2019/07/24
  */
 @FeignClient(name = "${zuihou.feign.demo-server:zuihou-demo-server}", path = "/date")
-public interface TestDateApi {
+public interface TestDateApi
+{
     /**
      * 测试
      *

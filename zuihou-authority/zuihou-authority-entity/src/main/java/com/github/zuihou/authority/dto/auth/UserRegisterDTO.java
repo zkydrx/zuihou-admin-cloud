@@ -21,7 +21,8 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "UserRegisterDTO", description = "用户注册DTO")
-public class UserRegisterDTO implements Serializable {
+public class UserRegisterDTO implements Serializable
+{
 
     @NotEmpty(message = "手机号不能为空")
     @ApiModelProperty(value = "手机号")

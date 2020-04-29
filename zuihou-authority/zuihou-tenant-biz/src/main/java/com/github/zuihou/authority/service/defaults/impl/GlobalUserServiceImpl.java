@@ -29,12 +29,13 @@ import static com.github.zuihou.utils.BizAssert.isTrue;
  */
 @Slf4j
 @Service
-public class GlobalUserServiceImpl extends SuperServiceImpl<GlobalUserMapper, GlobalUser> implements GlobalUserService {
+public class GlobalUserServiceImpl extends SuperServiceImpl<GlobalUserMapper, GlobalUser> implements GlobalUserService
+{
 
     @Override
-    public Boolean check(String account) {
-        return super.count(Wraps.<GlobalUser>lbQ()
-                .eq(GlobalUser::getAccount, account)) > 0;
+    public Boolean check(String account)
+    {
+        return super.count(Wraps.<GlobalUser>lbQ().eq(GlobalUser::getAccount, account)) > 0;
     }
 
     /**
@@ -43,7 +44,8 @@ public class GlobalUserServiceImpl extends SuperServiceImpl<GlobalUserMapper, Gl
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public GlobalUser save(GlobalUserSaveDTO data) {
+    public GlobalUser save(GlobalUserSaveDTO data)
+    {
         BizAssert.equals(data.getPassword(), data.getConfirmPassword(), "2次输入的密码不一致");
         isTrue(check(data.getAccount()), "账号已经存在");
 
@@ -65,13 +67,16 @@ public class GlobalUserServiceImpl extends SuperServiceImpl<GlobalUserMapper, Gl
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public GlobalUser update(GlobalUserUpdateDTO data) {
-        if (StrUtil.isNotBlank(data.getPassword()) || StrUtil.isNotBlank(data.getPassword())) {
+    public GlobalUser update(GlobalUserUpdateDTO data)
+    {
+        if (StrUtil.isNotBlank(data.getPassword()) || StrUtil.isNotBlank(data.getPassword()))
+        {
             BizAssert.equals(data.getPassword(), data.getConfirmPassword(), "2次输入的密码不一致");
         }
 
         GlobalUser globalUser = BeanPlusUtil.toBean(data, GlobalUser.class);
-        if (StrUtil.isNotBlank(data.getPassword())) {
+        if (StrUtil.isNotBlank(data.getPassword()))
+        {
             String md5Password = SecureUtil.md5(data.getPassword());
             globalUser.setPassword(md5Password);
 

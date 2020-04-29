@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/order")
 @Api(value = "Order", tags = "订单")
-public class OrderController {
+public class OrderController
+{
 
     @Autowired
     private OrderService orderService;
@@ -45,7 +46,8 @@ public class OrderController {
     @ApiOperation(value = "查询订单", notes = "查询订单")
     @GetMapping("/{id}")
     @SysLog("查询订单")
-    public R<Order> get(@PathVariable Long id) {
+    public R<Order> get(@PathVariable Long id)
+    {
         return R.success(orderService.getById(id));
     }
 
@@ -58,7 +60,8 @@ public class OrderController {
     @ApiOperation(value = "新增订单", notes = "新增订单不为空的字段")
     @PostMapping
     @SysLog("新增订单")
-    public R<Order> save(@RequestBody @Validated OrderSaveDTO data) {
+    public R<Order> save(@RequestBody @Validated OrderSaveDTO data)
+    {
         Order order = BeanPlusUtil.toBean(data, Order.class);
         orderService.save(order);
         return R.success(order);
@@ -73,7 +76,8 @@ public class OrderController {
     @ApiOperation(value = "修改订单", notes = "修改订单不为空的字段")
     @PutMapping
     @SysLog("修改订单")
-    public R<Order> update(@RequestBody @Validated(SuperEntity.Update.class) OrderUpdateDTO data) {
+    public R<Order> update(@RequestBody @Validated(SuperEntity.Update.class) OrderUpdateDTO data)
+    {
         Order order = BeanPlusUtil.toBean(data, Order.class);
         orderService.updateById(order);
         return R.success(order);
@@ -88,7 +92,8 @@ public class OrderController {
     @ApiOperation(value = "删除订单", notes = "根据id物理删除订单")
     @DeleteMapping(value = "/{id}")
     @SysLog("删除订单")
-    public R<Boolean> delete(@PathVariable Long id) {
+    public R<Boolean> delete(@PathVariable Long id)
+    {
         orderService.removeById(id);
         return R.success(true);
     }

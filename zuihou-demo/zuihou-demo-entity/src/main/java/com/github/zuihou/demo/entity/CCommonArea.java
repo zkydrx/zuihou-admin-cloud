@@ -28,7 +28,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value = "CCommonArea", description = "地区表")
-public class CCommonArea extends Entity<Long> {
+public class CCommonArea extends Entity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -114,9 +115,22 @@ public class CCommonArea extends Entity<Long> {
 
 
     @Builder
-    public CCommonArea(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                       String name, String code, String fullName, Integer sortValue, String longitude,
-                       String latitude, Integer level, String tenantId, Long parentId, String parentCode) {
+    public CCommonArea(Long id,
+                       LocalDateTime createTime,
+                       Long createUser,
+                       LocalDateTime updateTime,
+                       Long updateUser,
+                       String name,
+                       String code,
+                       String fullName,
+                       Integer sortValue,
+                       String longitude,
+                       String latitude,
+                       Integer level,
+                       String tenantId,
+                       Long parentId,
+                       String parentCode)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

@@ -40,7 +40,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/menu")
 @Api(value = "Menu", tags = "菜单")
-public class MenuController {
+public class MenuController
+{
 
     @Autowired
     private DozerUtils dozer;
@@ -54,16 +55,16 @@ public class MenuController {
      * @param userId 指定用户id
      * @return
      */
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "long", paramType = "query"),
-    })
+    @ApiImplicitParams({@ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"), @ApiImplicitParam(name = "userId", value = "用户id", dataType =
+            "long", paramType = "query"),})
     @ApiOperation(value = "查询用户可用的所有菜单", notes = "查询用户可用的所有菜单")
     @GetMapping("/menus")
     public R<List<Menu>> myMenus(@RequestParam(value = "group", required = false) String group,
                                  @RequestParam(value = "userId", required = false) Long userId,
-                                 @ApiIgnore @LoginUser SysUser sysUser) {
-        if (userId == null || userId <= 0) {
+                                 @ApiIgnore @LoginUser SysUser sysUser)
+    {
+        if (userId == null || userId <= 0)
+        {
             userId = sysUser.getId();
         }
         List<Menu> list = menuService.findVisibleMenu(group, userId);
@@ -71,16 +72,16 @@ public class MenuController {
         return R.success(tree);
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "long", paramType = "query"),
-    })
+    @ApiImplicitParams({@ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"), @ApiImplicitParam(name = "userId", value = "用户id", dataType =
+            "long", paramType = "query"),})
     @ApiOperation(value = "查询用户可用的所有菜单路由树", notes = "查询用户可用的所有菜单路由树")
     @GetMapping("/router")
     public R<List<VueRouter>> myRouter(@RequestParam(value = "group", required = false) String group,
                                        @RequestParam(value = "userId", required = false) Long userId,
-                                       @ApiIgnore @LoginUser SysUser sysUser) {
-        if (userId == null || userId <= 0) {
+                                       @ApiIgnore @LoginUser SysUser sysUser)
+    {
+        if (userId == null || userId <= 0)
+        {
             userId = sysUser.getId();
         }
         List<Menu> list = menuService.findVisibleMenu(group, userId);
@@ -95,11 +96,13 @@ public class MenuController {
      */
     @ApiOperation(value = "查询超管菜单路由树", notes = "查询超管菜单路由树")
     @GetMapping("/admin/router")
-    public R<List<VueRouter>> adminRouter() {
+    public R<List<VueRouter>> adminRouter()
+    {
         return R.success(buildSuperAdminRouter());
     }
 
-    private List<VueRouter> buildSuperAdminRouter() {
+    private List<VueRouter> buildSuperAdminRouter()
+    {
         List<VueRouter> tree = new ArrayList<>();
         List<VueRouter> children = new ArrayList<>();
 
@@ -113,9 +116,7 @@ public class MenuController {
         // <TagsView> at src/layout/components/TagsView/index.vue
         tenant.setName("租户管理");
         tenant.setAlwaysShow(true);
-        tenant.setMeta(RouterMeta.builder()
-                .title("租户管理").breadcrumb(true).icon("")
-                .build());
+        tenant.setMeta(RouterMeta.builder().title("租户管理").breadcrumb(true).icon("").build());
         tenant.setId(-2L);
         tenant.setParentId(-1L);
         children.add(tenant);
@@ -125,9 +126,7 @@ public class MenuController {
         globalUser.setComponent("zuihou/defaults/globaluser/Index");
         globalUser.setName("全局用户");
         globalUser.setHidden(false);
-        globalUser.setMeta(RouterMeta.builder()
-                .title("全局用户").breadcrumb(true).icon("")
-                .build());
+        globalUser.setMeta(RouterMeta.builder().title("全局用户").breadcrumb(true).icon("").build());
         globalUser.setId(-3L);
         globalUser.setParentId(-1L);
         children.add(globalUser);
@@ -138,9 +137,7 @@ public class MenuController {
         defaults.setHidden(false);
         defaults.setName("系统设置");
         defaults.setAlwaysShow(true);
-        defaults.setMeta(RouterMeta.builder()
-                .title("系统设置").icon("el-icon-coin").breadcrumb(true)
-                .build());
+        defaults.setMeta(RouterMeta.builder().title("系统设置").icon("el-icon-coin").breadcrumb(true).build());
         defaults.setId(-1L);
         defaults.setChildren(children);
 

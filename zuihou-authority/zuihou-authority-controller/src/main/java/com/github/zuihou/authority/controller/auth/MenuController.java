@@ -39,124 +39,128 @@ import java.util.List;
 @RequestMapping("/menu")
 @Api(value = "Menu", tags = "菜单")
 @PreAuth(replace = "menu:")
-public class MenuController extends SuperCacheController<MenuService, Long, Menu, Menu, MenuSaveDTO, MenuUpdateDTO> {
+public class MenuController extends SuperCacheController<MenuService, Long, Menu, Menu, MenuSaveDTO, MenuUpdateDTO>
+{
 
     @Autowired
     private DozerUtils dozer;
 
     @Override
-    public R<Menu> handlerSave(MenuSaveDTO menuSaveDTO) {
+    public R<Menu> handlerSave(MenuSaveDTO menuSaveDTO)
+    {
         Menu menu = BeanPlusUtil.toBean(menuSaveDTO, Menu.class);
         baseService.saveWithCache(menu);
         return success(menu);
     }
 
     @Override
-    public R<Menu> handlerUpdate(MenuUpdateDTO model) {
+    public R<Menu> handlerUpdate(MenuUpdateDTO model)
+    {
         Menu menu = BeanPlusUtil.toBean(model, Menu.class);
         baseService.updateWithCache(menu);
         return success(menu);
     }
 
     @Override
-    public R<Boolean> handlerDelete(List<Long> ids) {
+    public R<Boolean> handlerDelete(List<Long> ids)
+    {
         baseService.removeByIdWithCache(ids);
         return success();
     }
 
-//    /**
-//     * 查询用户可用的所有资源
-//     *
-//     * @param group  分组 <br>
-//     * @param userId 指定用户id
-//     * @return
-//     */
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"),
-//            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "long", paramType = "query"),
-//    })
-//    @ApiOperation(value = "查询用户可用的所有菜单", notes = "查询用户可用的所有菜单")
-//    @GetMapping("/menus")
-//    public R<List<Menu>> myMenus(@RequestParam(value = "group", required = false) String group,
-//                                 @RequestParam(value = "userId", required = false) Long userId) {
-//        if (userId == null || userId <= 0) {
-//            userId = getUserId();
-//        }
-//        List<Menu> list = baseService.findVisibleMenu(group, userId);
-//        List<Menu> tree = TreeUtil.buildTree(list);
-//        return success(tree);
-//    }
-//
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"),
-//            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "long", paramType = "query"),
-//    })
-//    @ApiOperation(value = "查询用户可用的所有菜单路由树", notes = "查询用户可用的所有菜单路由树")
-//    @GetMapping("/router")
-//    public R<List<VueRouter>> myRouter(@RequestParam(value = "group", required = false) String group,
-//                                       @RequestParam(value = "userId", required = false) Long userId) {
-//        if (userId == null || userId <= 0) {
-//            userId = getUserId();
-//        }
-//        List<Menu> list = baseService.findVisibleMenu(group, userId);
-//        List<VueRouter> treeList = dozer.mapList(list, VueRouter.class);
-//        return success(TreeUtil.buildTree(treeList));
-//    }
-//
-//    @ApiOperation(value = "查询超管菜单路由树", notes = "查询超管菜单路由树")
-//    @GetMapping("/admin/router")
-//    public R<List<VueRouter>> adminRouter() {
-//        return success(buildSuperAdminRouter());
-//    }
-//
-//    private List<VueRouter> buildSuperAdminRouter() {
-//        List<VueRouter> tree = new ArrayList<>();
-//        List<VueRouter> children = new ArrayList<>();
-//
-//        VueRouter tenant = new VueRouter();
-//        tenant.setPath("/defaults/tenant");
-//        tenant.setComponent("zuihou/defaults/tenant/Index");
-//        tenant.setHidden(false);
-//        // 没有name ，刷新页面后，切换菜单会报错：
-//        // [Vue warn]: Error in nextTick: "TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))"
-//        // found in
-//        // <TagsView> at src/layout/components/TagsView/index.vue
-//        tenant.setName("租户管理");
-//        tenant.setAlwaysShow(true);
-//        tenant.setMeta(RouterMeta.builder()
-//                .title("租户管理").breadcrumb(true).icon("")
-//                .build());
-//        tenant.setId(-2L);
-//        tenant.setParentId(-1L);
-//        children.add(tenant);
-//
-//        VueRouter globalUser = new VueRouter();
-//        globalUser.setPath("/defaults/globaluser");
-//        globalUser.setComponent("zuihou/defaults/globaluser/Index");
-//        globalUser.setName("全局用户");
-//        globalUser.setHidden(false);
-//        globalUser.setMeta(RouterMeta.builder()
-//                .title("全局用户").breadcrumb(true).icon("")
-//                .build());
-//        globalUser.setId(-3L);
-//        globalUser.setParentId(-1L);
-//        children.add(globalUser);
-//
-//        VueRouter defaults = new VueRouter();
-//        defaults.setPath("/defaults");
-//        defaults.setComponent("Layout");
-//        defaults.setHidden(false);
-//        defaults.setName("系统设置");
-//        defaults.setAlwaysShow(true);
-//        defaults.setMeta(RouterMeta.builder()
-//                .title("系统设置").icon("el-icon-coin").breadcrumb(true)
-//                .build());
-//        defaults.setId(-1L);
-//        defaults.setChildren(children);
-//
-//        tree.add(defaults);
-//        return tree;
-//    }
+    //    /**
+    //     * 查询用户可用的所有资源
+    //     *
+    //     * @param group  分组 <br>
+    //     * @param userId 指定用户id
+    //     * @return
+    //     */
+    //    @ApiImplicitParams({
+    //            @ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"),
+    //            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "long", paramType = "query"),
+    //    })
+    //    @ApiOperation(value = "查询用户可用的所有菜单", notes = "查询用户可用的所有菜单")
+    //    @GetMapping("/menus")
+    //    public R<List<Menu>> myMenus(@RequestParam(value = "group", required = false) String group,
+    //                                 @RequestParam(value = "userId", required = false) Long userId) {
+    //        if (userId == null || userId <= 0) {
+    //            userId = getUserId();
+    //        }
+    //        List<Menu> list = baseService.findVisibleMenu(group, userId);
+    //        List<Menu> tree = TreeUtil.buildTree(list);
+    //        return success(tree);
+    //    }
+    //
+    //    @ApiImplicitParams({
+    //            @ApiImplicitParam(name = "group", value = "菜单组", dataType = "string", paramType = "query"),
+    //            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "long", paramType = "query"),
+    //    })
+    //    @ApiOperation(value = "查询用户可用的所有菜单路由树", notes = "查询用户可用的所有菜单路由树")
+    //    @GetMapping("/router")
+    //    public R<List<VueRouter>> myRouter(@RequestParam(value = "group", required = false) String group,
+    //                                       @RequestParam(value = "userId", required = false) Long userId) {
+    //        if (userId == null || userId <= 0) {
+    //            userId = getUserId();
+    //        }
+    //        List<Menu> list = baseService.findVisibleMenu(group, userId);
+    //        List<VueRouter> treeList = dozer.mapList(list, VueRouter.class);
+    //        return success(TreeUtil.buildTree(treeList));
+    //    }
+    //
+    //    @ApiOperation(value = "查询超管菜单路由树", notes = "查询超管菜单路由树")
+    //    @GetMapping("/admin/router")
+    //    public R<List<VueRouter>> adminRouter() {
+    //        return success(buildSuperAdminRouter());
+    //    }
+    //
+    //    private List<VueRouter> buildSuperAdminRouter() {
+    //        List<VueRouter> tree = new ArrayList<>();
+    //        List<VueRouter> children = new ArrayList<>();
+    //
+    //        VueRouter tenant = new VueRouter();
+    //        tenant.setPath("/defaults/tenant");
+    //        tenant.setComponent("zuihou/defaults/tenant/Index");
+    //        tenant.setHidden(false);
+    //        // 没有name ，刷新页面后，切换菜单会报错：
+    //        // [Vue warn]: Error in nextTick: "TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))"
+    //        // found in
+    //        // <TagsView> at src/layout/components/TagsView/index.vue
+    //        tenant.setName("租户管理");
+    //        tenant.setAlwaysShow(true);
+    //        tenant.setMeta(RouterMeta.builder()
+    //                .title("租户管理").breadcrumb(true).icon("")
+    //                .build());
+    //        tenant.setId(-2L);
+    //        tenant.setParentId(-1L);
+    //        children.add(tenant);
+    //
+    //        VueRouter globalUser = new VueRouter();
+    //        globalUser.setPath("/defaults/globaluser");
+    //        globalUser.setComponent("zuihou/defaults/globaluser/Index");
+    //        globalUser.setName("全局用户");
+    //        globalUser.setHidden(false);
+    //        globalUser.setMeta(RouterMeta.builder()
+    //                .title("全局用户").breadcrumb(true).icon("")
+    //                .build());
+    //        globalUser.setId(-3L);
+    //        globalUser.setParentId(-1L);
+    //        children.add(globalUser);
+    //
+    //        VueRouter defaults = new VueRouter();
+    //        defaults.setPath("/defaults");
+    //        defaults.setComponent("Layout");
+    //        defaults.setHidden(false);
+    //        defaults.setName("系统设置");
+    //        defaults.setAlwaysShow(true);
+    //        defaults.setMeta(RouterMeta.builder()
+    //                .title("系统设置").icon("el-icon-coin").breadcrumb(true)
+    //                .build());
+    //        defaults.setId(-1L);
+    //        defaults.setChildren(children);
+    //
+    //        tree.add(defaults);
+    //        return tree;
+    //    }
 
     /**
      * 查询系统中所有的的菜单树结构， 不用缓存，因为该接口很少会使用，就算使用，也会管理员维护菜单时使用
@@ -166,7 +170,8 @@ public class MenuController extends SuperCacheController<MenuService, Long, Menu
     @ApiOperation(value = "查询系统所有的菜单", notes = "查询系统所有的菜单")
     @GetMapping("/tree")
     @SysLog("查询系统所有的菜单")
-    public R<List<Menu>> allTree() {
+    public R<List<Menu>> allTree()
+    {
         List<Menu> list = baseService.list(Wraps.<Menu>lbQ().orderByAsc(Menu::getSortValue));
         return success(TreeUtil.buildTree(list));
     }

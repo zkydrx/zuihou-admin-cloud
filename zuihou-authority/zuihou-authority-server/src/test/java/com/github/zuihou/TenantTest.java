@@ -26,7 +26,8 @@ import java.util.List;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @Slf4j
-public class TenantTest {
+public class TenantTest
+{
 
     @Autowired
     private RoleMapper roleMapper;
@@ -34,25 +35,29 @@ public class TenantTest {
     private UserMapper userMapper;
 
     @Before
-    public void setTenant() {
+    public void setTenant()
+    {
         BaseContextHandler.setTenant("0000");
     }
 
     @Test
-    public void test() {
+    public void test()
+    {
         List<Long> userIdByCode = roleMapper.findUserIdByCode(new String[]{"SUPER_ADMIN"});
         System.out.println(userIdByCode.size());
     }
 
     @Test
-    public void testFindUserByRoleId() {
+    public void testFindUserByRoleId()
+    {
         List<User> list = userMapper.findUserByRoleId(100L, "ad%min");
         log.info("list.size= " + list.size());
     }
 
     @Test
-    public void testList() {
-//        LbqWrapper<User> query = null;
+    public void testList()
+    {
+        //        LbqWrapper<User> query = null;
         LbqWrapper<User> query = Wraps.lbQ();
         query.eq(User::getName, "超管");
         query.like(User::getAccount, "zuihou");

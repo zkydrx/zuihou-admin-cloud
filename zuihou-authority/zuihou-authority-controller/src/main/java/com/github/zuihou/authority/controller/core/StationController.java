@@ -35,15 +35,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/station")
 @Api(value = "Station", tags = "岗位")
 @PreAuth(replace = "station:")
-public class StationController extends SuperCacheController<StationService, Long, Station, StationPageDTO, StationSaveDTO, StationUpdateDTO> {
+public class StationController extends SuperCacheController<StationService, Long, Station, StationPageDTO, StationSaveDTO, StationUpdateDTO>
+{
 
     @Override
-    public void query(PageParams<StationPageDTO> params, IPage<Station> page, Long defSize) {
+    public void query(PageParams<StationPageDTO> params, IPage<Station> page, Long defSize)
+    {
         baseService.findStationPage(page, params.getModel());
     }
 
     @Override
-    public R<Boolean> handlerImport(List<Map<String, String>> list) {
+    public R<Boolean> handlerImport(List<Map<String, String>> list)
+    {
         List<Station> stationList = list.stream().map((map) -> {
             Station item = new Station();
             item.setDescribe(map.getOrDefault("描述", ""));

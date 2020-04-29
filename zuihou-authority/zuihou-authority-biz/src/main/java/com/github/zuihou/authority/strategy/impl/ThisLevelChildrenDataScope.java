@@ -22,16 +22,19 @@ import java.util.stream.Collectors;
  * @date 2019-06-08 16:30
  */
 @Component("THIS_LEVEL_CHILDREN")
-public class ThisLevelChildrenDataScope implements AbstractDataScopeHandler {
+public class ThisLevelChildrenDataScope implements AbstractDataScopeHandler
+{
     @Autowired
     private UserService userService;
     @Autowired
     private OrgService orgService;
 
     @Override
-    public List<Long> getOrgIds(List<Long> orgList, Long userId) {
+    public List<Long> getOrgIds(List<Long> orgList, Long userId)
+    {
         User user = userService.getById(userId);
-        if (user == null) {
+        if (user == null)
+        {
             return Collections.emptyList();
         }
         Long orgId = RemoteData.getKey(user.getOrg());

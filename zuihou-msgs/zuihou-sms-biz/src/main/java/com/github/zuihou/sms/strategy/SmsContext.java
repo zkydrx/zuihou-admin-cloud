@@ -19,17 +19,16 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2019-05-15
  */
 @Component
-public class SmsContext {
+public class SmsContext
+{
     private final Map<String, SmsStrategy> smsContextStrategyMap = new ConcurrentHashMap<>();
 
     private final SmsTaskMapper smsTaskMapper;
     private final SmsTemplateMapper smsTemplateMapper;
 
     @Autowired
-    public SmsContext(
-            Map<String, SmsStrategy> strategyMap,
-            SmsTaskMapper smsTaskMapper,
-            SmsTemplateMapper smsTemplateMapper) {
+    public SmsContext(Map<String, SmsStrategy> strategyMap, SmsTaskMapper smsTaskMapper, SmsTemplateMapper smsTemplateMapper)
+    {
         strategyMap.forEach(this.smsContextStrategyMap::put);
         this.smsTaskMapper = smsTaskMapper;
         this.smsTemplateMapper = smsTemplateMapper;
@@ -44,7 +43,8 @@ public class SmsContext {
      * @param taskId
      * @return
      */
-    public String smsSend(Long taskId) {
+    public String smsSend(Long taskId)
+    {
         SmsTask smsTask = smsTaskMapper.selectById(taskId);
         BizAssert.notNull(smsTask, "短信任务尚未保存成功");
 
@@ -56,7 +56,8 @@ public class SmsContext {
         BizAssert.notNull(smsStrategy, "短信供应商不存在");
 
         R<String> result = smsStrategy.sendSms(smsTask, template);
-        if (result.getIsSuccess()) {
+        if (result.getIsSuccess())
+        {
             return result.getData();
         }
         return null;

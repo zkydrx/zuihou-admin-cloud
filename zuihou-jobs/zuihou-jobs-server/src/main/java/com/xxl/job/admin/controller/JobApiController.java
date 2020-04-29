@@ -19,17 +19,20 @@ import java.io.IOException;
  * Created by xuxueli on 17/5/10.
  */
 @Controller
-public class JobApiController implements InitializingBean {
+public class JobApiController implements InitializingBean
+{
 
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception
+    {
 
     }
 
     @RequestMapping(AdminBiz.MAPPING)
     @PermessionLimit(limit = false)
-    public void api(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void api(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
         XxlJobDynamicScheduler.invokeAdminService(request, response);
     }
 

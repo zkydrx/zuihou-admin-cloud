@@ -18,7 +18,8 @@ import java.util.TreeMap;
  * b、hash method replace hashCode：String的hashCode可能重复，需要进一步扩大hashCode的取值范围
  * Created by xuxueli on 17/3/10.
  */
-public class ExecutorRouteConsistentHash extends ExecutorRouter {
+public class ExecutorRouteConsistentHash extends ExecutorRouter
+{
 
     private static int VIRTUAL_NODE_NUM = 5;
 
@@ -28,20 +29,27 @@ public class ExecutorRouteConsistentHash extends ExecutorRouter {
      * @param key
      * @return
      */
-    private static long hash(String key) {
+    private static long hash(String key)
+    {
 
         // md5 byte
         MessageDigest md5;
-        try {
+        try
+        {
             md5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e)
+        {
             throw new RuntimeException("MD5 not supported", e);
         }
         md5.reset();
         byte[] keyBytes = null;
-        try {
+        try
+        {
             keyBytes = key.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e)
+        {
             throw new RuntimeException("Unknown string :" + key, e);
         }
 
@@ -49,22 +57,22 @@ public class ExecutorRouteConsistentHash extends ExecutorRouter {
         byte[] digest = md5.digest();
 
         // hash code, Truncate to 32-bits
-        long hashCode = ((long) (digest[3] & 0xFF) << 24)
-                | ((long) (digest[2] & 0xFF) << 16)
-                | ((long) (digest[1] & 0xFF) << 8)
-                | (digest[0] & 0xFF);
+        long hashCode = ((long) (digest[3] & 0xFF) << 24) | ((long) (digest[2] & 0xFF) << 16) | ((long) (digest[1] & 0xFF) << 8) | (digest[0] & 0xFF);
 
         long truncateHashCode = hashCode & 0xffffffffL;
         return truncateHashCode;
     }
 
-    public String hashJob(int jobId, List<String> addressList) {
+    public String hashJob(int jobId, List<String> addressList)
+    {
 
         // ------A1------A2-------A3------
         // -----------J1------------------
         TreeMap<Long, String> addressRing = new TreeMap<Long, String>();
-        for (String address : addressList) {
-            for (int i = 0; i < VIRTUAL_NODE_NUM; i++) {
+        for (String address : addressList)
+        {
+            for (int i = 0; i < VIRTUAL_NODE_NUM; i++)
+            {
                 long addressHash = hash("SHARD-" + address + "-NODE-" + i);
                 addressRing.put(addressHash, address);
             }
@@ -72,14 +80,16 @@ public class ExecutorRouteConsistentHash extends ExecutorRouter {
 
         long jobHash = hash(String.valueOf(jobId));
         SortedMap<Long, String> lastRing = addressRing.tailMap(jobHash);
-        if (!lastRing.isEmpty()) {
+        if (!lastRing.isEmpty())
+        {
             return lastRing.get(lastRing.firstKey());
         }
         return addressRing.firstEntry().getValue();
     }
 
     @Override
-    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
+    public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList)
+    {
         String address = hashJob(triggerParam.getJobId(), addressList);
         return new ReturnT<String>(address);
     }

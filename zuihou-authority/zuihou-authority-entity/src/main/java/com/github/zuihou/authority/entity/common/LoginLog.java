@@ -33,7 +33,8 @@ import static com.github.zuihou.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Accessors(chain = true)
 @TableName("c_common_login_log")
 @ApiModel(value = "LoginLog", description = "登录日志")
-public class LoginLog extends SuperEntity<Long> {
+public class LoginLog extends SuperEntity<Long>
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -133,9 +134,21 @@ public class LoginLog extends SuperEntity<Long> {
 
 
     @Builder
-    public LoginLog(Long id, LocalDateTime createTime, Long createUser,
-                    String requestIp, Long userId, String userName, String account, String description,
-                    LocalDate loginDate, String ua, String browser, String browserVersion, String operatingSystem, String location) {
+    public LoginLog(Long id,
+                    LocalDateTime createTime,
+                    Long createUser,
+                    String requestIp,
+                    Long userId,
+                    String userName,
+                    String account,
+                    String description,
+                    LocalDate loginDate,
+                    String ua,
+                    String browser,
+                    String browserVersion,
+                    String operatingSystem,
+                    String location)
+    {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;

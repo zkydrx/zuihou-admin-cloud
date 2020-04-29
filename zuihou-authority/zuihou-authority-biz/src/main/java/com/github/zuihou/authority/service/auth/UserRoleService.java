@@ -13,7 +13,8 @@ import com.github.zuihou.base.service.SuperService;
  * @author zuihou
  * @date 2019-07-03
  */
-public interface UserRoleService extends SuperService<UserRole> {
+public interface UserRoleService extends SuperService<UserRole>
+{
     /**
      * 初始化超级管理员角色 权限
      *

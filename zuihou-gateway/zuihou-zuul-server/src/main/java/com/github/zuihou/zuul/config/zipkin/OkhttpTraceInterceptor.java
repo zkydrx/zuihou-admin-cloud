@@ -22,7 +22,8 @@ import java.io.IOException;
  * @see org.springframework.cloud.netflix.ribbon.okhttp.OkHttpRibbonRequest
  */
 @Slf4j
-public class OkhttpTraceInterceptor implements Interceptor {
+public class OkhttpTraceInterceptor implements Interceptor
+{
 
 
     /**
@@ -50,7 +51,8 @@ public class OkhttpTraceInterceptor implements Interceptor {
      * 将X-B3-TraceId | X-B3-SpanId | X-B3-ParentSpanId添加到请求的头部，再将请求发送出去
      */
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException
+    {
         Request request = chain.request();
         TraceContext traceContext = tracer.currentSpan().context();
         //copy all headers to newheaders
@@ -61,7 +63,8 @@ public class OkhttpTraceInterceptor implements Interceptor {
         //set next spanid
         headers.add(SPAN_ID_NAME, HexCodec.toLowerHex(nextId()));
         String parentId = traceContext.parentIdString();
-        if (parentId == null) {
+        if (parentId == null)
+        {
             //set parentid = spanid(root) when null
             parentId = HexCodec.toLowerHex(traceContext.spanId());
         }
@@ -73,9 +76,7 @@ public class OkhttpTraceInterceptor implements Interceptor {
         Response response = chain.proceed(request);
 
         //将traceid返回去给调用方，如浏览器发起的请求，可在浏览器看到该信息，方便定位
-        Headers.Builder responseHeadersBuilder = response.headers()
-                .newBuilder()
-                .add(TRACE_ID_NAME, traceContext.traceIdString());
+        Headers.Builder responseHeadersBuilder = response.headers().newBuilder().add(TRACE_ID_NAME, traceContext.traceIdString());
         response = response.newBuilder().headers(responseHeadersBuilder.build()).build();
 
         return response;
@@ -84,9 +85,11 @@ public class OkhttpTraceInterceptor implements Interceptor {
     /**
      * Generates a new 64-bit ID, taking care to dodge zero which can be confused with absent
      */
-    long nextId() {
+    long nextId()
+    {
         long nextId = Platform.get().randomLong();
-        while (nextId == 0L) {
+        while (nextId == 0L)
+        {
             nextId = Platform.get().randomLong();
         }
         return nextId;

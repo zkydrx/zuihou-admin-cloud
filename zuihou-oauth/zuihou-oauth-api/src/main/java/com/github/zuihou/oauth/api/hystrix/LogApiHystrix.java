@@ -12,9 +12,11 @@ import org.springframework.stereotype.Component;
  * @date 2019/07/02
  */
 @Component
-public class LogApiHystrix implements LogApi {
+public class LogApiHystrix implements LogApi
+{
     @Override
-    public R<OptLogDTO> save(OptLogDTO log) {
+    public R<OptLogDTO> save(OptLogDTO log)
+    {
         return R.timeout();
     }
 }

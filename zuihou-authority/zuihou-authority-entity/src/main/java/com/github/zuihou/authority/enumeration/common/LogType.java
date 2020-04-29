@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "LogType", description = "日志类型-枚举")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum LogType implements BaseEnum {
+public enum LogType implements BaseEnum
+{
 
     /**
      * OPT="操作类型"
@@ -38,25 +39,32 @@ public enum LogType implements BaseEnum {
     private String desc;
 
 
-    public static LogType match(String val, LogType def) {
-        for (LogType enm : LogType.values()) {
-            if (enm.name().equalsIgnoreCase(val)) {
+    public static LogType match(String val, LogType def)
+    {
+        for (LogType enm : LogType.values())
+        {
+            if (enm.name().equalsIgnoreCase(val))
+            {
                 return enm;
             }
         }
         return def;
     }
 
-    public static LogType get(String val) {
+    public static LogType get(String val)
+    {
         return match(val, null);
     }
 
-    public boolean eq(String val) {
+    public boolean eq(String val)
+    {
         return this.name().equalsIgnoreCase(val);
     }
 
-    public boolean eq(LogType val) {
-        if (val == null) {
+    public boolean eq(LogType val)
+    {
+        if (val == null)
+        {
             return false;
         }
         return eq(val.name());
@@ -64,7 +72,8 @@ public enum LogType implements BaseEnum {
 
     @Override
     @ApiModelProperty(value = "编码", allowableValues = "OPT,EX", example = "OPT")
-    public String getCode() {
+    public String getCode()
+    {
         return this.name();
     }
 
